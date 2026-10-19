@@ -184,7 +184,7 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <div class="card"><h3>ROLLED / ARC</h3><div class="fld">
 <label>Chord<input id="rC" inputmode="decimal" value="48"></label><label>Rise<input id="rS" inputmode="decimal" value="6"></label></div><div id="rOut"></div></div>
 </section>
-<div id="moreMenu"><button data-s="takeoffs">📋 Takeoffs</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button></div><div class="toast" id="toast"></div>
+<div id="moreMenu"><button data-s="takeoffs">📋 Takeoffs</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT v3</div></div><div class="toast" id="toast"></div>
 <section class="screen" id="takeoffs"><div class="stub"><h2>Takeoffs</h2>Material lists, cut lists, weights — coming soon.</div></section>
 <section class="screen" id="weld"><div class="stub"><h2>Weld Settings</h2>MIG / TIG / Stick / Flux-core by thickness — coming soon.</div></section>
 <section class="screen" id="notes"><div class="stub"><h2>Notes</h2>Job notes — coming soon.</div></section>
@@ -339,8 +339,25 @@ q("pPrint").onclick=function(){var b=P(q("pB").value),cp=cope(b,P(q("pM").value)
 window.go=function(id){q("moreMenu").style.display="none";document.querySelectorAll("nav button,.screen").forEach(function(x){x.classList.remove("on")});q(id).classList.add("on");
  var nb=document.querySelector('nav [data-s='+id+']')||document.querySelector('nav [data-s=more]');nb.classList.add("on")};
 document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){if(b.dataset.s=="more"){var m=q("moreMenu");m.style.display=m.style.display=="flex"?"none":"flex"}else go(b.dataset.s)}});
-document.querySelectorAll("#moreMenu button").forEach(function(b){b.onclick=function(){go(b.dataset.s)}});
+document.querySelectorAll("#moreMenu button[data-s]").forEach(function(b){b.onclick=function(){go(b.dataset.s)}});
 all();var h=location.hash.slice(1);if(h&&q(h))go(h);})();
 expr="1 5/16+3/8";live();
 </script><script>if("serviceWorker" in navigator&&location.protocol!="file:")navigator.serviceWorker.register("sw.js").then(function(){console.log("SW registered")}).catch(function(e){console.warn("SW",e)});</script>
+<script>
+var APP_VERSION="v3";
+function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
+function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
+function freshReload(){location.reload()}
+function checkForUpdates(){document.getElementById("moreMenu").style.display="none";toast("Checking for updates…");
+ if(!("serviceWorker" in navigator)||location.protocol=="file:"){toast("Updating…");clearCaches().then(function(){setTimeout(freshReload,600)});return}
+ navigator.serviceWorker.getRegistration().then(function(reg){
+  if(!reg){toast("Updating…");return clearCaches().then(function(){setTimeout(freshReload,600)})}
+  return reg.update().then(function(){return new Promise(function(res){var w=reg.installing;if(!w)return res();
+    w.addEventListener("statechange",function(){if(w.state=="installed"||w.state=="redundant"||w.state=="activated")res()});setTimeout(res,8000)})}).then(function(){
+   if(reg.waiting){toast("Updating…");var done=false;navigator.serviceWorker.addEventListener("controllerchange",function(){if(done)return;done=true;clearCaches(null).then(freshReload)});
+    reg.waiting.postMessage({type:"SKIP_WAITING"});setTimeout(function(){if(!done){done=true;clearCaches().then(freshReload)}},4000)}
+   else{toast("You're on the latest version ("+APP_VERSION+")");clearCaches().then(function(){setTimeout(freshReload,1200)})}})
+ }).catch(function(e){console.warn("update",e);toast("Updating…");clearCaches().then(function(){setTimeout(freshReload,600)})})}
+document.getElementById("updBtn").onclick=checkForUpdates;
+</script>
 </body></html>
