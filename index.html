@@ -184,7 +184,7 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <div class="card"><h3>ROLLED / ARC</h3><div class="fld">
 <label>Chord<input id="rC" inputmode="decimal" value="48"></label><label>Rise<input id="rS" inputmode="decimal" value="6"></label></div><div id="rOut"></div></div>
 </section>
-<div id="moreMenu"><button data-s="takeoffs">📋 Takeoffs</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT v3</div></div><div class="toast" id="toast"></div>
+<div id="moreMenu"><button data-s="takeoffs">📋 Takeoffs</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT v4</div></div><div class="toast" id="toast"></div>
 <section class="screen" id="takeoffs"><div class="stub"><h2>Takeoffs</h2>Material lists, cut lists, weights — coming soon.</div></section>
 <section class="screen" id="weld"><div class="stub"><h2>Weld Settings</h2>MIG / TIG / Stick / Flux-core by thickness — coming soon.</div></section>
 <section class="screen" id="notes"><div class="stub"><h2>Notes</h2>Job notes — coming soon.</div></section>
@@ -232,10 +232,11 @@ var TD=("#0-80|3/64|.0469|#52 (.0635)|#50 (.0700);#1-64|#53|.0595|#48 (.0760)|#4
 
 // decimal without leading zero: 0.3125 -> ".3125"
 function decStr(v,p){var t=(+v.toFixed(p)).toString();return t.replace(/^(-?)0\./,"$1.")}
-// chart tap: if expression ends in a number, replace that number (fresh entry for that operand); else append
-function chartInsert(ex,val){var m=ex.match(/(\d+(?:\.\d+)?\s+\d+\/\d*|\d*\.?\d*(?:\/\d*)?)\s*$/);var tail=m?m[0]:"";
- if(/[\d.]/.test(tail))return ex.slice(0,ex.length-tail.length)+val;return ex+val}
-if(typeof module!="undefined")module.exports={evaluate:evaluate,toFrac:toFrac,parseIn:parseIn,bend:bend,flatLen:flatLen,calib:calib,MAT:MAT,TD:TD,decStr:decStr,chartInsert:chartInsert};
+// chart tap: add value to the trailing number (whole, decimal, fraction or mixed); after an operator / empty just insert
+function chartAdd(ex,val){var v=+val,m=ex.match(/(\d+(?:\.\d+)?\s+\d+\/\d+|\d*\.?\d+(?:\/\d+)?)\s*$/);
+ if(m){var n;try{n=evaluate(m[1])}catch(e){n=NaN}if(isFinite(n))return ex.slice(0,ex.length-m[0].length)+decStr(n+v,6)}
+ return ex+decStr(v,6)}
+if(typeof module!="undefined")module.exports={evaluate:evaluate,toFrac:toFrac,parseIn:parseIn,bend:bend,flatLen:flatLen,calib:calib,MAT:MAT,TD:TD,decStr:decStr,chartAdd:chartAdd};
 var D2R=Math.PI/180,R2D=180/Math.PI;
 function tri(o){var ri=o.rise,ru=o.run,di=o.diag,an=o.angle,h=function(v){return isFinite(v)&&v>0};
  if(h(ri)&&h(ru)){}else if(h(ri)&&h(di)){ru=Math.sqrt(di*di-ri*ri)}else if(h(ru)&&h(di)){ri=Math.sqrt(di*di-ru*ru)}
@@ -275,7 +276,7 @@ function press(k){
  ins(k)}
 function rows(d){var h="";for(var n=1;n<=d;n++){var g=gcd(n,d),s=(n/g)+"/"+(d/g);if(n==d)s='1"';
  h+='<button class="'+(64/(d/g)<=4?"s16":"")+'" data-v="'+(n/d)+'"><b>'+s+'</b><span>'+(n==d?"1.0":decStr(n/d,d==64?6:4))+'</span></button>'}
- $("rows").innerHTML=h;$("rows").querySelectorAll("button").forEach(function(b){b.onclick=function(){if(justEq){expr="";justEq=false}expr=chartInsert(expr,decStr(+b.dataset.v,6));live()}})}
+ $("rows").innerHTML=h;$("rows").querySelectorAll("button").forEach(function(b){b.onclick=function(){justEq=false;expr=chartAdd(expr,+b.dataset.v);live()}})}
 document.querySelectorAll(".tg button").forEach(function(b){b.onclick=function(){document.querySelectorAll(".tg button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");rows(+b.dataset.d)}});
 document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){document.querySelectorAll("nav button,.screen").forEach(function(x){x.classList.remove("on")});b.classList.add("on");$(b.dataset.s).classList.add("on")}});
 rows(16);
@@ -344,7 +345,7 @@ all();var h=location.hash.slice(1);if(h&&q(h))go(h);})();
 expr="1 5/16+3/8";live();
 </script><script>if("serviceWorker" in navigator&&location.protocol!="file:")navigator.serviceWorker.register("sw.js").then(function(){console.log("SW registered")}).catch(function(e){console.warn("SW",e)});</script>
 <script>
-var APP_VERSION="v3";
+var APP_VERSION="v4";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
