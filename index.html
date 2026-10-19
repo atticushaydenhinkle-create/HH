@@ -230,7 +230,12 @@ var TD=("#0-80|3/64|.0469|#52 (.0635)|#50 (.0700);#1-64|#53|.0595|#48 (.0760)|#4
  [20,2.5,0,21,22],[20,1.5,1,21,22],[24,3,0,25,26],[24,2,1,25,26]].forEach(function(m){var t=+(m[0]-m[1]).toFixed(2);
  TD.push(["M"+m[0]+"×"+m[1]+(m[2]?" fine":""),t+" mm",(t/25.4).toFixed(4),m[3]+" mm",m[4]+" mm"])});
 
-if(typeof module!="undefined")module.exports={evaluate:evaluate,toFrac:toFrac,parseIn:parseIn,bend:bend,flatLen:flatLen,calib:calib,MAT:MAT,TD:TD};
+// decimal without leading zero: 0.3125 -> ".3125"
+function decStr(v,p){var t=(+v.toFixed(p)).toString();return t.replace(/^(-?)0\./,"$1.")}
+// chart tap: if expression ends in a number, replace that number (fresh entry for that operand); else append
+function chartInsert(ex,val){var m=ex.match(/(\d+(?:\.\d+)?\s+\d+\/\d*|\d*\.?\d*(?:\/\d*)?)\s*$/);var tail=m?m[0]:"";
+ if(/[\d.]/.test(tail))return ex.slice(0,ex.length-tail.length)+val;return ex+val}
+if(typeof module!="undefined")module.exports={evaluate:evaluate,toFrac:toFrac,parseIn:parseIn,bend:bend,flatLen:flatLen,calib:calib,MAT:MAT,TD:TD,decStr:decStr,chartInsert:chartInsert};
 var D2R=Math.PI/180,R2D=180/Math.PI;
 function tri(o){var ri=o.rise,ru=o.run,di=o.diag,an=o.angle,h=function(v){return isFinite(v)&&v>0};
  if(h(ri)&&h(ru)){}else if(h(ri)&&h(di)){ru=Math.sqrt(di*di-ri*ri)}else if(h(ru)&&h(di)){ri=Math.sqrt(di*di-ru*ru)}
@@ -269,8 +274,8 @@ function press(k){
  if("+-×÷".indexOf(k)>=0){justEq=false;expr=expr.replace(/ $/,"")+k;live();return}
  ins(k)}
 function rows(d){var h="";for(var n=1;n<=d;n++){var g=gcd(n,d),s=(n/g)+"/"+(d/g);if(n==d)s='1"';
- h+='<button class="'+(64/(d/g)<=4?"s16":"")+'" data-v="'+(n/d)+'"><b>'+s+'</b><span>'+(n/d).toFixed(d==64?6:4).replace(/0+$/,"").replace(/\.$/,".0")+'</span></button>'}
- $("rows").innerHTML=h;$("rows").querySelectorAll("button").forEach(function(b){b.onclick=function(){ins((+b.dataset.v).toString())}})}
+ h+='<button class="'+(64/(d/g)<=4?"s16":"")+'" data-v="'+(n/d)+'"><b>'+s+'</b><span>'+(n==d?"1.0":decStr(n/d,d==64?6:4))+'</span></button>'}
+ $("rows").innerHTML=h;$("rows").querySelectorAll("button").forEach(function(b){b.onclick=function(){if(justEq){expr="";justEq=false}expr=chartInsert(expr,decStr(+b.dataset.v,6));live()}})}
 document.querySelectorAll(".tg button").forEach(function(b){b.onclick=function(){document.querySelectorAll(".tg button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");rows(+b.dataset.d)}});
 document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){document.querySelectorAll("nav button,.screen").forEach(function(x){x.classList.remove("on")});b.classList.add("on");$(b.dataset.s).classList.add("on")}});
 rows(16);
@@ -294,7 +299,7 @@ q("cUse").onclick=function(){var k=+this.dataset.k;if(isFinite(k)){q("bK").value
 gauges();q("bGa").value="14";drawLegs();calc();
 function td(){var f=q("tdq").value.toLowerCase().replace(/\s/g,"").replace(/x/g,"×");q("#tdt tbody".slice(0,0)||"tdt").querySelector("tbody").innerHTML=TD.filter(function(r){return r[0].toLowerCase().replace(/\s/g,"").indexOf(f)>=0}).map(function(r){
  return '<tr data-v="'+r[2]+'"><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="d">'+r[2]+'</td><td><small>'+r[3]+'</small></td><td><small>'+r[4]+'</small></td></tr>'}).join("");
- q("tdt").querySelectorAll("tbody tr").forEach(function(tr){tr.onclick=function(){justEq=true;expr="";ins((+tr.dataset.v).toString());var t=q("toast");t.textContent=tr.dataset.v+'" → Calc';t.style.display="block";setTimeout(function(){t.style.display="none"},1200)}})}
+ q("tdt").querySelectorAll("tbody tr").forEach(function(tr){tr.onclick=function(){justEq=true;expr="";ins(decStr(+tr.dataset.v,4));var t=q("toast");t.textContent=tr.dataset.v+'" → Calc';t.style.display="block";setTimeout(function(){t.style.display="none"},1200)}})}
 q("tdq").oninput=td;td();
 })();
 
@@ -325,7 +330,7 @@ function all(){var d=depth();
  else{q("pOut").innerHTML='<div class="hint err">Branch OD must be ≤ main OD.</div>';q("pSvg").innerHTML="";q("copeT").innerHTML=""}
  var a=arc(P(q("rC").value),P(q("rS").value));q("rOut").innerHTML=tv("Radius",a.R)+tv("Arc length",a.len)+tv("Included angle",a.angle,"°")}
 q("angles").addEventListener("input",all);q("aSh").onchange=all;
-q("angles").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins((+(+t.dataset.v).toFixed(4)).toString());var m=q("toast");m.textContent=(+t.dataset.v).toFixed(4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
+q("angles").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=(+t.dataset.v).toFixed(4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
 q("pPrint").onclick=function(){var b=P(q("pB").value),cp=cope(b,P(q("pM").value),P(q("pA").value),180);if(!cp)return;var W=cp.circ,H=cp.depth+1,
  pl=cp.pts.map(function(p){return p.x.toFixed(4)+","+(0.5+p.depth).toFixed(4)}).join(" "),
  svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'in" height="'+H+'in" viewBox="0 0 '+W+' '+H+'"><rect width="'+W+'" height="'+H+'" fill="none" stroke="#000" stroke-width="0.01"/><polyline points="'+pl+'" fill="none" stroke="#000" stroke-width="0.02"/>'+
