@@ -45,6 +45,10 @@ input:focus,select:focus{outline:none;border-color:#ffb020}
 .legrow{display:flex;gap:6px;align-items:center;margin-bottom:6px}.legrow span{width:56px;font-size:12px;color:#9aa4b2;font-weight:700}
 .legrow input{margin:0}.btn{height:44px;padding:0 12px;border:0;border-radius:8px;font-weight:800;font-size:15px;background:#2b3442;color:#5cc8ff}
 .btn.am{background:#ffb020;color:#000}.btn.rd{background:#4a1515;color:#ff6b6b;width:44px}
+.ms{border:1px solid #2a2f37;border-radius:8px;margin-top:8px;background:#0d1014}.ms summary{padding:12px 10px;font-weight:800;color:#5cc8ff;font-size:15px;cursor:pointer}
+.mw{max-height:420px;overflow:auto}.mt{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.mt th{position:sticky;top:0;background:#1d222a;color:#ffb020;padding:6px 3px;text-align:left;font-size:11px}.mt td{padding:8px 3px;border-bottom:1px solid #222831}
+.mt td:first-child{font-weight:800}.mt td.d{color:#5cc8ff;font-weight:700}.mt td small{color:#7c8594}.mt tr:active{background:#2b3442}
 #tdt{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
 #tdt th{position:sticky;top:0;background:#1d222a;color:#ffb020;padding:6px 3px;text-align:left;font-size:11px}
 #tdt td{padding:9px 3px;border-bottom:1px solid #222831}#tdt td:first-child{font-weight:800}
@@ -223,12 +227,21 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <section class="screen" id="tabs"><div class="card"><h3>CUSTOMIZE TABS</h3><div class="hint">Calc is always first. Pick tabs 2–4; everything else lives in More.</div>
 <div class="fld" style="margin-top:6px"><label class="w">Tab 2<select id="tb1" class="tbs"></select></label><label class="w">Tab 3<select id="tb2" class="tbs"></select></label><label class="w">Tab 4<select id="tb3" class="tbs"></select></label></div>
 <div class="hint err" id="tbErr" style="min-height:14px"></div>
-<h3 style="margin-top:8px">PRESETS</h3><div class="seg" id="tbPre"><button data-p="bends,angles,tap">Sheet Metal</button><button data-p="pipe,angles,weld">Pipe Fitter</button><button data-p="angles,weld,bends">Structural / Fab</button></div>
+<h3 style="margin-top:8px">PRESETS</h3><div class="seg" id="tbPre"><button data-p="bends,angles,tap">Sheet Metal</button><button data-p="pipe,angles,weld">Pipe Fitter</button><button data-p="angles,weld,bends">Structural / Fab</button><button data-p="materials,angles,weld">Materials</button></div>
 <button class="btn am" id="tbDone" style="width:100%;margin-bottom:6px;display:none">Done ✓</button><button class="btn am" id="tbSave" style="width:100%">Save tabs</button><button class="btn" id="tbReset" style="width:100%;margin-top:6px">Reset to default (Bends, Angles, Pipe)</button></div></section>
-<div id="moreMenu"><button data-s="tap">🔩 Tap &amp; Drill</button><button data-s="takeoffs">📋 Takeoffs</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT v8</div></div><div class="toast" id="toast"></div>
+<div id="moreMenu"><button data-s="tap">🔩 Tap &amp; Drill</button><button data-s="materials">🧱 Materials</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT v9</div></div><div class="toast" id="toast"></div>
 <div id="onb"><img src="logo-icon.svg" width="110" height="110" alt="Rocking HH"><h2>HH FAB SHT</h2><div style="font-size:20px;font-weight:900;margin-top:6px">What field are you in?</div><div class="hint">We'll set up your tabs. You can change them anytime.</div>
 <div id="onbF"></div><button class="btn am" id="onbNext" style="width:100%;max-width:420px;margin-top:16px">Continue</button></div>
-<section class="screen" id="takeoffs"><div class="stub"><h2>Takeoffs</h2>Material lists, cut lists, weights — coming soon.</div></section>
+<section class="screen" id="materials"><div class="card"><h3>MATERIALS</h3>
+<div class="hint" style="color:#ff6b6b">⚠ Nominal values (AISC / ASTM / mfr. standard gauge). Actual sizes and weights vary — verify with your supplier.</div>
+<input id="matQ" placeholder="Search: 11 ga, 2x2, W8, Sch 40, 3/8…" style="margin-top:6px">
+<div class="hint">Tap a section to open/close. Tap a row to send its thickness/size decimal to Calc. Weights are steel.</div>
+<div id="matList"></div></div>
+<div class="card"><h3>WEIGHT CALCULATOR (STEEL)</h3><div class="fld">
+<label>Shape<select id="mwG"></select></label><label>Size<select id="mwS"></select></label>
+<label>Length (ft)<input id="mwFt" inputmode="decimal" value="20"></label><label>+ inches<input id="mwIn" inputmode="decimal" value="0"></label>
+<label id="mwPl" style="display:none">Plate width (in)<input id="mwW" inputmode="decimal" value="48"></label><label>Qty<input id="mwQ" inputmode="numeric" value="1"></label>
+</div><div id="mwOut"></div><div class="hint">Aluminum ≈ .35 × steel; stainless ≈ 1.02 × steel.</div></div></section>
 <section class="screen" id="weld">
 <div class="card"><h3>WELD SETTINGS</h3><div class="hint" style="color:#ff6b6b;font-size:13px">⚠ Starting points only — run a test bead on scrap.</div><div class="fld" style="margin-top:6px">
 <label>Brand<select id="wBr"></select></label><label>Machine<select id="wMa"></select></label>
@@ -569,12 +582,12 @@ opts("wBr",BRANDS.map(function(b){return[b,b]}),"Hobart");q("wBr").onchange=wBra
 wBrand();q("wTh").value="16ga";wThk();
 q("weld").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=decStr(+t.dataset.v,4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
 // ---- Customizable tabs ----
-var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld"],takeoffs:["📋","Takeoffs"],notes:["📝","Notes"]},DEF_TABS=["bends","angles","pipe"];
-function getTabs(){try{var t=JSON.parse(localStorage.getItem("hhTabs"));if(t&&t.length==3&&t.every(function(x){return PAGES[x]})&&new Set(t).size==3)return t}catch(e){}return DEF_TABS.slice()}
+var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld"],materials:["🧱","Materials"],notes:["📝","Notes"]},DEF_TABS=["bends","angles","pipe"];
+function getTabs(){try{var t=JSON.parse(localStorage.getItem("hhTabs"));if(t&&t.map){t=t.map(function(x){return x=="takeoffs"?"materials":x});var u=[];t.forEach(function(x){if(PAGES[x]&&u.indexOf(x)<0)u.push(x)});DEF_TABS.concat(Object.keys(PAGES)).forEach(function(x){if(u.length<3&&u.indexOf(x)<0)u.push(x)});if(u.join()!=t.join()&&t.length)localStorage.setItem("hhTabs",JSON.stringify(u));t=u}if(t&&t.length==3&&t.every(function(x){return PAGES[x]})&&new Set(t).size==3)return t}catch(e){}return DEF_TABS.slice()}
 function renderNav(){var t=getTabs(),cur=document.querySelector(".screen.on");cur=cur?cur.id:"calc";
  document.querySelector("nav").innerHTML='<button data-s="calc"><i>🧮</i>Calc</button>'+t.map(function(k){return '<button data-s="'+k+'"><i>'+PAGES[k][0]+"</i>"+PAGES[k][1]+"</button>"}).join("")+'<button data-s="more"><i>☰</i>More</button>';
  var more=Object.keys(PAGES).filter(function(k){return t.indexOf(k)<0});
- q("moreMenu").innerHTML=more.map(function(k){return '<button data-s="'+k+'">'+PAGES[k][0]+" "+(k=="weld"?"Weld Settings":k=="tap"?"Tap &amp; Drill":PAGES[k][1])+"</button>"}).join("")+'<button data-s="tabs">⚙️ Customize Tabs</button><button id="fieldBtn">🧑‍🏭 Change my field</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT '+(window.APP_VERSION||"v8")+"</div>";
+ q("moreMenu").innerHTML=more.map(function(k){return '<button data-s="'+k+'">'+PAGES[k][0]+" "+(k=="weld"?"Weld Settings":k=="tap"?"Tap &amp; Drill":PAGES[k][1])+"</button>"}).join("")+'<button data-s="tabs">⚙️ Customize Tabs</button><button id="fieldBtn">🧑‍🏭 Change my field</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT '+(window.APP_VERSION||"v9")+"</div>";
  document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){if(b.dataset.s=="more"){var m=q("moreMenu");m.style.display=m.style.display=="flex"?"none":"flex"}else go(b.dataset.s)}});
  document.querySelectorAll("#moreMenu button[data-s]").forEach(function(b){b.onclick=function(){go(b.dataset.s)}});
  q("updBtn").onclick=function(){window.checkForUpdates&&checkForUpdates()};q("fieldBtn").onclick=function(){q("moreMenu").style.display="none";onboard()};go(cur)}
@@ -590,7 +603,7 @@ var APP_URL="https://atticushaydenhinkle-create.github.io/HH/";
 q("shareApp").onclick=function(){var d={title:"HH FAB SHT",text:"Fab calculator for welders & fabricators",url:APP_URL};
  function cp(){return(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(APP_URL):Promise.reject()).catch(function(){var a=document.createElement("textarea");a.value=APP_URL;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}a.remove()}).then(function(){toast("App link copied to clipboard",1600)})}
  if(navigator.share)navigator.share(d).catch(function(e){if(!e||e.name!="AbortError")cp()});else cp()};
-var FIELDS=[["sheet","Sheet Metal","bends,angles,tap"],["pipe","Pipe Fitter","pipe,angles,weld"],["struct","Structural","angles,weld,bends"],["welder","Welder","weld,angles,notes"],["fab","Fabricator","bends,angles,weld"],["custom","Other / Custom",null]],onbSel=null;
+var FIELDS=[["sheet","Sheet Metal","bends,angles,tap"],["pipe","Pipe Fitter","pipe,angles,weld"],["struct","Structural","materials,angles,weld"],["welder","Welder","weld,angles,notes"],["fab","Fabricator","bends,angles,materials"],["custom","Other / Custom",null]],onbSel=null;
 function onboard(){var t=getTabs().join(","),saved=localStorage.getItem("hhField"),hasTabs=!!localStorage.getItem("hhTabs");onbSel=null;
  FIELDS.forEach(function(f){if(saved?saved==f[0]:(hasTabs&&f[2]==t))onbSel=f[0]});
  if(!onbSel&&hasTabs&&!saved)onbSel="keep";
@@ -603,11 +616,71 @@ q("onbNext").onclick=function(){var f=FIELDS.filter(function(x){return x[0]==onb
  localStorage.setItem("hhOnboarded","1");q("onb").style.display="none";renderNav();tabForm(getTabs());q("tbDone").style.display="";go("tabs")};
 q("tbDone").onclick=function(){var t=formTabs();if(new Set(t).size<3){q("tbErr").textContent="Each tab can only be used once.";return}localStorage.setItem("hhTabs",JSON.stringify(t));localStorage.setItem("hhOnboarded","1");q("tbDone").style.display="none";renderNav();go(t[0]);toast("You're all set",1200)};
 
+// ---- Materials (v9) ----
+(function(){var q=function(i){return document.getElementById(i)},D=function(v,p){return decStr(v,p==null?4:p)},ST=.2836*12;
+function fr(v){var n=Math.round(v*16),w=Math.floor(n/16),r=n%16,g=16;while(r&&r%2==0){r/=2;g/=2}return(w?w+(r?"-":""):"")+(r?r+"/"+g:"")||"0"}
+var G={steel:{7:.1793,8:.1644,9:.1495,10:.1345,11:.1196,12:.1046,13:.0897,14:.0747,15:.0673,16:.0598,17:.0538,18:.0478,19:.0418,20:.0359,22:.0299,24:.0239,26:.0179,28:.0149},
+galv:{8:.1681,9:.1532,10:.1382,11:.1233,12:.1084,13:.0934,14:.0785,16:.0635,18:.0516,20:.0396,22:.0336,24:.0276,26:.0217,28:.0187},
+ss:{7:.1875,8:.1719,10:.1406,11:.125,12:.1094,14:.0781,16:.0625,18:.05,20:.0375,22:.0313,24:.025,26:.0187,28:.0156},
+al:{8:.1285,10:.1019,11:.0907,12:.0808,14:.0641,16:.0508,18:.0403,20:.032,22:.0253,24:.0201,26:.0159}};
+var PL=[3,4,5,6,8,10,12,14,16,20,24,28,32].map(function(n){return n/16});
+var SQ=[[1,[.065,.083,.12]],[1.5,[.065,.083,.12,.188]],[2,[.083,.12,.188,.25]],[2.5,[.12,.188,.25]],[3,[.12,.188,.25]],[4,[.12,.188,.25,.375]],[5,[.188,.25,.375]],[6,[.188,.25,.375,.5]],[8,[.25,.375,.5]]];
+var RT=[[2,1,[.065,.083,.12]],[3,1,[.083,.12]],[3,2,[.12,.188,.25]],[4,2,[.12,.188,.25]],[4,3,[.188,.25]],[5,3,[.188,.25]],[6,2,[.188,.25]],[6,3,[.188,.25]],[6,4,[.188,.25,.375]],[8,4,[.188,.25,.375]],[8,6,[.25,.375]],[10,4,[.25,.375]],[12,6,[.25,.375,.5]]];
+function hss(b,h,t){return ST*(2*t*(b+h)-16*t*t+3*Math.PI*t*t)}
+var NPS=[["1/8",.405,.068,.095],["1/4",.54,.088,.119],["3/8",.675,.091,.126],["1/2",.84,.109,.147],["3/4",1.05,.113,.154],["1",1.315,.133,.179],["1-1/4",1.66,.14,.191],["1-1/2",1.9,.145,.2],["2",2.375,.154,.218],["2-1/2",2.875,.203,.276],["3",3.5,.216,.3],["3-1/2",4,.226,.318],["4",4.5,.237,.337],["5",5.563,.258,.375],["6",6.625,.28,.432],["8",8.625,.322,.5],["10",10.75,.365,.594],["12",12.75,.406,.688]];
+function pw(od,t){return 10.69*(od-t)*t}
+var AE=[[1,[.125,.1875,.25]],[1.25,[.125,.1875,.25]],[1.5,[.125,.1875,.25]],[2,[.125,.1875,.25,.375]],[2.5,[.1875,.25,.375]],[3,[.1875,.25,.375,.5]],[4,[.25,.375,.5]],[5,[.375,.5]],[6,[.375,.5,.75]],[8,[.5,.75,1]]],
+AU=[[2,1.5,[.1875,.25]],[2.5,1.5,[.1875,.25]],[3,2,[.1875,.25,.375]],[3.5,2.5,[.25,.375]],[4,3,[.25,.375,.5]],[5,3,[.25,.375,.5]],[6,4,[.375,.5]],[8,6,[.5,.75]]];
+function aw(a,b,t){return ST*t*(a+b-t)}
+var CH=[["C3x4.1",3,1.41,.17,.273],["C3x5",3,1.5,.258,.273],["C3x6",3,1.6,.356,.273],["C4x5.4",4,1.58,.184,.296],["C4x7.25",4,1.72,.321,.296],["C5x6.7",5,1.75,.19,.32],["C5x9",5,1.89,.325,.32],["C6x8.2",6,1.92,.2,.343],["C6x10.5",6,2.03,.314,.343],["C6x13",6,2.16,.437,.343],["C7x9.8",7,2.09,.21,.366],["C7x12.25",7,2.19,.314,.366],["C8x11.5",8,2.26,.22,.39],["C8x13.75",8,2.34,.303,.39],["C8x18.75",8,2.53,.487,.39],["C9x13.4",9,2.43,.233,.413],["C10x15.3",10,2.6,.24,.436],["C10x20",10,2.74,.379,.436],["C10x25",10,2.89,.526,.436],["C12x20.7",12,2.94,.282,.501],["C12x25",12,3.05,.387,.501],["C12x30",12,3.17,.51,.501],["C15x33.9",15,3.4,.4,.65],["C15x40",15,3.52,.52,.65],["C15x50",15,3.72,.716,.65],
+["MC6x12",6,2.5,.31,.375],["MC6x18",6,3.5,.379,.475],["MC8x8.5",8,1.87,.179,.311],["MC8x20",8,3.03,.4,.5],["MC8x22.8",8,3.5,.427,.525],["MC10x22",10,3.32,.29,.575],["MC10x25",10,3.41,.38,.575],["MC12x31",12,3.67,.37,.7],["MC12x35",12,3.77,.467,.7],["MC18x42.7",18,3.95,.45,.625]];
+var WB=[["W4x13",4.16,4.06,.28,.345],["W5x16",5.01,5,.24,.36],["W6x9",5.9,3.94,.17,.215],["W6x12",6.03,4,.23,.28],["W6x15",5.99,5.99,.23,.26],["W6x20",6.2,6.02,.26,.365],["W8x10",7.89,3.94,.17,.205],["W8x13",7.99,4,.23,.255],["W8x18",8.14,5.25,.23,.33],["W8x24",7.93,6.5,.245,.4],["W8x31",8,8,.285,.435],["W10x12",9.87,3.96,.19,.21],["W10x15",9.99,4,.23,.27],["W10x22",10.2,5.75,.24,.36],["W10x33",9.73,7.96,.29,.435],["W10x49",10,10,.34,.56],["W12x14",11.9,3.97,.2,.225],["W12x19",12.2,4.01,.235,.35],["W12x26",12.2,6.49,.23,.38],["W12x40",11.9,8.01,.295,.515],["W12x50",12.2,8.08,.37,.64],["W14x22",13.7,5,.23,.335],["W14x30",13.8,6.73,.27,.385],["W14x48",13.8,8.03,.34,.595],["W16x26",15.7,5.5,.25,.345],["W16x40",16,7,.305,.505],["W18x35",17.7,6,.3,.425],["W18x50",18,7.5,.355,.57],["W21x44",20.7,6.5,.35,.45],["W24x55",23.6,7.01,.395,.505],
+["S3x5.7",3,2.33,.17,.26],["S3x7.5",3,2.51,.349,.26],["S4x7.7",4,2.66,.193,.293],["S4x9.5",4,2.8,.326,.293],["S5x10",5,3,.214,.326],["S6x12.5",6,3.33,.232,.359],["S6x17.25",6,3.57,.465,.359],["S8x18.4",8,4,.271,.426],["S8x23",8,4.17,.441,.426],["S10x25.4",10,4.66,.311,.491],["S10x35",10,4.94,.594,.491],["S12x31.8",12,5,.35,.544],["S12x35",12,5.08,.428,.544],["S12x50",12,5.48,.687,.659],["S15x42.9",15,5.5,.411,.622],["S18x54.7",18,6,.461,.691],["S20x66",20,6.26,.505,.795],["S24x80",24,7,.5,.87]];
+function lbft(n){return +n.split("x")[1]}
+var FB=[[.125,[.5,.75,1,1.5,2,3]],[.1875,[.75,1,1.5,2,3,4]],[.25,[.5,.75,1,1.25,1.5,2,2.5,3,4,5,6,8]],[.375,[1,1.5,2,3,4,5,6,8]],[.5,[1,1.5,2,3,4,5,6,8]],[.75,[1.5,2,3,4,6]],[1,[2,3,4,6]]];
+var BR=[.25,.3125,.375,.5,.625,.75,.875,1,1.25,1.5,1.75,2,2.5,3,4];
+// shapes for weight calc: [group,label,lb/ft] ; plate handled separately
+var SH=[];
+function tbl(id,hd,rows){return '<details class="ms" id="'+id+'"><summary>'+hd[0]+'</summary><div class="mw"><table class="mt"><thead><tr>'+hd[1].map(function(h){return"<th>"+h+"</th>"}).join("")+"</tr></thead><tbody>"+rows.join("")+"</tbody></table></div></details>"}
+function tr(c,v){return '<tr'+(v!=null?' data-v="'+v+'"':"")+'>'+c.map(function(x,i){return(i?'<td class="d">':"<td>")+x+"</td>"}).join("")+"</tr>"}
+var h="",r=[];
+var gs=Object.keys(G.steel).concat(["--"]).filter(function(x){return x!="--"});var all=[7,8,9,10,11,12,13,14,15,16,17,18,19,20,22,24,26,28];
+h+=tbl("mGa",["Sheet metal gauge (in / mm)",["Ga","Steel","Galv","Stainless","Alum"]],all.map(function(g){return tr([g].concat(["steel","galv","ss","al"].map(function(m){var v=G[m][g];return v?D(v)+"<small><br>"+(v*25.4).toFixed(2)+"</small>":"–"})),G.steel[g])}));
+h+=tbl("mPl",["Plate thickness (steel)",["Frac","Dec","mm","lb/ft²"]],PL.map(function(t){return tr([fr(t)+'"',D(t),(t*25.4).toFixed(2),(40.84*t).toFixed(2)],t)}));
+PL.forEach(function(t){SH.push(["Plate",fr(t)+'" plate',40.84*t,1])});
+r=[];SQ.forEach(function(s){s[1].forEach(function(t){var w=hss(s[0],s[0],t),n=s[0]+"x"+s[0]+"x"+D(t,3);r.push(tr([n,D(t,3),w.toFixed(2)],t));SH.push(["Square tube",n,w])})});
+h+=tbl("mSq",["Square tube",["Size","Wall","lb/ft"]],r);
+r=[];RT.forEach(function(s){s[2].forEach(function(t){var w=hss(s[0],s[1],t),n=s[0]+"x"+s[1]+"x"+D(t,3);r.push(tr([n,D(t,3),w.toFixed(2)],t));SH.push(["Rect tube",n,w])})});
+h+=tbl("mRt",["Rectangular tube",["Size","Wall","lb/ft"]],r);
+r=[];NPS.forEach(function(p){[["40",p[2]],["80",p[3]]].forEach(function(s){var w=pw(p[1],s[1]),n=p[0]+'" Sch '+s[0];r.push(tr([n,D(p[1],3),D(s[1],3),D(p[1]-2*s[1],3),w.toFixed(2)],p[1]));SH.push(["Pipe",n,w])})});
+h+=tbl("mPi",["Pipe (NPS Sch 40 / 80)",["NPS","OD","Wall","ID","lb/ft"]],r);
+r=[];AE.forEach(function(a){a[1].forEach(function(t){var w=aw(a[0],a[0],t),n="L"+a[0]+"x"+a[0]+"x"+fr(t);r.push(tr([n,D(t),w.toFixed(2)],t));SH.push(["Angle",n,w])})});
+AU.forEach(function(a){a[2].forEach(function(t){var w=aw(a[0],a[1],t),n="L"+a[0]+"x"+a[1]+"x"+fr(t);r.push(tr([n,D(t),w.toFixed(2)],t));SH.push(["Angle",n,w])})});
+h+=tbl("mAn",["Angle (equal & unequal)",["Size","Thk","lb/ft"]],r);
+h+=tbl("mCh",["Channel (C & MC)",["Shape","d","bf","tw","tf"]],CH.map(function(c){SH.push(["Channel",c[0],lbft(c[0])]);return tr([c[0],D(c[1],2),D(c[2],2),D(c[3],3),D(c[4],3)],c[1])}));
+r=[];FB.forEach(function(f){f[1].forEach(function(w){var lb=ST*f[0]*w,n=fr(f[0])+'" x '+fr(w)+'"';r.push(tr([n,D(f[0]),lb.toFixed(2)],f[0]));SH.push(["Flat bar",n,lb])})});
+h+=tbl("mFb",["Flat bar",["Size","Thk","lb/ft"]],r);
+r=[];BR.forEach(function(d){var rw=ST*Math.PI*d*d/4,sw=ST*d*d;r.push(tr([fr(d)+'"',D(d),rw.toFixed(2),sw.toFixed(2)],d));SH.push(["Round bar",fr(d)+'" round',rw]);SH.push(["Square bar",fr(d)+'" square',sw])});
+h+=tbl("mBr",["Round & square bar",["Size","Dec","Rnd lb/ft","Sq lb/ft"]],r);
+h+=tbl("mWb",["W & S beams (I-beam)",["Shape","d","bf","tw","tf"]],WB.map(function(c){SH.push([c[0][0]=="W"?"W-beam":"S-beam",c[0],lbft(c[0])]);return tr([c[0],D(c[1],2),D(c[2],2),D(c[3],3),D(c[4],3)],c[1])}));
+q("matList").innerHTML=h;
+q("matList").querySelectorAll("details")[0].open=true;
+q("matQ").oninput=function(){var s=this.value.trim().toLowerCase().replace(/\s+/g,"");q("matList").querySelectorAll("details").forEach(function(d){var n=0,hd=d.querySelector("summary").textContent.toLowerCase().replace(/\s+/g,"").indexOf(s)>=0;d.querySelectorAll("tbody tr").forEach(function(t){var m=!s||hd||t.textContent.toLowerCase().replace(/\s+/g,"").indexOf(s)>=0;t.style.display=m?"":"none";if(m)n++});d.style.display=n?"":"none";if(s)d.open=n>0})};
+q("matList").addEventListener("click",function(e){var t=e.target.closest("tr[data-v]");if(!t)return;justEq=true;expr="";ins(D(+t.dataset.v));toast(D(+t.dataset.v)+" → Calc",1200)});
+var grp=[];SH.forEach(function(s){if(grp.indexOf(s[0])<0)grp.push(s[0])});
+q("mwG").innerHTML=grp.map(function(g){return"<option>"+g+"</option>"}).join("");
+function sz(){var g=q("mwG").value;q("mwS").innerHTML=SH.map(function(s,i){return s[0]==g?'<option value="'+i+'">'+s[1]+"</option>":""}).join("");q("mwPl").style.display=g=="Plate"?"":"none";calc()}
+function n(id){var v=parseFloat(q(id).value);return isFinite(v)?v:0}
+function calc(){var s=SH[+q("mwS").value];if(!s){q("mwOut").innerHTML="";return}var L=n("mwFt")+n("mwIn")/12,Q=n("mwQ")||1,w,u;
+ if(s[3]){var A=n("mwW")/12;w=s[2]*A*L;u=(s[2]).toFixed(2)+" lb/ft² × "+D(A,3)+" ft wide"}else{w=s[2]*L;u=s[2].toFixed(2)+" lb/ft"}
+ q("mwOut").innerHTML='<div class="big">TOTAL WEIGHT<b>'+(w*Q).toFixed(1)+' lb</b>≈ '+(w*Q*.4536).toFixed(1)+' kg · '+u+(Q>1?" · "+w.toFixed(1)+" lb ea":"")+"</div>"}
+q("mwG").onchange=sz;["mwS","mwFt","mwIn","mwQ","mwW"].forEach(function(id){q(id).oninput=calc;q(id).onchange=calc});sz();
+})();
 all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage.getItem("hhOnboarded")&&!/^#note=/.test(location.hash))onboard();})();
 live();
 </script><script>if("serviceWorker" in navigator&&location.protocol!="file:")navigator.serviceWorker.register("sw.js").then(function(){console.log("SW registered")}).catch(function(e){console.warn("SW",e)});</script>
 <script>
-var APP_VERSION="v8";
+var APP_VERSION="v9";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
