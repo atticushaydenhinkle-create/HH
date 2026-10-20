@@ -1094,7 +1094,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script>
 <script>
-var APP_VERSION="v28";
+var APP_VERSION="v29";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
@@ -1838,5 +1838,48 @@ q("bkAdd").onclick=function(){var x=parseFloat(q("bkW").value);if(!(x>0))return;
 q("bkList").addEventListener("input",function(e){var i=e.target.dataset.i;if(i==null)return;if(e.target.dataset.k=="q")L[i].q=Math.max(0,parseInt(e.target.value)||0);else L[i].c=e.target.checked;calc()});
 q("bkList").addEventListener("click",function(e){var x=e.target.dataset.x;if(x!=null){L.splice(+x,1);draw()}});
 draw()})();</script>
+
+<script id="wpjs">(function(){var q=function(i){return document.getElementById(i)},S=q("plumb");if(!S)return;
+var SZ=["1/2\"","3/4\"","1\"","1-1/4\"","1-1/2\"","2\""];
+var M=[["Copper Type L (C 140)",140,[.545,.785,1.025,1.265,1.505,1.985],"ASTM B88"],["Copper Type M (C 140)",140,[.569,.811,1.055,1.291,1.527,2.009],"ASTM B88"],["PEX SDR-9 (C 150)",150,[.475,.681,.875,1.069,1.263,1.653],"ASTM F876/F877"],["PVC Sch 40 (C 150)",150,[.622,.824,1.049,1.380,1.610,2.067],"ASTM D1785"],["Galvanized Sch 40 – new (C 120)",120,[.622,.824,1.049,1.380,1.610,2.067],"ASTM A53"],["Galvanized – old/scaled (C 80)",80,[.622,.824,1.049,1.380,1.610,2.067],"ASTM A53, aged"]];
+var MT=[["None / not included",0],["5/8\" (20 gpm max)",20],["3/4\" (30 gpm max)",30],["1\" (50 gpm max)",50],["1-1/2\" (100 gpm max)",100],["2\" (160 gpm max)",160]];
+var D=[["Custom",0,0,"" ],["Hose bib (~5 gpm)",5,20,"" ],["Spray sprinkler head (~1.5 gpm, 30 psi)",1.5,30,"h"],["Rotor sprinkler head (~3 gpm, 40 psi)",3,40,"h"],["Shower head (2.5 gpm max, federal)",2.5,20,""],["Toilet tank fill (~3 gpm)",3,20,""],["Clothes washer (~4 gpm)",4,20,""],["Dishwasher (~2 gpm)",2,20,""],["Kitchen faucet (~2.2 gpm)",2.2,20,""]];
+var o=function(a,s){return a.map(function(x,i){return'<option value="'+i+'"'+(i==s?" selected":"")+">"+(x.join?x[0]:x)+"</option>"}).join("")};
+var h='<div class="card" id="wpCard"><h3>WATER PRESSURE &amp; FLOW</h3><div class="hint" style="color:#ffb020">⚠ Hazen-Williams estimate. Fixture/head flows are typical values — check the manufacturer\'s specs. Measure static pressure with a gauge at a hose bib. Local code & AHJ rule.</div>'+
+'<div class="fld"><label>Static / street psi<input id="wpP" inputmode="decimal" value="60"></label><label>Meter size<select id="wpMt">'+o(MT,2)+'</select></label>'+
+'<label>Pipe material<select id="wpM">'+o(M,0)+'</select></label><label>Nominal size<select id="wpS">'+o(SZ,1)+'</select></label>'+
+'<label>Pipe length (ft)<input id="wpL" inputmode="decimal" value="100"></label><label>Fittings equiv. length (ft)<input id="wpF" inputmode="decimal" value="20"></label>'+
+'<label>Elevation rise (ft, − = drop)<input id="wpE" inputmode="decimal" value="10"></label><label>Garden hose<select id="wpH"><option value="0">None</option><option value=".625">5/8" hose</option><option value=".75">3/4" hose</option></select></label>'+
+'<label>Hose length (ft)<input id="wpHL" inputmode="decimal" value="50"></label><label style="flex-basis:100%">Demand preset<select id="wpD" style="width:100%">'+o(D,0)+'</select></label>'+
+'<label>GPM each<input id="wpG" inputmode="decimal" value="8"></label><label>Count / heads<input id="wpN" inputmode="numeric" value="1"></label><label>Min psi needed at outlet<input id="wpR" inputmode="decimal" value="20"></label></div><div id="wpOut"></div>'+
+'<details class="ms"><summary>Notes, C values &amp; IDs</summary><div class="mw" style="font-size:14px;padding:6px">'+
+'<p>ΔP (psi) = 4.52 × L × Q<sup>1.852</sup> ÷ (C<sup>1.852</sup> × d<sup>4.87</sup>), Q in gpm, d = actual ID in inches. Velocity (fps) = 0.4085 × Q ÷ d². Elevation: 0.433 psi per foot.</p>'+
+'<p>C values (Engineering Toolbox / AWWA M22): copper 130–140, PEX & PVC 150, galvanized new 120, old 80 or less. Some designers use 130 for copper to be conservative.</p>'+
+'<p>IDs (in): '+M.slice(0,4).map(function(m){return"<b>"+m[0].split(" (")[0]+"</b> "+m[2].join(" / ")+" ("+m[3]+")"}).join("; ")+'. Galvanized = steel Sch 40 IDs. Sizes 1/2"–2".</p>'+
+'<p>Meter loss is a rough estimate: AWWA C700 allows up to ~20 psi at the meter\'s max rated flow, scaled by (Q/Qmax)².</p>'+
+'<p>Hose loss uses Hazen-Williams with C 140 on the hose ID. Hoses vary a lot by brand.</p>'+
+'<p><b>Sizing a whole building:</b> use water supply fixture units (WSFU), IPC Table E103.3 / UPC Table 610.3 & Ch. 6, not one-fixture GPM.</p>'+
+'<p><b>Over 80 psi static</b> → a pressure-reducing valve is required (IPC 604.8, UPC 608.2). UPC 608.2 also requires an expansion tank downstream (or approved relief valve).</p>'+
+'<p>Velocity: 8 fps is common guidance for copper (hot water lower, ~5 fps, to prevent erosion). UPC A107.1 caps at 10 fps.</p></div></details></div>';
+var pr=q("pipeCard")||null;S.insertAdjacentHTML("beforeend",h);
+function hw(Q,C,d,L){return Q>0&&d>0?4.52*L*Math.pow(Q,1.852)/(Math.pow(C,1.852)*Math.pow(d,4.87)):0}
+function f(id){var v=parseFloat(q(id).value);return isFinite(v)?v:0}
+function rs(l,v){return'<div class="rs">'+l+"<b>"+v+"</b></div>"}
+function res(Q){var m=M[+q("wpM").value],d=m[2][+q("wpS").value],mt=MT[+q("wpMt").value][1],hd=+q("wpH").value;
+ var pf=hw(Q,m[1],d,f("wpL")+f("wpF")),hf=hd?hw(Q,140,hd,f("wpHL")):0,ml=mt?20*Math.pow(Q/mt,2):0,el=0.433*f("wpE");
+ return{m:m,d:d,pf:pf,hf:hf,ml:ml,el:el,r:f("wpP")-pf-hf-ml-el,v:0.4085*Q/(d*d),vh:hd?0.4085*Q/(hd*hd):0}}
+function calc(){var G=f("wpG"),N=Math.max(1,parseInt(q("wpN").value)||1),Q=G*N,R=f("wpR"),x=res(Q),o="",P=f("wpP");
+ o+=rs("Total demand",Q.toFixed(1)+" gpm")+rs("Pipe friction ("+(f("wpL")+f("wpF"))+" ft, ID "+x.d+"\")",x.pf.toFixed(1)+" psi");
+ if(x.hf)o+=rs("Hose friction",x.hf.toFixed(1)+" psi");if(x.ml)o+=rs("Meter loss (est.)",x.ml.toFixed(1)+" psi");
+ o+=rs("Elevation ("+f("wpE")+" ft × 0.433)",(x.el>=0?"−":"+")+Math.abs(x.el).toFixed(1)+" psi");
+ var ok=x.r>=R;o+=rs("Residual at outlet",'<span style="color:'+(ok?"#4cd964":"#ff6b6b")+'">'+x.r.toFixed(1)+" psi</span>")+rs("Pipe velocity",'<span style="color:'+(x.v>8?"#ff6b6b":x.v>5?"#ffb020":"#4cd964")+'">'+x.v.toFixed(1)+" fps</span>");
+ if(x.vh)o+=rs("Hose velocity",x.vh.toFixed(1)+" fps");
+ var w=[];if(P>80)w.push("Static over 80 psi — PRV required (IPC 604.8 / UPC 608.2).");
+ if(x.v>8)w.push((x.m[0].indexOf("Copper")==0?"Copper over 8 fps — erosion risk (common guidance). ":"Over 8 fps — noisy / water hammer. ")+"Go up a pipe size.");
+ if(!ok)w.push(D[+q("wpD").value][3]=="h"?"Below the sprinkler head rating ("+R+" psi) — heads won't throw full radius. Cut heads per zone.":"Below "+R+" psi at the outlet (typical fixture minimum is 20 psi). Upsize pipe or shorten the run.");
+ if(G>0&&R>0){var n=0;while(n<200&&res(G*(n+1)).r>=R)n++;o+=rs("Max "+(D[+q("wpD").value][3]=="h"?"heads per zone":"outlets at once")+" @ "+G+" gpm, "+R+" psi",n+(n?" ("+(n*G).toFixed(1)+" gpm)":""))}
+ o+=w.map(function(t){return'<div class="hint" style="color:#ffb020">⚠ '+t+"</div>"}).join("");q("wpOut").innerHTML=o}
+q("wpD").onchange=function(){var d=D[this.value];if(d[1]){q("wpG").value=d[1];q("wpR").value=d[2];if(d[3]!="h")q("wpN").value=1}calc()};
+q("wpCard").addEventListener("input",calc);q("wpCard").addEventListener("change",calc);calc()})();</script>
 
 </body></html>
