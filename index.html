@@ -287,7 +287,7 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <div class="hint">Typical: 1/4"/ft for 3" and smaller drains, 1/8"/ft for 4" and larger (check local code).</div></div>
 <div class="card"><h3>PIPE OFFSET</h3><div class="seg" id="poA"><button data-a="11.25">11¼°</button><button data-a="22.5">22½°</button><button data-a="45" class="on">45°</button><button data-a="60">60°</button></div><div class="fld">
 <label class="w">Offset (in) – center to center, e.g. 12<input id="poO" inputmode="decimal" value="12"></label></div><div id="poOut"></div></div></section>
-<div id="moreMenu"><button data-s="tap">🔩 Tap &amp; Drill</button><button data-s="materials">🧱 Materials</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">Papa's Shop v12</div></div><div class="toast" id="toast"></div>
+<div id="moreMenu"><button data-s="tap">🔩 Tap &amp; Drill</button><button data-s="materials">🧱 Materials</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="instBtn">📲 How to add to Home Screen</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">Papa's Shop v13</div></div><div class="toast" id="toast"></div>
 <div id="onb"><img src="logo-icon.svg" width="110" height="110" alt="Rocking HH"><h2>Papa's Shop</h2><div style="font-size:20px;font-weight:900;margin-top:6px">What field are you in?</div><div class="hint">We'll set up your tabs. You can change them anytime.</div>
 <div id="onbF"></div><button class="btn am" id="onbNext" style="width:100%;max-width:420px;margin-top:16px">Continue</button></div>
 <section class="screen" id="materials"><div class="card"><h3>MATERIALS</h3>
@@ -690,10 +690,10 @@ function renderNav(){var t=getTabs(),cur=document.querySelector(".screen.on");cu
  document.querySelector("nav").innerHTML='<button data-s="calc"><i>🧮</i>Calc</button>'+t.map(function(k){return '<button data-s="'+k+'"><i>'+PAGES[k][0]+"</i>"+PAGES[k][1]+"</button>"}).join("")+'<button data-s="more"><i>☰</i>More</button>';
  var more=Object.keys(PAGES).filter(function(k){return t.indexOf(k)<0});
  var fg=FIELD_GRP[localStorage.getItem("hhField")]||"weld",gs=GROUPS.slice().sort(function(x,y){return(y[0]==fg)-(x[0]==fg)});
- q("moreMenu").innerHTML='<div class="mmScroll">'+gs.map(function(g){var it=g[2];if(!it.length)return"";return '<details class="mmG"'+(g[0]==fg?" open":"")+"><summary>"+g[1]+(g[0]==fg?" ★":"")+"</summary>"+it.map(function(k){return '<button data-s="'+k+'">'+PAGES[k][0]+" "+(k=="weld"?"Weld Settings":k=="tap"?"Tap &amp; Drill":PAGES[k][1])+"</button>"}).join("")+"</details>"}).join("")+'<button data-s="tabs">⚙️ Customize Tabs</button><button id="fieldBtn">🧑‍🏭 Change my field</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">Papa&#39;s Shop '+(window.APP_VERSION||"v12")+"</div></div>";
+ q("moreMenu").innerHTML='<div class="mmScroll">'+gs.map(function(g){var it=g[2];if(!it.length)return"";return '<details class="mmG"'+(g[0]==fg?" open":"")+"><summary>"+g[1]+(g[0]==fg?" ★":"")+"</summary>"+it.map(function(k){return '<button data-s="'+k+'">'+PAGES[k][0]+" "+(k=="weld"?"Weld Settings":k=="tap"?"Tap &amp; Drill":PAGES[k][1])+"</button>"}).join("")+"</details>"}).join("")+'<button data-s="tabs">⚙️ Customize Tabs</button><button id="fieldBtn">🧑‍🏭 Change my field</button><button id="instBtn">📲 How to add to Home Screen</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">Papa&#39;s Shop '+(window.APP_VERSION||"v13")+"</div></div>";
  document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){if(b.dataset.s=="more"){var m=q("moreMenu");m.style.display=m.style.display=="flex"?"none":"flex"}else go(b.dataset.s)}});
  document.querySelectorAll("#moreMenu button[data-s]").forEach(function(b){b.onclick=function(){go(b.dataset.s)}});
- q("updBtn").onclick=function(){window.checkForUpdates&&checkForUpdates()};q("fieldBtn").onclick=function(){q("moreMenu").style.display="none";onboard()};go(cur)}
+ q("updBtn").onclick=function(){window.checkForUpdates&&checkForUpdates()};q("instBtn").onclick=function(){q("moreMenu").style.display="none";showInstallTip(true)};q("fieldBtn").onclick=function(){q("moreMenu").style.display="none";onboard()};go(cur)}
 function tabForm(t){["tb1","tb2","tb3"].forEach(function(id,i){var fg=FIELD_GRP[localStorage.getItem("hhField")]||"weld";q(id).innerHTML=GROUPS.slice().sort(function(x,y){return(y[0]==fg)-(x[0]==fg)}).map(function(g){return '<optgroup label="'+g[1]+'">'+g[2].map(function(k){return '<option value="'+k+'"'+(t[i]==k?" selected":"")+">"+PAGES[k][1]+"</option>"}).join("")+"</optgroup>"}).join("")});q("tbErr").textContent=""}
 function formTabs(){return["tb1","tb2","tb3"].map(function(id){return q(id).value})}
 document.querySelectorAll(".tbs").forEach(function(sl){sl.onchange=function(){var t=formTabs();q("tbErr").textContent=new Set(t).size<3?"Each tab can only be used once.":""}});
@@ -703,8 +703,9 @@ document.querySelectorAll("#tbPre button").forEach(function(b){b.onclick=functio
 tabForm(getTabs());window.renderNav=renderNav;
 // ---- Share app + onboarding (v8) ----
 var APP_URL="https://atticushaydenhinkle-create.github.io/HH/";
-q("shareApp").onclick=function(){var d={title:"Papa's Shop",text:"Shop calculator for welders, fabricators & the trades",url:APP_URL};
- function cp(){return(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(APP_URL):Promise.reject()).catch(function(){var a=document.createElement("textarea");a.value=APP_URL;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}a.remove()}).then(function(){toast("App link copied to clipboard",1600)})}
+var SHARE_TEXT="Papa's Shop - shop math for every trade.\n\nOpen the link, then add it to your Home Screen:\niPhone: open in Safari, tap Share (square with up arrow) > Add to Home Screen.\nAndroid: open in Chrome, tap \u22ee menu > Add to Home screen / Install app.";
+q("shareApp").onclick=function(){var d={title:"Papa's Shop",text:SHARE_TEXT,url:APP_URL},full=SHARE_TEXT+"\n\n"+APP_URL;
+ function cp(){return(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(full):Promise.reject()).catch(function(){var a=document.createElement("textarea");a.value=full;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}a.remove()}).then(function(){toast("App link + install steps copied",1600)})}
  if(navigator.share)navigator.share(d).catch(function(e){if(!e||e.name!="AbortError")cp()});else cp()};
 var FIELDS=[["sheet","Sheet Metal","bends,angles,tap"],["pipe","Pipe Fitter","pipe,angles,weld"],["struct","Structural","materials,angles,weld"],["welder","Welder","weld,angles,notes"],["fab","Fabricator","bends,angles,materials"],["carp","Carpenter / Framer","framing,lumber,notes"],["conc","Concrete","concrete,framing,notes"],["elec","Electrician","elec,notes,materials"],["plumb","Plumber","plumb,pipe,notes"],["gc","General Contractor","framing,concrete,lumber"],["custom","Other / Custom",null]],onbSel=null;
 function onboard(){var t=getTabs().join(","),saved=localStorage.getItem("hhField"),hasTabs=!!localStorage.getItem("hhTabs");onbSel=null;
@@ -717,7 +718,7 @@ q("onbNext").onclick=function(){var f=FIELDS.filter(function(x){return x[0]==onb
  if(f){localStorage.setItem("hhField",f[0]);if(f[2]){localStorage.setItem("hhTabs",JSON.stringify(f[2].split(",")))}}
  else if(!onbSel&&!localStorage.getItem("hhTabs")){/* nothing picked: keep defaults */}
  localStorage.setItem("hhOnboarded","1");q("onb").style.display="none";renderNav();tabForm(getTabs());q("tbDone").style.display="";go("tabs")};
-q("tbDone").onclick=function(){var t=formTabs();if(new Set(t).size<3){q("tbErr").textContent="Each tab can only be used once.";return}localStorage.setItem("hhTabs",JSON.stringify(t));localStorage.setItem("hhOnboarded","1");q("tbDone").style.display="none";renderNav();go(t[0]);toast("You're all set",1200)};
+q("tbDone").onclick=function(){var t=formTabs();if(new Set(t).size<3){q("tbErr").textContent="Each tab can only be used once.";return}localStorage.setItem("hhTabs",JSON.stringify(t));localStorage.setItem("hhOnboarded","1");q("tbDone").style.display="none";renderNav();go(t[0]);toast("You're all set",1200);setTimeout(function(){window.maybeInstallTip&&maybeInstallTip()},1400)};
 
 // ---- Construction trades (v11) ----
 (function(){var q=function(i){return document.getElementById(i)},P=parseIn,D2=Math.PI/180;
@@ -822,7 +823,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script><script>if("serviceWorker" in navigator&&location.protocol!="file:")navigator.serviceWorker.register("sw.js").then(function(){console.log("SW registered")}).catch(function(e){console.warn("SW",e)});</script>
 <script>
-var APP_VERSION="v12";
+var APP_VERSION="v13";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
@@ -899,6 +900,32 @@ function checkHash(){var m=location.hash.match(/^#note=(.+)$/);if(!m)return Prom
  if(confirm("Save this shared note?\n\n"+(n.title||"(untitled)")+(n.job?"\nJob: "+n.job:""))){var now=Date.now();return put({id:"n"+now.toString(36)+Math.random().toString(36).slice(2,6),title:n.title,job:n.job,body:n.body,photos:[],created:now,updated:now}).then(function(){if(window.go)go("notes");toast("Shared note saved",1500);return list()})}})
  .catch(function(){toast("That note link is damaged",1800)})}
 window.addEventListener("hashchange",checkHash);list();checkHash();
+})();
+</script>
+<style>
+#instTip{position:fixed;left:0;right:0;bottom:0;z-index:9000;background:rgba(0,0,0,.55);display:none;align-items:flex-end;justify-content:center;height:100%}
+#instTip .card{background:#1b2028;color:#eef1f5;width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:18px 20px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -6px 24px rgba(0,0,0,.4);font:15px/1.45 -apple-system,system-ui,sans-serif}
+#instTip h3{margin:0 0 6px;font-size:18px}#instTip ol{margin:8px 0 12px;padding-left:22px}#instTip li{margin:6px 0}
+#instTip .note{font-size:13px;color:#aab3c0;margin:0 0 12px}#instTip button{width:100%;padding:12px;border:0;border-radius:10px;background:#f28c28;color:#111;font-weight:800;font-size:16px}
+</style>
+<div id="instTip" role="dialog" aria-label="Add to Home Screen"><div class="card"><h3>📲 Add Papa's Shop to your Home Screen</h3><div id="instBody"></div><button id="instOk">Got it</button></div></div>
+<script>
+(function(){
+function isStandalone(){return navigator.standalone===true||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)}
+function body(){var ua=navigator.userAgent,ios=/iPhone|iPad|iPod/.test(ua)||(navigator.platform=="MacIntel"&&navigator.maxTouchPoints>1),
+ nonSafari=/CriOS|FxiOS|EdgiOS|OPiOS|GSA\/|DuckDuckGo/.test(ua),h="";
+ if(ios&&nonSafari)h='<p class="note">On iPhone, only Safari can add apps to the Home Screen.</p><ol><li>Copy this page link (or tap Share &gt; Copy).</li><li>Open it in <b>Safari</b>.</li><li>Tap <b>Share</b> (square with up arrow) &gt; <b>Add to Home Screen</b>.</li></ol>';
+ else if(ios)h='<ol><li>Tap <b>Share</b> (square with up arrow) at the bottom of Safari.</li><li>Scroll down and tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>.</li></ol>';
+ else h='<ol><li>Open this page in <b>Chrome</b>.</li><li>Tap the <b>&#8942;</b> menu (top right).</li><li>Tap <b>Add to Home screen</b> or <b>Install app</b>.</li></ol>';
+ if(isStandalone())h='<p class="note">You\'re already running the Home Screen app. To install on another phone:</p>'+h;
+ return h}
+window.showInstallTip=function(){document.getElementById("instBody").innerHTML=body();document.getElementById("instTip").style.display="flex"};
+window.maybeInstallTip=function(){if(isStandalone()||localStorage.getItem("hhInstallTipDone")||!localStorage.getItem("hhOnboarded"))return;
+ var o=document.getElementById("onb");if(o&&o.style.display=="flex")return;showInstallTip()};
+function close(){localStorage.setItem("hhInstallTipDone","1");document.getElementById("instTip").style.display="none"}
+document.getElementById("instOk").onclick=close;
+document.getElementById("instTip").onclick=function(e){if(e.target.id=="instTip")close()};
+setTimeout(maybeInstallTip,1500);
 })();
 </script>
 </body></html>
