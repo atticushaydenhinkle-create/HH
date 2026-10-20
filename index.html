@@ -1066,7 +1066,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script>
 <script>
-var APP_VERSION="v40";window.APP_VERSION=APP_VERSION;document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION});document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION})});
+var APP_VERSION="v41";window.APP_VERSION=APP_VERSION;document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION});document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION})});
 (function(){var RX=/-?Infinity|NaN|undefined/g;function scrub(root){if(!root||!root.querySelectorAll)return;var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n;while(n=w.nextNode()){if(RX.test(n.nodeValue)){RX.lastIndex=0;n.nodeValue=n.nodeValue.replace(RX,"–")}RX.lastIndex=0}}
  function go(){new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(x){if(x.nodeType==1){if(x.closest&&x.closest("section,.card"))scrub(x)}else if(x.nodeType==3&&x.parentNode&&x.parentNode.closest&&x.parentNode.closest("section,.card")&&RX.test(x.nodeValue)){RX.lastIndex=0;x.nodeValue=x.nodeValue.replace(RX,"–")}RX.lastIndex=0})})}).observe(document.body,{childList:true,subtree:true});document.querySelectorAll("section").forEach(scrub)}
  if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
