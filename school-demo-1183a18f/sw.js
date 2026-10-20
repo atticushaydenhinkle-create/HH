@@ -1,4 +1,4 @@
-const C='hhschool-v5',F=['./','jobwalk.js','school.js','index.html','manifest.json','version.json','logo.svg','logo-icon.svg','logo.png','icon-180.png','icon-192.png','icon-512.png'];
+const C='hhschool-v6',F=['./','school.js','index.html','manifest.json','version.json','logo.svg','logo-icon.svg','logo.png','icon-180.png','icon-192.png','icon-512.png'];
 const M=(r,o)=>caches.open(C).then(c=>c.match(r,o));
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(F.map(u=>new Request(u,{cache:'reload'})))))});
 self.addEventListener('message',e=>{if(e.data&&e.data.type==='SKIP_WAITING')self.skipWaiting()});
