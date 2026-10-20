@@ -171,6 +171,7 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <div class="hint">Tap drill = ~75% thread. Clearance: close / free fit. Tap a row to send tap-drill decimal (in) to Calc.</div>
 <div style="max-height:560px;overflow-y:auto;margin-top:6px"><table id="tdt"><thead><tr><th>Thread</th><th>Tap drill</th><th>Dec (in)</th><th>Close</th><th>Free</th></tr></thead><tbody></tbody></table></div></div></section>
 <section class="screen" id="angles">
+<div class="card"><h3>YOUR SAW</h3><div class="seg" id="sawSeg"><button data-s="band">Bandsaw<br><small>angle only</small></button><button data-s="chop">Miter / chop saw<br><small>angle + tilt</small></button></div><div class="hint" id="sawHint"></div></div>
 <div class="card"><h3>MATERIAL</h3><div class="fld">
 <label class="w">Shape<select id="aSh"><option value="flat">Flat bar</option><option value="tube" selected>Square / rect tube</option><option value="round">Round tube / pipe</option><option value="angle">Angle iron</option><option value="chan">Channel</option></select></label>
 <label class="sz szW">Width<input id="aW" inputmode="decimal" value="2"></label>
@@ -210,10 +211,10 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <label>Diagonal<input id="tDi" inputmode="decimal"></label><label>Angle (°)<input id="tAn" inputmode="decimal"></label></div>
 <svg id="tSvg" class="diag" width="300" height="130"></svg><div id="tOut"></div></div>
 <div class="card"><h3>COMPOUND MITER (sloped sides / legs)</h3><div class="fld">
-<label>Tilt from vertical (°)<input id="cT" inputmode="decimal" value="45"></label><label>Sides<input id="cN" inputmode="decimal" value="4"></label></div><div id="cOut"></div><details class="exm"><summary>Example</summary><div class="exb"><b>4-sided planter, sides sloped 30°</b>
+<label>Tilt from vertical (°)<input id="cT" inputmode="decimal" value="45"></label><label>Sides<input id="cN" inputmode="decimal" value="4"></label></div><div id="cOut"></div><svg id="cSvg" class="diag" width="340" height="150" viewBox="0 0 340 150" style="display:none"></svg><details class="exm"><summary>Example</summary><div class="exb"><b>4-sided planter, sides sloped 30°</b>
 <svg viewBox="0 0 220 110" width="220" height="110"><polygon points="40,20 180,20 150,95 70,95" fill="none" stroke="#5cc8ff" stroke-width="3"/><line x1="70" y1="95" x2="70" y2="20" stroke="#9aa4b2" stroke-dasharray="4 3"/><path d="M70,60 A35,35 0 0 0 57.5,62" fill="none" stroke="#ffb020" stroke-width="2"/><text x="44" y="56" fill="#ffb020" font-size="12">30°</text><text x="88" y="70" fill="#9aa4b2" font-size="11">side (end view)</text></svg>
-<ol><li>Each side leans out 30° from straight up (plumb). Enter Tilt 30.</li><li>It's a box, so 4 sides. Enter Sides 4.</li><li>Set the saw <b>miter to 26.6°</b> and tilt the blade <b>bevel to 37.8°</b>.</li><li>Cut both ends of all 4 sides this way, flipping the board so the cuts mirror. Dry-fit before glue or tack.</li></ol>
-<div class="hint">Answers: miter 26.57°, bevel 37.76° (bevel measured as blade tilt from 0°).</div>
+<ol><li>Each side leans out 30° from straight up (plumb). Enter Tilt 30.</li><li>It's a box, so 4 sides. Enter Sides 4.</li><li class="exBand"><b>Bandsaw:</b> set the vise to <b>45°</b> (180 ÷ 4 sides). Stand the piece against the vise jaw and lean it <b>30° from vertical</b> — the same way it sits in the planter — shim it and check with an angle finder on the face. Cut.</li><li class="exChop"><b>Miter saw:</b> lay the piece flat, set the <b>miter to 26.6°</b> and tilt the blade <b>bevel to 37.8°</b>.</li><li>Cut both ends of all 4 sides, flipping the piece so the cuts mirror. Dry-fit before tacking.</li></ol>
+<div class="hint">Answers: bandsaw vise 45° with the part leaned 30° (same cut as miter 26.57° + bevel 37.76° on a tilting saw, bevel measured as blade tilt from 0°). Do <b>not</b> set the vise to 26.57° and roll the part 37.76° — that gives a different, wrong cut.</div>
 <button type="button" class="exLoad" data-ex="cm">Load example</button></div></details></div>
 <div class="card"><h3>ROLLED / ARC</h3><div class="fld">
 <label>Chord<input id="rC" inputmode="decimal" value="48"></label><label>Rise<input id="rS" inputmode="decimal" value="6"></label></div><div id="rOut"></div><details class="exm"><summary>Example</summary><div class="exb"><b>Roll 2" square tube to a 48" radius, 90° arc</b>
@@ -549,6 +550,12 @@ q("tdq").oninput=td;td();
 })();
 
 (function(){var q=$,P=parseIn;
+var SAW=localStorage.getItem("hhSaw")=="chop"?"chop":"band";
+function bandNote(c){return 'Most bandsaw scales read <b>0° at square</b>. If yours reads 90° at square, set it to <b class="tv" data-v="'+(90-c)+'">'+decStr(90-c,2)+'°</b>.'}
+function sawSet(c){return (SAW=="band"?"Set vise/saw to ":"Set saw to ")+'<b class="tv" data-v="'+c+'">'+decStr(c,2)+'°</b>'}
+function sawUI(){document.querySelectorAll("#sawSeg button").forEach(function(b){b.classList.toggle("on",b.dataset.s==SAW)});
+ q("sawHint").innerHTML=SAW=="band"?"Horizontal bandsaw: the vise swivels, the blade doesn't tilt. All angles below are vise angles from square.":"Miter/chop saw: miter (swing) plus blade bevel (tilt). Angles measured from square / 0°.";
+ document.querySelectorAll(".exBand").forEach(function(e){e.style.display=SAW=="band"?"":"none"});document.querySelectorAll(".exChop").forEach(function(e){e.style.display=SAW=="chop"?"":"none"})}
 function tv(label,v,unit){if(!isFinite(v))return '<div class="rs">'+label+'<b>–</b></div>';unit=unit||"in";if(unit=="n")return '<div class="rs">'+label+'<b class="tv" data-v="'+v+'">'+(+(+v).toFixed(1))+'</b></div>';
  return '<div class="rs">'+label+'<b class="tv" data-v="'+v+'">'+v.toFixed(unit=="°"?2:4)+(unit=="°"?"°":'"')+(unit=="in"?"<i>"+toFrac(v,16)+'"</i>':"")+'</b></div>'}
 function depth(){var sh=q("aSh").value;document.querySelectorAll(".sz").forEach(function(e){e.style.display="none"});
@@ -557,13 +564,30 @@ function depth(){var sh=q("aSh").value;document.querySelectorAll(".sz").forEach(
 function all(){var d=depth();
  var t=tri({rise:P(q("tRi").value),run:P(q("tRu").value),diag:P(q("tDi").value),angle:P(q("tAn").value)}),o="",g="";
  if(t){var b=brace(t,d);o=tv("Rise",t.rise)+tv("Run",t.run)+tv("Diagonal",t.diag)+tv("Angle from run",t.angle,"°")+tv("Angle from rise",t.comp,"°")+
-  tv("Brace long point",b.long)+tv("Brace short point",b.short)+tv("Saw @ vertical-member end",b.sawVert,"°")+tv("Saw @ horizontal-member end",b.sawHorz,"°")+
-  '<div class="hint">Long points on the diagonal (inside corner to inside corner). Short = long − d·tanθ − d·cotθ. Saw angle is measured from square.</div>';
+  tv("Brace long point",b.long)+tv("Brace short point",b.short)+'<div class="rs">Vertical-member end<b>'+sawSet(b.sawVert)+'</b></div><div class="rs">Horizontal-member end<b>'+sawSet(b.sawHorz)+'</b></div>'+
+  '<div class="hint">Long points on the diagonal (inside corner to inside corner). Short = long − d·tanθ − d·cotθ. Angles from square. '+(SAW=="band"?"Most bandsaw scales read 0° at square; if yours reads 90° at square, use 90° minus each number.":"")+'</div>';
   var k=Math.min(240/t.run,100/t.rise),x0=30,y0=118,X=x0+t.run*k,Y=y0-t.rise*k;
   g='<polygon points="'+x0+','+y0+' '+X+','+y0+' '+X+','+Y+'" fill="none" stroke="#5cc8ff" stroke-width="3"/><text x="'+(x0+X)/2+'" y="'+(y0-4)+'" fill="#9aa4b2" font-size="12">run</text><text x="'+(X+4)+'" y="'+(y0+Y)/2+'" fill="#9aa4b2" font-size="12">rise</text><text x="'+((x0+X)/2-30)+'" y="'+((y0+Y)/2-6)+'" fill="#ffb020" font-size="12">diag</text><text x="'+(x0+18)+'" y="'+(y0-6)+'" fill="#ffb020" font-size="12">'+t.angle.toFixed(1)+'°</text>'}
  else o='<div class="hint err">Need two valid values.</div>';q("tOut").innerHTML=o;q("tSvg").innerHTML=g;
  var a=arc(P(q("rC").value),P(q("rS").value));q("rOut").innerHTML=tv("Radius",a.R)+tv("Arc length",a.len)+tv("Included angle",a.angle,"°");
- var cp=compound(P(q("cT").value),P(q("cN").value));q("cOut").innerHTML=tv("Saw miter",cp.miter,"°")+tv("Blade bevel (tilt)",cp.bevel,"°")}
+ var cp=compound(P(q("cT").value),P(q("cN").value));var cT=P(q("cT").value),cN=P(q("cN").value);
+ if(SAW=="chop"||!(cT>=0&&cT<90&&cN>=3)){q("cSvg").style.display="none";q("cOut").innerHTML=tv("Saw miter",cp.miter,"°")+tv("Blade bevel (tilt)",cp.bevel,"°")}
+ else{var va=180/cN;q("cSvg").style.display="";
+  q("cOut").innerHTML='<div class="rs">Set vise/saw to<b>'+sawSet(va).replace(/^.*?(<b)/,"$1")+'</b></div><div class="rs">Lean the part from vertical<b>'+DG(cT)+'</b></div>'+
+  '<div class="hint" style="color:#ffb020">A bandsaw can\'t tilt the blade, so you tilt the work instead: hold each side the way it sits in the finished hopper.</div>'+
+  steps(["Set the vise to "+DG(va)+" (180 ÷ "+(+cN.toFixed(2))+" sides). "+bandNote(va),
+   "Stand the piece on its edge against the vise jaw, top edge level, like it sits in the hopper.",
+   "Lean the face "+DG(cT)+" off vertical (tube: rotate it about its length). Shim it, and check with an angle finder on the face.",
+   "Clamp it solid so it can't roll, and cut. Flip end-for-end for the other end so the cuts mirror."])+
+  '<div class="hint">This one cut equals miter '+decStr(cp.miter,2)+'° + bevel '+decStr(cp.bevel,2)+'° on a tilting saw. Don\'t set the vise to '+decStr(cp.miter,2)+'° and roll the part '+decStr(cp.bevel,2)+'° — that\'s a different (wrong) cut.</div>';
+  var a=cT*D2R,cx=230,by=128,h=90,tx=cx+h*Math.sin(a),ty=by-h*Math.cos(a);
+  q("cSvg").innerHTML='<text x="10" y="16" fill="#9aa4b2" font-size="11" font-weight="700">END VIEW IN THE VISE</text><line x1="130" y1="'+by+'" x2="330" y2="'+by+'" stroke="#5d6672" stroke-width="4"/><text x="132" y="'+(by+14)+'" fill="#5d6672" font-size="10">vise bed</text>'+
+  '<line x1="'+cx+'" y1="'+by+'" x2="'+cx+'" y2="'+(by-h)+'" stroke="#9aa4b2" stroke-dasharray="4 3"/><line x1="'+cx+'" y1="'+by+'" x2="'+tx.toFixed(1)+'" y2="'+ty.toFixed(1)+'" stroke="#5cc8ff" stroke-width="10" stroke-linecap="square"/>'+
+  '<path d="M'+cx+','+(by-50)+' A50,50 0 0 1 '+(cx+50*Math.sin(a)).toFixed(1)+','+(by-50*Math.cos(a)).toFixed(1)+'" fill="none" stroke="#ffb020" stroke-width="2"/><text x="'+(cx+6)+'" y="'+(by-56)+'" fill="#ffb020" font-size="12" font-weight="700">'+decStr(cT,1)+'°</text>'+
+  '<polygon points="'+(cx-14)+','+(by-2)+' '+(cx-4)+','+(by-2)+' '+(cx-4)+','+(by-14)+'" fill="#ffb020"/><text x="'+(cx-18)+'" y="'+(by-18)+'" fill="#ffb020" font-size="10" text-anchor="end">shim</text>'+
+  '<text x="10" y="40" fill="#e6e9ee" font-size="11">Vise: '+decStr(va,1)+'° from square</text><text x="10" y="56" fill="#e6e9ee" font-size="11">Part leaned: '+decStr(cT,1)+'°</text><text x="10" y="72" fill="#9aa4b2" font-size="10">check with angle finder</text>'}
+ sawUI()}
+q("sawSeg").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;SAW=b.dataset.s;localStorage.setItem("hhSaw",SAW);all();tcall()});
 q("angles").addEventListener("input",all);q("angles").addEventListener("click",function(e){var b=e.target.closest(".exLoad");if(!b)return;if(b.dataset.ex=="cm"){q("cT").value="30";q("cN").value="4"}else{q("rC").value="67.8823";q("rS").value="14.0589"}all();b.textContent="Loaded ✓";setTimeout(function(){b.textContent="Load example"},1500)});q("aSh").onchange=all;
 q("angles").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=decStr(+t.dataset.v,4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
 window.go=function(id){q("moreMenu").style.display="none";document.querySelectorAll("nav button,.screen").forEach(function(x){x.classList.remove("on")});q(id).classList.add("on");
@@ -625,13 +649,13 @@ function tcall(){var m=TC.m,rd=TC.p=="rd";
  q("tcWL").textContent=rd?(m=="cope"?"Branch pipe OD (in) – the one you cope, e.g. 1.66":"Pipe OD (in), e.g. 2.375"):(m=="cope"?"Branch tube width (in), e.g. 2":"Tube width (in) – the face you cut through, e.g. 2");
  q("tcAL").textContent=m=="frame"?"":(q("tcAK").value=="joint"?"Total turn of the joint (°) e.g. 45":"Saw angle per piece (°) e.g. 22.5");
  q("tcTip").textContent=TIPS[m];
- var d=P(q("tcW").value),out="",svg="",tpl=false,sawNote=function(c){return 'Saw angle is measured <b>from square</b> (0° = straight cut). If your saw reads 90° at square, set it to '+DG(90-c)+"."};
+ var d=P(q("tcW").value),out="",svg="",tpl=false,sawNote=function(c){return SAW=="band"?'Vise angle from square (0° = straight cut). '+bandNote(c):'Saw angle is measured <b>from square</b> (0° = straight cut). If your saw reads 90° at square, set it to '+DG(90-c)+"."};
  q("copeT").innerHTML="";
  if(!(d>0)){q("tcOut").innerHTML='<div class="hint err">Enter the tube width / OD.</div>';q("tcSvg").innerHTML="";return}
  if(m=="frame"){var n=P(q("tcN").value),cc=P(q("tcC").value),cut;
   if(cc>0&&cc<180){cut=(180-cc)/2;n=Math.max(3,Math.min(12,Math.round(360/(180-cc))))}else if(n>=3){cut=180/n;cc=180-2*cut}else{q("tcOut").innerHTML='<div class="hint err">Need 3+ sides or a corner angle.</div>';q("tcSvg").innerHTML="";return}
   var e=d*Math.tan(cut*D2R),isIn=q("tcLM").value=="in",sides=[P(q("tcL").value)],L2=P(q("tcL2").value);if(Math.round(n)==4&&L2>0)sides.push(L2);
-  var st=["Set saw to "+DG(cut)+" (corner angle "+decStr(cc,2)+"°). Cut both ends of every piece, ends pointing opposite ways (like a picture frame)."];
+  var st=[sawSet(cut)+" (corner angle "+decStr(cc,2)+"°). Cut both ends of every piece, ends pointing opposite ways (like a picture frame)."];
   sides.forEach(function(S,i){var lp=isIn?S+2*e:S,sp=isIn?S:S-2*e,nm=sides.length>1?(i?"Height pieces: ":"Width pieces: "):"Each side: ";
    st.push(nm+"long point to long point = "+N3(lp)+" (outside edge)");st.push(nm+"short point to short point = "+N3(sp)+" (inside edge)"+(sp<=0?' <span class="err">too short!</span>':""))});
   st.push("Each end: short point is "+N3(e)+" back from the long point.");
@@ -645,7 +669,7 @@ function tcall(){var m=TC.m,rd=TC.p=="rd";
  else if(m=="miter"){var A=P(q("tcA").value),c=q("tcAK").value=="joint"?A/2:A,c2=P(q("tcA2").value);c2=isFinite(c2)?c2:0;
   if(!(c>=0&&c<89&&c2>=0&&c2<89)){q("tcOut").innerHTML='<div class="hint err">Angle must be 0–89°.</div>';q("tcSvg").innerHTML="";return}
   var r=pipeCut(d,c,"cut"),L=P(q("tcML").value),e2=d*Math.tan(c2*D2R),sp=L-r.diff-e2;
-  var st=["Set saw to "+DG(c)+" for this end"+(c2>0?" and "+DG(c2)+" for the other end":" (other end square)")+". Joint turns "+decStr(2*c,2)+"° when two of these meet.",
+  var st=[sawSet(c)+" for this end"+(c2>0?" and "+DG(c2)+" for the other end":" (other end square)")+". Joint turns "+decStr(2*c,2)+"° when two of these meet.",
    "Mark long point at "+N3(L)+" from the other end's long point.",
    "Short point is "+N3(r.diff)+" shorter at this end (width × tan angle)."+(c2>0?" Other end: "+N3(e2)+".":""),
    "Short point to short point = "+N3(sp)+", centerline = "+N3(L-(r.diff+e2)/2)+" (long points on the same side)."];
@@ -662,7 +686,7 @@ function tcall(){var m=TC.m,rd=TC.p=="rd";
    if(!cp){q("tcOut").innerHTML='<div class="hint err">Branch OD must be ≤ main OD.</div>';q("tcSvg").innerHTML="";return}
    tpl=true;out=steps(["Print the template (or mark the 16 points below) — around the branch = "+N3(cp.circ)+".","Wrap it on the branch with the top edge flush with the pipe end; mark the curve.","Deepest cut from the end = "+N3(cp.depth)+".","Cut to the line, grind to fit, check angle "+DG(an)+" between pipes."]);
    q("copeT").innerHTML="<tr><th>Pt</th><th>°</th><th>Around</th><th>Cut depth</th><th>1/16</th></tr>"+cp.pts.slice(0,16).map(function(p,i){return"<tr><td>"+(i+1)+"</td><td>"+p.deg.toFixed(1)+'</td><td class="tv" data-v="'+p.x+'">'+decStr(p.x,3)+'</td><td class="tv" data-v="'+p.depth+'">'+decStr(p.depth,3)+"</td><td>"+toFrac(p.depth,16)+"</td></tr>"}).join("")}
-  else{var ct=90-an,e=d*Math.tan(ct*D2R);out=steps(an==90?["Square tube into a flat face at 90°: just a square cut — no cope needed.","Cut length = gap between faces."]:["Set saw to "+DG(ct)+" (from square).","Long point to short point difference = "+N3(e)+".","Tube lands on the flat face at "+DG(an)+"."])+'<div class="hint">Square tube onto a flat tube face is a straight (miter) cut. Use Round pipe for a saddle.</div>'}
+  else{var ct=90-an,e=d*Math.tan(ct*D2R);out=steps(an==90?["Square tube into a flat face at 90°: just a square cut — no cope needed.","Cut length = gap between faces."]:[sawSet(ct)+" (from square).","Long point to short point difference = "+N3(e)+".","Tube lands on the flat face at "+DG(an)+"."])+'<div class="hint">Square tube onto a flat tube face is a straight (miter) cut. Use Round pipe for a saddle.</div>'}
   var ar=an*D2R,ux=Math.cos(ar),uy=-Math.sin(ar),wx=-uy*16,wy=ux*16,bx=170,by=112;
   svg='<rect x="20" y="112" width="300" height="44" fill="#2a313b" stroke="'+B+'" stroke-width="2"/>'+stx(60,140,"MAIN",G)+
    '<polygon points="'+(bx-wx)+','+(by-wy)+' '+(bx+wx)+','+(by+wy)+' '+(bx+wx+ux*110)+','+(by+wy+uy*110)+' '+(bx-wx+ux*110)+','+(by-wy+uy*110)+'" fill="#2a313b" stroke="'+B+'" stroke-width="2"/>'+
@@ -847,7 +871,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script><script>if("serviceWorker" in navigator&&location.protocol!="file:")navigator.serviceWorker.register("sw.js").then(function(){console.log("SW registered")}).catch(function(e){console.warn("SW",e)});</script>
 <script>
-var APP_VERSION="v17";
+var APP_VERSION="v18";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
