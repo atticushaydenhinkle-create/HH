@@ -341,6 +341,34 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <label>Quantity<input id="lbQ" inputmode="decimal" value="10"></label>
 <label class="w">Cost per board foot ($) – optional<input id="lbC" inputmode="decimal" placeholder="e.g. 1.25"></label></div><div id="lbOut"></div>
 <div class="hint">BF = thick × wide (in) × long (ft) ÷ 12, using nominal size (a 2×6 counts as 2×6).</div></div></section>
+<section class="screen" id="roof">
+<div class="card"><h3>PITCH CONVERTER</h3><div class="fld">
+<label>Pitch (X in 12)<input id="rfP" inputmode="decimal" value="6"></label>
+<label>…or Degrees<input id="rfD" inputmode="decimal" placeholder="e.g. 26.57"></label>
+<label class="w">…or Percent grade<input id="rfG" inputmode="decimal" placeholder="e.g. 50"></label></div><div id="rfPOut"></div>
+<div class="hint">Type in any one box; the newest entry wins. Degrees = atan(X/12). Percent = X/12 × 100.</div></div>
+<div class="card"><h3>COMMON RAFTER</h3><div class="fld">
+<label>Building span (ft, outside walls)<input id="rfS" inputmode="decimal" value="24"></label>
+<label>Pitch (X in 12)<input id="rfRP" inputmode="decimal" value="6"></label>
+<label>Overhang (in, level)<input id="rfO" inputmode="decimal" value="12"></label>
+<label>Ridge board thick (in)<input id="rfR" inputmode="decimal" value="1.5"></label>
+<label>Rafter depth (in, actual) 2×8=7.25<input id="rfDp" inputmode="decimal" value="7.25"></label>
+<label>Wall plate width (in) 2×4=3.5<input id="rfW" inputmode="decimal" value="3.5"></label></div><div id="rfROut"></div>
+<div class="hint">Run = span ÷ 2 − half the ridge. Length is along the top edge (line length), plate to ridge face. Common practice: don't notch the seat deeper than 1/3 of the rafter depth. IRC R802.6 needs at least 1-1/2" bearing on wood.</div></div>
+<div class="card"><h3>HIP / VALLEY RAFTER</h3><div class="fld">
+<label>Common run (ft)<input id="rfHR" inputmode="decimal" value="12"></label>
+<label>Pitch (X in 12)<input id="rfHP" inputmode="decimal" value="6"></label></div><div id="rfHOut"></div>
+<div class="hint">Hips and valleys travel 17" for each 12" of common run (equal pitches). Multiplier = √(17² + X²) ÷ 17 per unit of hip run. Shorten by half the ridge's 45° thickness.</div></div>
+<div class="card"><h3>ROOF AREA → SQUARES</h3><div class="fld">
+<label>Footprint length (ft, incl. overhang)<input id="rfAL" inputmode="decimal" value="40"></label>
+<label>Footprint width (ft, incl. overhang)<input id="rfAW" inputmode="decimal" value="26"></label>
+<label>Pitch (X in 12)<input id="rfAP" inputmode="decimal" value="6"></label>
+<label>Waste %<input id="rfWst" inputmode="decimal" value="10"></label></div><div id="rfAOut"></div>
+<div class="hint">Area = footprint × pitch multiplier (works for gable and hip roofs of a single pitch). 1 square = 100 sq ft. 3 bundles per square is typical for 3-tab and most architectural shingles; check the wrapper.</div></div>
+<div class="card"><h3>PITCH MULTIPLIER TABLE</h3><div id="rfTbl"></div></div>
+<div class="card"><h3>QUICK REFERENCE – IRC 2021</h3><div id="rfRef"></div>
+<div class="hint">These are model-code minimums. Your local amendments and the manufacturer's install instructions control; when they're stricter, follow them.</div></div>
+</section>
 <section class="screen" id="elec">
 <div class="card"><h3>CONDUIT OFFSET</h3><div class="seg" id="eoA"><button data-a="10">10°</button><button data-a="22.5">22.5°</button><button data-a="30" class="on">30°</button><button data-a="45">45°</button><button data-a="60">60°</button></div><div class="fld">
 <label class="w">Offset depth (in) – how far you need to move over, e.g. 6<input id="eoD" inputmode="decimal" value="6"></label></div><div id="eoOut"></div></div>
@@ -799,8 +827,8 @@ opts("wBr",BRANDS.map(function(b){return[b,b]}),"Hobart");q("wBr").onchange=wBra
 wBrand();q("wTh").value="16ga";wThk();
 q("weld").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=decStr(+t.dataset.v,4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
 // ---- Customizable tabs ----
-var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld"],handrail:["🪜","Handrail"],materials:["🧱","Materials"],framing:["🪚","Framing"],lumber:["🪵","Lumber"],concrete:["🏗","Concrete"],elec:["⚡","Electrical"],plumb:["🚰","Plumbing"],codes:["📜","Codes"],notes:["📝","Notes"],feedback:["⭐","Feedback"]},DEF_TABS=["bends","angles","pipe"];
-var GROUPS=[["weld","Welding / Fab",["bends","angles","pipe","weld","tap","materials","handrail"]],["carp","Carpentry / Framing",["framing","lumber"]],["conc","Concrete",["concrete"]],["elec","Electrical",["elec"]],["plumb","Plumbing",["plumb"]],["gen","General",["codes","notes","feedback"]]],
+var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld"],handrail:["🪜","Handrail"],materials:["🧱","Materials"],framing:["🪚","Framing"],lumber:["🪵","Lumber"],roof:["🏠","Roofing"],concrete:["🏗","Concrete"],elec:["⚡","Electrical"],plumb:["🚰","Plumbing"],codes:["📜","Codes"],notes:["📝","Notes"],feedback:["⭐","Feedback"]},DEF_TABS=["bends","angles","pipe"];
+var GROUPS=[["weld","Welding / Fab",["bends","angles","pipe","weld","tap","materials","handrail"]],["carp","Carpentry / Framing",["framing","lumber","roof"]],["conc","Concrete",["concrete"]],["elec","Electrical",["elec"]],["plumb","Plumbing",["plumb"]],["gen","General",["codes","notes","feedback"]]],
  FIELD_GRP={sheet:"weld",pipe:"weld",struct:"weld",welder:"weld",fab:"weld",carp:"carp",conc:"conc",elec:"elec",plumb:"plumb",gc:"carp"};
 function getTabs(){try{var t=JSON.parse(localStorage.getItem("hhTabs"));if(t&&t.map){t=t.map(function(x){return x=="takeoffs"?"materials":x});var u=[];t.forEach(function(x){if(PAGES[x]&&u.indexOf(x)<0)u.push(x)});DEF_TABS.concat(Object.keys(PAGES)).forEach(function(x){if(u.length<3&&u.indexOf(x)<0)u.push(x)});if(u.join()!=t.join()&&t.length)localStorage.setItem("hhTabs",JSON.stringify(u));t=u}if(t&&t.length==3&&t.every(function(x){return PAGES[x]})&&new Set(t).size==3)return t}catch(e){}return DEF_TABS.slice()}
 function renderNav(){var t=getTabs(),cur=document.querySelector(".screen.on");cur=cur?cur.id:"calc";
@@ -1063,7 +1091,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script>
 <script>
-var APP_VERSION="v23";
+var APP_VERSION="v24";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
@@ -1680,4 +1708,44 @@ q("handrail").addEventListener("input",function(e){var id=e.target.id||"";if(/^h
 q("handrail").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));toast(decStr(+t.dataset.v,4)+" → Calc",1200)});
 document.addEventListener("click",function(e){var b=e.target.closest("[data-s=handrail]");if(b){sawUI();all()}},true);
 sawUI();all()})();</script>
+<script>(function(){
+var D=Math.PI/180;function q(i){return document.getElementById(i)}function N(i){var v=parseFloat(q(i).value);return isFinite(v)?v:NaN}
+function F(v){return isFinite(v)?decStr(v,3)+'" <i>'+toFrac(v,16)+'"</i>':"–"}
+function FI(inch){if(!isFinite(inch))return"–";var f=Math.floor(inch/12),r=inch-f*12;if(r>11.97){f++;r=0}return f+"' "+toFrac(r,16)+'"'}
+function row(l,v){return '<div class="rs">'+l+"<b>"+v+"</b></div>"}
+function n(v,d){return isFinite(v)?decStr(v,d):"–"}
+function M(p){return Math.sqrt(144+p*p)/12}
+var last="rfP";["rfP","rfD","rfG"].forEach(function(i){q(i).addEventListener("input",function(){last=i;pc()})});
+function pc(){var p;if(last=="rfP")p=N("rfP");else if(last=="rfD"){var d=N("rfD");p=d>0&&d<90?12*Math.tan(d*D):NaN}else p=N("rfG")*12/100;
+ var deg=Math.atan(p/12)/D;q("rfPOut").innerHTML='<div class="big">PITCH<b>'+n(p,2)+' / 12</b>'+n(deg,2)+'°  ·  '+n(p/12*100,1)+'%</div>'+row("Multiplier (rafter per ft of run)",n(M(p),4))+row("Rise per foot of run",F(p))}
+function rf(){var S=N("rfS"),p=N("rfRP"),o=N("rfO"),rb=N("rfR")||0,dp=N("rfDp"),w=N("rfW"),m=M(p),a=Math.atan(p/12);
+ var run=S*12/2-rb/2,L=run*m,OL=o*m,rise=run*p/12;
+ var hap=dp/Math.cos(a),seatPlumb=w*Math.tan(a),notch=w*Math.sin(a),pct=notch/dp*100;
+ q("rfROut").innerHTML='<div class="big">COMMON RAFTER<b>'+FI(L)+'</b>+ '+FI(OL)+' tail = '+FI(L+OL)+' overall</div>'+
+ row("Run (in)",F(run))+row("Ridge height above plate (to rafter line)",FI(rise)+" ("+F(rise)+")")+
+ row("Plumb cut (saw angle)",n(a/D,2)+"°")+row("Seat / level cut",n(90-a/D,2)+"° from the edge")+
+ row("Birdsmouth seat (on plate)",F(w))+row("Birdsmouth heel (plumb)",F(seatPlumb))+
+ row("Notch depth (square to edge)",F(notch)+" = "+n(pct,0)+"% of depth")+row("Height above plate (HAP)",F(hap-seatPlumb))+
+ (pct>33.4?'<div class="hint err" style="margin-top:4px">Notch is deeper than 1/3 of the rafter. Go to a deeper rafter or a shorter seat (keep ≥ 1-1/2" bearing).</div>':"")}
+function hp(){var r=N("rfHR"),p=N("rfHP"),hm=Math.sqrt(289+p*p)/12,L=r*hm*12;
+ q("rfHOut").innerHTML='<div class="big">HIP / VALLEY<b>'+FI(L)+'</b>line length</div>'+row("Hip multiplier (per ft of common run)",n(hm,4))+row("Hip run",FI(r*12*Math.SQRT2))+row("Hip pitch",n(p*12/17,2)+" / 12  ("+n(Math.atan(p/17)/D,2)+"°)")+row("Rise (same as common)",F(r*p))+row("Cheek cuts","45° (equal pitches)")}
+function ar(){var A=N("rfAL")*N("rfAW")*M(N("rfAP")),w=N("rfWst")||0,T=A*(1+w/100),sq=T/100;
+ q("rfAOut").innerHTML='<div class="big">ORDER<b>'+n(Math.ceil(sq*3),0)+' bundles</b>'+n(sq,2)+' squares incl. '+n(w,0)+'% waste</div>'+row("Roof surface (no waste)",n(A,0)+" sq ft")+row("Squares (no waste)",n(A/100,2))+row("With waste",n(T,0)+" sq ft")+row("Bundles @ 3/sq (rounded up)",n(Math.ceil(sq*3),0))}
+var h='<table style="width:100%;border-collapse:collapse;font-size:14px"><tr style="color:#ffb020"><th align=left>Pitch</th><th>Degrees</th><th>Common ×</th><th>Hip ×</th></tr>';
+for(var p=1;p<=12;p++)h+='<tr style="border-top:1px solid #333"><td>'+p+'/12</td><td align=center>'+(Math.atan(p/12)/D).toFixed(2)+'°</td><td align=center>'+M(p).toFixed(3)+'</td><td align=center>'+(Math.sqrt(289+p*p)/17).toFixed(3)+'</td></tr>';
+q("rfTbl").innerHTML=h+'</table><div class="hint" style="margin-top:4px">Common × = rafter length or roof area per unit of level run. Hip × is per unit of hip run (multiply by 1.414 to use the common run).</div>';
+var REF=[["Asphalt shingles – minimum slope","2:12 minimum. Shingles not allowed below 2:12.","IRC R905.2.2"],
+["Asphalt shingles 2:12 to under 4:12","Two layers of underlayment are required (19\"/36\" shingle-lap method), or follow the manufacturer's low-slope method.","IRC R905.1.1 / Table R905.1.1(2)"],
+["Asphalt shingles 4:12 and up","Standard single layer of underlayment, lapped 2\" horizontal and 4\" end laps.","IRC R905.1.1"],
+["Drip edge (shingles)","Required at eaves and rake edges. Lap pieces 2\" min. Extends 1/4\" below sheathing and 2\" min. onto the roof deck. Fasten at 12\" o.c. max. Underlayment goes over drip edge at eaves and under it at rakes.","IRC R905.2.8.5"],
+["Ice barrier","Where the local code calls for it, use self-adhered membrane (or two cemented layers) from the eave to 24\" inside the exterior wall line.","IRC R905.1.2"],
+["Metal roof panels","3:12 min for lapped non-soldered seams without sealant. 1/2:12 with applied lap sealant. 1/4:12 for standing seam.","IRC R905.10.2"],
+["Metal shingles","3:12 minimum.","IRC R905.4.2"],
+["Clay / concrete tile","2-1/2:12 minimum. From 2-1/2:12 up to 4:12, use double underlayment.","IRC R905.3.2 / R905.3.3"],
+["Wood shakes / shingles","Shakes 3:12 min. Wood shingles 3:12 min.","IRC R905.8.2 / R905.7.2"],
+["Low slope: built-up, mod-bit, single-ply (EPDM/TPO/PVC)","1/4:12 (2%) minimum, so the roof drains. Coal-tar built-up: 1/8:12.","IRC R905.9.1 / R905.11.1 / R905.12.1 / R905.13.1"],
+["Reroofing","Max two layers of roofing. Tear off before a 2nd layer if the existing roof is wood shakes, slate, clay/concrete tile, or is water-soaked or deteriorated.","IRC R908.3 / R908.3.1"]];
+q("rfRef").innerHTML=REF.map(function(r){return '<div class="rs" style="display:block"><b style="float:none;color:#ffb020">'+r[0]+'</b><div style="font-size:14px;margin:2px 0">'+r[1]+'</div><div style="font-size:12px;color:#7c8594">'+r[2]+'</div></div>'}).join("");
+function all(){pc();rf();hp();ar()}q("roof").addEventListener("input",function(e){if(["rfP","rfD","rfG"].indexOf(e.target.id)<0)all()});all();
+})();</script>
 </body></html>
