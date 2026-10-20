@@ -427,6 +427,7 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <div id="cdSum"></div>
 <input id="cdQ" placeholder="Search codes… (e.g. guard, GFCI, trench)" style="margin-top:8px"></div>
 <div id="cdBody"></div></section>
+<section class="screen" id="jobwalk"><div id="page-jobwalk"><div id="jobWalkRoot"></div></div></section>
 <section class="screen" id="notes">
 <div class="card" id="nList"><h3>NOTES</h3>
 <input id="nQ" placeholder="Search notes…"><div class="fld" style="margin-top:6px"><label>Job / folder<select id="nJobF"><option value="">All jobs</option></select></label><label>&nbsp;<button class="btn am" id="nNew" style="margin-top:3px">+ New note</button></label></div>
@@ -688,6 +689,7 @@ q("sawSeg").addEventListener("click",function(e){var b=e.target.closest("button"
 q("angles").addEventListener("input",all);q("angles").addEventListener("click",function(e){var b=e.target.closest(".exLoad");if(!b)return;if(b.dataset.ex=="cm"){q("cT").value="30";q("cN").value="4"}else{q("rC").value="67.8823";q("rS").value="14.0589"}all();b.textContent="Loaded ✓";setTimeout(function(){b.textContent="Load example"},1500)});q("aSh").onchange=all;
 q("angles").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=decStr(+t.dataset.v,4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
 window.go=function(id){q("moreMenu").style.display="none";document.querySelectorAll("nav button,.screen").forEach(function(x){x.classList.remove("on")});q(id).classList.add("on");
+ try{if(id=="jobwalk"){if(window.JobWalk&&!window._jwOn){window._jwOn=1;JobWalk.mount(q("jobWalkRoot"))}if(location.hash!="#jobwalk")history.replaceState(null,"","#jobwalk")}else if(window._jwOn){window._jwOn=0;window.JobWalk&&JobWalk.unmount();if(location.hash=="#jobwalk")history.replaceState(null,"",location.pathname+location.search)}}catch(e){console.error(e)}
  var nb=document.querySelector('nav [data-s='+id+']')||document.querySelector('nav [data-s=more]');nb.classList.add("on")};
 document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){if(b.dataset.s=="more"){var m=q("moreMenu");m.style.display=m.style.display=="flex"?"none":"flex"}else go(b.dataset.s)}});
 document.querySelectorAll("#moreMenu button[data-s]").forEach(function(b){b.onclick=function(){go(b.dataset.s)}});
@@ -827,9 +829,9 @@ opts("wBr",BRANDS.map(function(b){return[b,b]}),"Hobart");q("wBr").onchange=wBra
 wBrand();q("wTh").value="16ga";wThk();
 q("weld").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=decStr(+t.dataset.v,4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
 // ---- Customizable tabs ----
-var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld"],handrail:["🪜","Handrail"],materials:["🧱","Materials"],framing:["🪚","Framing"],lumber:["🪵","Lumber"],roof:["🏠","Roofing"],concrete:["🏗","Concrete"],elec:["⚡","Electrical"],plumb:["🚰","Plumbing"],codes:["📜","Codes"],notes:["📝","Notes"],feedback:["⭐","Feedback"]},DEF_TABS=["bends","angles","pipe"];
-var GROUPS=[["weld","Welding / Fab",["bends","angles","pipe","weld","tap","materials","handrail"]],["carp","Carpentry / Framing",["framing","lumber","roof"]],["conc","Concrete",["concrete"]],["elec","Electrical",["elec"]],["plumb","Plumbing",["plumb"]],["gen","General",["codes","notes","feedback"]]],
- FIELD_GRP={sheet:"weld",pipe:"weld",struct:"weld",welder:"weld",fab:"weld",carp:"carp",conc:"conc",elec:"elec",plumb:"plumb",gc:"carp"};
+var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld"],handrail:["🪜","Handrail"],materials:["🧱","Materials"],framing:["🪚","Framing"],lumber:["🪵","Lumber"],roof:["🏠","Roofing"],concrete:["🏗","Concrete"],elec:["⚡","Electrical"],plumb:["🚰","Plumbing"],codes:["📜","Codes"],notes:["📝","Notes"],jobwalk:["📋","Job Walk"],feedback:["⭐","Feedback"]},DEF_TABS=["bends","angles","pipe"];
+var GROUPS=[["weld","Welding / Fab",["bends","angles","pipe","weld","tap","materials","handrail"]],["carp","Carpentry / Framing",["framing","lumber","roof"]],["conc","Concrete",["concrete"]],["elec","Electrical",["elec"]],["plumb","Plumbing",["plumb"]],["mgmt","Management",["jobwalk"]],["gen","General",["codes","notes","feedback"]]],
+ FIELD_GRP={sheet:"weld",pipe:"weld",struct:"weld",welder:"weld",fab:"weld",carp:"carp",conc:"conc",elec:"elec",plumb:"plumb",gc:"carp",mgr:"mgmt"};
 function getTabs(){try{var t=JSON.parse(localStorage.getItem("hhTabs"));if(t&&t.map){t=t.map(function(x){return x=="takeoffs"?"materials":x});var u=[];t.forEach(function(x){if(PAGES[x]&&u.indexOf(x)<0)u.push(x)});DEF_TABS.concat(Object.keys(PAGES)).forEach(function(x){if(u.length<3&&u.indexOf(x)<0)u.push(x)});if(u.join()!=t.join()&&t.length)localStorage.setItem("hhTabs",JSON.stringify(u));t=u}if(t&&t.length==3&&t.every(function(x){return PAGES[x]})&&new Set(t).size==3)return t}catch(e){}return DEF_TABS.slice()}
 function renderNav(){var t=getTabs(),cur=document.querySelector(".screen.on");cur=cur?cur.id:"calc";
  document.querySelector("nav").innerHTML='<button data-s="calc"><i>🧮</i>Calc</button>'+t.map(function(k){return '<button data-s="'+k+'"><i>'+PAGES[k][0]+"</i>"+PAGES[k][1]+"</button>"}).join("")+'<button data-s="more"><i>☰</i>More</button>';
@@ -954,7 +956,7 @@ var SHARE_TEXT="Papa's Shop - shop math for every trade.\n\nOpen the link, then 
 q("shareApp").onclick=function(){var d={title:"Papa's Shop",text:SHARE_TEXT,url:APP_URL},full=SHARE_TEXT+"\n\n"+APP_URL;
  function cp(){return(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(full):Promise.reject()).catch(function(){var a=document.createElement("textarea");a.value=full;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}a.remove()}).then(function(){toast("App link + install steps copied",1600)})}
  if(navigator.share)navigator.share(d).catch(function(e){if(!e||e.name!="AbortError")cp()});else cp()};
-var FIELDS=[["sheet","Sheet Metal","bends,angles,tap"],["pipe","Pipe Fitter","pipe,angles,weld"],["struct","Structural","materials,angles,handrail"],["welder","Welder","weld,angles,notes"],["fab","Fabricator","bends,angles,handrail"],["carp","Carpenter / Framer","framing,lumber,notes"],["conc","Concrete","concrete,framing,notes"],["elec","Electrician","elec,notes,materials"],["plumb","Plumber","plumb,pipe,notes"],["gc","General Contractor","framing,concrete,lumber"],["custom","Other / Custom",null]],onbSel=null;
+var FIELDS=[["sheet","Sheet Metal","bends,angles,tap"],["pipe","Pipe Fitter","pipe,angles,weld"],["struct","Structural","materials,angles,handrail"],["welder","Welder","weld,angles,notes"],["fab","Fabricator","bends,angles,handrail"],["carp","Carpenter / Framer","framing,lumber,notes"],["conc","Concrete","concrete,framing,notes"],["elec","Electrician","elec,notes,materials"],["plumb","Plumber","plumb,pipe,notes"],["gc","General Contractor","framing,concrete,lumber"],["mgr","Foreman / Manager","jobwalk,notes,materials"],["custom","Other / Custom",null]],onbSel=null;
 function onboard(){var t=getTabs().join(","),saved=localStorage.getItem("hhField"),hasTabs=!!localStorage.getItem("hhTabs");onbSel=null;
  FIELDS.forEach(function(f){if(saved?saved==f[0]:(hasTabs&&f[2]==t))onbSel=f[0]});
  if(!onbSel&&hasTabs&&!saved)onbSel="keep";
@@ -1091,7 +1093,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script>
 <script>
-var APP_VERSION="v24";
+var APP_VERSION="v25";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
@@ -1167,7 +1169,7 @@ $("nImp").onchange=function(){var f=this.files[0];this.value="";if(!f)return;f.t
 function checkHash(){var m=location.hash.match(/^#note=(.+)$/);if(!m)return Promise.resolve();return decodeNote(m[1]).then(function(n){history.replaceState(null,"",location.pathname+location.search);
  if(confirm("Save this shared note?\n\n"+(n.title||"(untitled)")+(n.job?"\nJob: "+n.job:""))){var now=Date.now();return put({id:"n"+now.toString(36)+Math.random().toString(36).slice(2,6),title:n.title,job:n.job,body:n.body,photos:[],created:now,updated:now}).then(function(){if(window.go)go("notes");toast("Shared note saved",1500);return list()})}})
  .catch(function(){toast("That note link is damaged",1800)})}
-window.addEventListener("hashchange",checkHash);list();checkHash();
+window.addEventListener("hashchange",checkHash);window.addEventListener("hashchange",function(){if(location.hash=="#jobwalk")go("jobwalk")});list();checkHash();
 })();
 </script>
 <style>
@@ -1748,4 +1750,6 @@ var REF=[["Asphalt shingles – minimum slope","2:12 minimum. Shingles not allow
 q("rfRef").innerHTML=REF.map(function(r){return '<div class="rs" style="display:block"><b style="float:none;color:#ffb020">'+r[0]+'</b><div style="font-size:14px;margin:2px 0">'+r[1]+'</div><div style="font-size:12px;color:#7c8594">'+r[2]+'</div></div>'}).join("");
 function all(){pc();rf();hp();ar()}q("roof").addEventListener("input",function(e){if(["rfP","rfD","rfG"].indexOf(e.target.id)<0)all()});all();
 })();</script>
+<script src="jobwalk.js" defer></script>
+<script>document.addEventListener("DOMContentLoaded",function(){var s=document.getElementById("jobwalk");if(s&&s.classList.contains("on")&&window.JobWalk&&!window._jwOn){window._jwOn=1;JobWalk.mount(document.getElementById("jobWalkRoot"))}})</script>
 </body></html>
