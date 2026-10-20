@@ -4,7 +4,7 @@
 'use strict';
 var VERSION='1.1.0', DBN='hhJobWalk';
 var CSS=`
-.jw{--bg:#0b0d10;--pn:#1d222a;--pn2:#222831;--bd:#2a313c;--tx:#f2f4f7;--mu:#9aa4b2;--am:#ffb020;--am2:#8a5606;--bl:#5cc8ff;--rd:#ff5d5d;color:var(--tx);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:15px;padding:10px;box-sizing:border-box;max-width:760px;margin:0 auto}
+.jw{--bg:#0b0d10;--pn:#1d222a;--pn2:#222831;--bd:#2a313c;--tx:#f2f4f7;--mu:#9aa4b2;--am:#ffb020;--am2:#8a5606;--bl:#4da3ff;--rd:#ff5d5d;color:var(--tx);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:15px;padding:10px;box-sizing:border-box;max-width:760px;margin:0 auto}
 .jw *{box-sizing:border-box}
 .jw h2{font-size:20px;margin:4px 0 10px;color:var(--am)}.jw h3{font-size:16px;margin:14px 0 8px;color:var(--am)}
 .jw .card{background:var(--pn);border:1px solid var(--bd);border-radius:12px;padding:12px;margin:8px 0}
@@ -139,7 +139,7 @@ function vList(){return Promise.all([db.all('jobs'),db.all('entries'),db.all('co
       h+='<div class="card job" data-act="openJob" data-id="'+j.id+'"><div class="row"><b class="grow">'+esc(j.name||'Untitled job')+'</b><span class="st st-'+esc(j.status)+'">'+esc(j.status||'')+'</span></div>'+
       '<div class="mu">'+esc(j.client||'')+(j.client&&j.address?' · ':'')+esc(j.address||'')+'</div>'+
       '<div class="mu">'+ne+' walk'+(ne===1?'':'s')+' · '+money(tc)+(j.start?' · Start '+dOnly(j.start):'')+'</div></div>'})});
-  h+='<h3>Backup &amp; storage</h3><div class="card"><div class="row"><button class="grow sm" data-act="exportJson">Export backup (JSON)</button><button class="grow sm" data-act="importJson">Import backup</button></div><div id="jwStore" class="mu" style="margin-top:8px">Checking storage…</div></div>';
+  h+='<h3>Backup &amp; storage</h3><div class="card"><div class="row"><button class="grow sm" data-act="exportJson">Export backup (JSON)</button><button class="grow sm" data-act="importJson">Import backup</button></div><div class="row" style="margin-top:6px"><button class="grow sm" data-act="prefsBk">App settings &amp; favorites backup</button></div><div id="jwStore" class="mu" style="margin-top:8px">Checking storage…</div></div>';
   root.innerHTML=h;storageInfo()})}
 function storageInfo(){Promise.all([db.all('photos'),navigator.storage&&navigator.storage.estimate?navigator.storage.estimate():Promise.resolve(null)]).then(function(r){
   var ps=r[0],sz=ps.reduce(function(s,p){return s+(p.blob?p.blob.size:0)+(p.marked?p.marked.size:0)},0),e=r[1],el=$('#jwStore',root);if(!el)return;
@@ -298,6 +298,7 @@ function onClick(ev){var t=ev.target.closest('[data-act]');if(!t||!root.contains
   bidBack:function(){go({name:'job',id:view.id})},
   saveBid:function(){saveBid().then(function(){toast('Bid saved with the job')})},
   bidSheet:function(){saveBid().then(function(){return jobData(view.id)}).then(function(d){openDoc(d.job.name+' bid',function(){return bidSheetHtml(d)},function(){return Promise.resolve(bidSheetHtml(d))},(d.job.name||'job').replace(/[^\w-]+/g,'_')+'_bid.html',function(){var c=bidCalc(sums(d),d.job.bid);return d.job.name+' bid: '+money(c.total)})})},
+  prefsBk:function(){if(window.hhPrefs)hhPrefs.bkSheet()},
   report:function(){openReport(view.id)},exportJson:exportJson,
   importJson:function(){var i=document.createElement('input');i.type='file';i.accept='application/json,.json';i.onchange=function(){if(i.files[0])importJson(i.files[0])};i.click()}
  };if(A[a]){ev.preventDefault();A[a]()}}
@@ -307,7 +308,7 @@ function addPhotos(files){var e=readEntry();toast('Saving '+files.length+' photo
  return db.put('entries',e).then(function(){return files.reduce(function(p,f){return p.then(function(){return downscale(f,2000).then(function(r){return db.put('photos',{id:uid(),entryId:e.id,jobId:e.jobId,blob:r.blob,w:r.w,h:r.h,name:f.name||'photo.jpg',created:Date.now()})})})},Promise.resolve())}).then(function(){touchJob(e.jobId);return render()}).catch(function(er){toast(er.message)})}
 
 // ---------- markup editor ----------
-var COLORS=['#ff3b30','#ffb020','#ffd600','#34c759','#5cc8ff','#ffffff','#000000'];
+var COLORS=['#ff3b30','#ffb020','#ffd600','#34c759','#4da3ff','#ffffff','#000000'];
 function openEditor(photo){return loadImg(photo.blob).then(function(img){
  var ov=document.createElement('div');ov.className='jw-ov';
  var tools=[['pen','✏️ Pen'],['arrow','➚ Arrow'],['rect','▭ Box'],['circle','◯ Circle'],['text','T Text'],['dim','↔ Dim'],['cal','📏 Scale']];
