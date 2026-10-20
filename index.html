@@ -73,7 +73,7 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 #onbF button{padding:16px 8px;border:2px solid #2a2f37;border-radius:12px;background:#1d222a;color:#fff;font-weight:800;font-size:15px}#onbF button small{display:block;color:#7c8594;font-size:11px;margin-top:4px;font-weight:700}
 #onbF button.on{border-color:#ffb020;background:#2b2412}
 .exm{margin-top:10px;border:1px solid #2a2f37;border-radius:10px;padding:6px 10px}.exm summary{font-weight:800;color:#ffb020;cursor:pointer}.exb ol{padding-left:20px;margin:6px 0}.exb li{margin:4px 0}.exb svg{display:block;margin:6px auto}.exLoad{margin-top:6px;padding:10px 14px;border-radius:10px;border:0;background:#ffb020;color:#111;font-weight:900}</style><style>html,body,button,input,select,textarea,a,label{touch-action:manipulation}input,select,textarea{font-size:max(16px,1em)!important}</style>
-<script>(function(){var last=0;document.addEventListener("touchend",function(e){var t=e.target,n=Date.now();if(t&&t.closest&&t.closest("input,textarea,select,[contenteditable],#hhLogo,#ppGame")){last=n;return}if(n-last<300)e.preventDefault();last=n},{passive:false});["gesturestart","gesturechange"].forEach(function(ev){document.addEventListener(ev,function(e){e.preventDefault()},{passive:false})})})();</script>
+<script>(function(){var last=0;document.addEventListener("touchend",function(e){var t=e.target,n=Date.now();if(t&&t.closest&&t.closest("input,textarea,select,[contenteditable],#hhLogo,#ppGame,#pwGame,#gmMenu")){last=n;return}if(n-last<300)e.preventDefault();last=n},{passive:false});["gesturestart","gesturechange"].forEach(function(ev){document.addEventListener(ev,function(e){e.preventDefault()},{passive:false})})})();</script>
 </head><body>
 <header style="display:flex;align-items:center;gap:8px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="34" height="34" aria-hidden="true"><defs>
 <linearGradient id="st" x1="0" x2="1"><stop offset="0" stop-color="#5d6672"/><stop offset=".22" stop-color="#5d6672"/><stop offset=".23" stop-color="#c9d1db"/><stop offset=".5" stop-color="#eef2f6"/><stop offset=".77" stop-color="#aab4c0"/><stop offset=".78" stop-color="#5d6672"/><stop offset="1" stop-color="#4a525c"/></linearGradient>
@@ -840,20 +840,20 @@ var TR=[["weld","Welding / Fab",[
 ["Guard required","Where open sides are more than 30\" above the floor or grade below.","IBC 1015.2"],
 ["Guard height","42\" minimum (some dwelling-unit exceptions allow 34\"–38\" along stairs).","IBC 1015.3"],
 ["Guard openings","No 4\" sphere through, up to 36\" high. Triangle at stair tread/riser/bottom rail: no 6\" sphere.","IBC 1015.4"],
-["Rail & guard loads","200 lb concentrated in any direction and 50 plf (lb per linear ft) uniform load on handrails and top rail of guards.","IBC 1607.9"]]],
+["ADA – commercial handrails","On public/commercial jobs the ADA also applies: 34\"–38\", 1-1/4\"–2\" OD, 1-1/2\" clearance, 12\" top extension, one-tread bottom extension, 12\" ramp extensions, continuous.","2010 ADA Standards §505","ada"],["ADA – ramps & stairs","Ramps 1:12 max., 30\" rise per run, 36\" wide, 60\" landings, edge protection. Stairs: risers 4\"–7\", treads 11\" min.","2010 ADA Standards §405 / §504","ada"],["Rail & guard loads","200 lb concentrated in any direction and 50 plf (lb per linear ft) uniform load on handrails and top rail of guards.","IBC 1607.9"]]],
 ["carp","Carpentry / Framing",[
 ["Stair width & headroom","36\" min. width, 6'-8\" min. headroom.","IRC R311.7.1 / R311.7.2"],
 ["Risers & treads","Riser 7-3/4\" max. Tread 10\" min. Max 3/8\" difference within a flight.","IRC R311.7.5"],
 ["Nosing","3/4\"–1-1/4\" required where tread depth is less than 11\".","IRC R311.7.5.3"],
 ["Stair handrail","Required with 4 or more risers. 34\"–38\" above nosings.","IRC R311.7.8"],
 ["Guards","Required where more than 30\" above grade. 36\" min. height. 4\" sphere rule (4-3/8\" on stair sides, 6\" triangle).","IRC R312.1"],
-["Headers","Size from header span tables by building width, snow load and floors supported. Bearing (jack) studs per table.","IRC R602.7, Tables R602.7(1)–(2)"],
+["ADA – doors & thresholds","Commercial/public: 32\" clear, 5 lbf interior doors, hardware 34\"–48\", thresholds 1/2\" max.","2010 ADA Standards §404","ada"],["Headers","Size from header span tables by building width, snow load and floors supported. Bearing (jack) studs per table.","IRC R602.7, Tables R602.7(1)–(2)"],
 ["Stud spacing","Typically 16\" or 24\" o.c. per bearing-wall table.","IRC Table R602.3(5)"]]],
 ["conc","Concrete",[
 ["Cover – cast against earth","3\" minimum.","ACI 318-19 Table 20.5.1.3.1"],
 ["Cover – exposed to weather/earth","#6–#18 bars: 2\". #5 bar and smaller: 1-1/2\".","ACI 318-19 Table 20.5.1.3.1"],
 ["Cover – interior","Slabs, walls, joists: 3/4\" (#11 and smaller). Beams, columns: 1-1/2\".","ACI 318-19 Table 20.5.1.3.1"],
-["Footing size","12\" min. width, 6\" min. thickness (more per table for soil and load).","IRC R403.1.1"],
+["ADA – walks, ramps, parking","Accessible route 36\" wide, 1:20 running, 1:48 cross slope. Ramps 1:12. Parking stalls 96\", aisles 60\" (96\" van option).","2010 ADA Standards §403 / §405 / §502","ada"],["Footing size","12\" min. width, 6\" min. thickness (more per table for soil and load).","IRC R403.1.1"],
 ["Footing depth","12\" min. below undisturbed ground, and below local frost depth.","IRC R403.1.4"],
 ["Slab on grade","3-1/2\" min. thickness. 6-mil vapor retarder. 4\" base course where required.","IRC R506.1–R506.2"],
 ["Concrete strength","2,500–3,500 psi minimum depending on weathering area and use.","IRC Table R402.2"]]],
@@ -863,12 +863,12 @@ var TR=[["weld","Welding / Fab",[
 ["Box fill","Per conductor: 14 AWG 2.00 in³, 12 AWG 2.25, 10 AWG 2.50, 8 AWG 3.00, 6 AWG 5.00. Device = 2 conductors. All grounds = 1.","NEC 314.16"],
 ["Conduit fill","1 wire 53%, 2 wires 31%, 3 or more 40% of the conduit area.","NEC Ch. 9 Table 1"],
 ["Burial depth","Direct burial cable 24\". PVC 18\". RMC/IMC 6\". Residential 120 V ≤20 A GFCI circuit 12\".","NEC Table 300.5"],
-["Working clearance","Depth 3 ft (0–150 V, Condition 1), width 30\" or equipment width, headroom 6-1/2 ft.","NEC 110.26(A)"]]],
+["ADA – outlet & switch heights","Commercial/public: operable parts within 15\"–48\" above the floor (reach ranges).","2010 ADA Standards §308","ada"],["Working clearance","Depth 3 ft (0–150 V, Condition 1), width 30\" or equipment width, headroom 6-1/2 ft.","NEC 110.26(A)"]]],
 ["plumb","Plumbing",[
 ["Drain slope (IPC)","2-1/2\" and smaller: 1/4\" per ft. 3\"–6\": 1/8\" per ft. 8\" and larger: 1/16\" per ft.","IPC Table 704.1"],
 ["Drain slope (UPC)","1/4\" per ft. 1/8\" per ft allowed where 1/4\" can't be done (with approval).","UPC 708.1"],
 ["Trap-to-vent distance (IPC)","1-1/4\" trap 5 ft, 1-1/2\" 6 ft, 2\" 8 ft, 3\" 12 ft, 4\" 16 ft.","IPC Table 906.1"],
-["Vents","Every trap must be vented. Vent pipes go through the roof and end above it (height set locally for snow).","IPC Ch. 9 / UPC Ch. 9"],
+["ADA – toilet rooms","Grab bars 33\"–36\" high, side 42\" / rear 36\" (24\" exception), WC centerline 16\"–18\", seat 17\"–19\", lav 34\" max., 60\" turning circle.","2010 ADA Standards §603–609","ada"],["Vents","Every trap must be vented. Vent pipes go through the roof and end above it (height set locally for snow).","IPC Ch. 9 / UPC Ch. 9"],
 ["Fixture units (DFU)","Lavatory 1, shower 2, bathtub 2, kitchen sink 2. Water closets 3–4 depending on type. Check the table for the exact fixture.","IPC Table 709.1 / UPC Table 702.1"]]],
 ["safe","General Safety",[
 ["Fall protection – construction","Required at 6 ft or more above a lower level.","OSHA 1926.501(b)(1)"],
@@ -876,22 +876,50 @@ var TR=[["weld","Welding / Fab",[
 ["Ladders","Extension ladder 3 ft above the landing. Set at 4:1 (1 ft out for every 4 ft up). Ladder needed at a break of 19\" or more.","OSHA 1926.1053 / 1926.1051"],
 ["Scaffolds","Fall protection at more than 10 ft. Holds 4× its intended load. Fully planked. Competent person inspects each shift.","OSHA 1926.451"],
 ["Trenching","Protective system at 5 ft and deeper (sloping, shoring, shielding). Ladder within 25 ft at 4 ft deep. Spoils 2 ft back from the edge. 20 ft+ needs a PE design.","OSHA 1926.651–652"],
-["Confined space","Permit-required spaces need evaluation, permits, attendant and rescue plan.","OSHA 1910.146 / 1926 Subpart AA"]]]];
+["Confined space","Permit-required spaces need evaluation, permits, attendant and rescue plan.","OSHA 1910.146 / 1926 Subpart AA"]]],["ada","ADA (commercial/public)",[
+["Who ADA covers","The 2010 ADA Standards apply to new construction and alterations of public accommodations, commercial facilities, and state/local government facilities. They do not cover single-family homes. Private multifamily housing falls under the Fair Housing Act design rules (HUD), not these Standards. Where a state or local code gives more access, the stricter rule applies.","28 CFR 35.151 / 28 CFR 36.401–406; access-board.gov/ada"],
+["Handrail height","Top of gripping surface 34\"–38\" above walking surfaces, stair nosings and ramp surfaces, kept at a consistent height.","2010 ADA Standards §505.4"],
+["Handrail continuity","Continuous for the full length of each stair flight or ramp run. Inside rails on switchback/dogleg stairs and ramps continuous between flights or runs.","2010 ADA Standards §505.3"],
+["Handrail size","Circular: 1-1/4\" to 2\" OD. Non-circular: perimeter 4\"–6-1/4\", cross-section 2-1/4\" max.","2010 ADA Standards §505.7.1 / 505.7.2"],
+["Handrail clearance","1-1/2\" min. between gripping surface and adjacent surfaces.","2010 ADA Standards §505.5"],
+["Handrail extensions – stairs","Top: extend horizontally 12\" min. starting directly above the first riser nosing. Bottom: extend at the stair slope for at least one tread depth past the last riser nosing. Return to wall, guard or landing, or run continuous to the next flight.","2010 ADA Standards §505.10.2 / 505.10.3"],
+["Handrail extensions – ramps","Extend horizontally 12\" min. beyond the top and bottom of each ramp run. Return to wall, guard or landing, or run continuous.","2010 ADA Standards §505.10.1"],
+["Ramp slope & rise","Running slope 1:12 max. Cross slope 1:48 max. Rise 30\" max. per run. Handrails required when the rise is more than 6\".","2010 ADA Standards §405.2 / 405.3 / 405.6 / 405.8"],
+["Ramp width","36\" min. clear width, measured between handrails where provided.","2010 ADA Standards §405.5"],
+["Ramp landings","At top and bottom of every run. At least as wide as the widest run, 60\" long min. Change of direction: 60\" × 60\" min.","2010 ADA Standards §405.7.2–405.7.4"],
+["Ramp edge protection","Each side of runs and landings: either extend the surface 12\" min. past the inside face of the handrail, or a curb/barrier that stops a 4\" sphere within 4\" of the floor (some exceptions apply).","2010 ADA Standards §405.9 / 405.9.1 / 405.9.2"],
+["Stairs – risers & treads","Uniform riser heights and tread depths. Risers 4\" min. to 7\" max. Treads 11\" deep min. No open risers.","2010 ADA Standards §504.2 / 504.3"],
+["Stair nosings","Leading-edge radius 1/2\" max. Projecting nosings need a curved or beveled underside. Risers may slope under the tread up to 30° from vertical. Nosing projection 1-1/2\" max.","2010 ADA Standards §504.5"],
+["Door clear width","32\" min. clear (swinging doors measured from the door face to the stop with the door open 90°). Openings more than 24\" deep: 36\" min.","2010 ADA Standards §404.2.3"],
+["Door maneuvering clearance","Swinging doors need maneuvering space on each side per Table 404.2.4.1. The size depends on the approach direction and push or pull side.","2010 ADA Standards §404.2.4 / Table 404.2.4.1"],
+["Door hardware & force","Operable hardware 34\"–48\" above the floor, usable without tight grasping or twisting (309.4). Interior hinged, sliding and folding doors: 5 lbf max. to open (fire doors per AHJ).","2010 ADA Standards §404.2.7 / 404.2.9"],
+["Thresholds","1/2\" high max. Changes in level: up to 1/4\" can be vertical, 1/4\"–1/2\" beveled at 1:2 max., over 1/2\" must be ramped.","2010 ADA Standards §404.2.5 / 303.2 / 303.3"],
+["Grab bars","Top of gripping surface 33\"–36\" above the floor (horizontal). Circular bars 1-1/4\"–2\" OD.","2010 ADA Standards §609.4 / 609.2.1"],
+["Water closet grab bars","Side wall: 42\" long min., 12\" max. from the rear wall, extending 54\" min. from the rear wall. Rear wall: 36\" long min., 12\" min. one side of the WC centerline and 24\" min. the other. 24\" rear bar allowed where a recessed fixture limits wall space.","2010 ADA Standards §604.5.1 / 604.5.2 (Exc. 1)"],
+["Water closet location & seat","Centerline 16\"–18\" from the side wall (17\"–19\" in ambulatory stalls). Seat height 17\"–19\".","2010 ADA Standards §604.2 / 604.4"],
+["Turning space","60\" diameter circle min., or a T-shape inside a 60\" square.","2010 ADA Standards §304.3.1 / 304.3.2"],
+["Lavatory height","Front of rim or counter, whichever is higher, 34\" max. above the floor.","2010 ADA Standards §606.3"],
+["Reach range – outlets & switches","Unobstructed forward or side reach: 15\" min. to 48\" max. above the floor. Applies to operable parts like receptacles, switches and controls.","2010 ADA Standards §308.2.1 / 308.3.1 / 309.3"],
+["Accessible route","Clear width 36\" min. Running slope 1:20 max. (steeper is a ramp). Cross slope 1:48 max.","2010 ADA Standards §403.5.1 / 403.3"],
+["Parking stalls","Car: 96\" wide min. Van: 132\" wide min., or 96\" wide when the access aisle is 96\" wide. Access aisle: 60\" wide min., full length of the stall, marked. Slopes 1:48 max.","2010 ADA Standards §502.2 / 502.3.1 / 502.3.2 / 502.4"],
+["Signs – tactile","Tactile characters 48\" min. (baseline of the lowest line) to 60\" max. (baseline of the highest line) above the floor. At a door, mount on the latch side.","2010 ADA Standards §703.4.1 / 703.4.2"],
+["Protruding objects","Objects with leading edges between 27\" and 80\" above the floor may stick out 4\" max. into the circulation path (handrails may stick out 4-1/2\").","2010 ADA Standards §307.2"]],1]];
 var FG={sheet:"weld",pipe:"weld",welder:"weld",fab:"weld",struct:"struct",carp:"carp",gc:"carp",conc:"conc",elec:"elec",plumb:"plumb"};
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 var opts='<option value="">— Pick your state —</option>'+Object.keys(SD).sort(function(a,b){return SD[a].n<SD[b].n?-1:1}).map(function(k){return'<option value="'+k+'">'+SD[k].n+"</option>"}).join("");
 q("cdSt").innerHTML=opts;q("onbSt").innerHTML=opts.replace("— Pick your state —","Skip for now");
+var ADAST={CA:["California Building Code Ch. 11B (DSA). In some provisions it requires more access than the ADA","DGS/DSA 2010 ADA vs CBC comparison","https://www.dgs.ca.gov/-/media/Divisions/DSA/Publications/access/2010ADA_CBC_Comparisonp.pdf"],TX:["Texas Accessibility Standards (TAS 2012), TDLR, Gov. Code Ch. 469","TDLR 2012 TAS","https://www.tdlr.texas.gov/ab/abtas.htm"],MA:["521 CMR, Architectural Access Board","Mass. AAB / 521 CMR","https://www.mass.gov/orgs/architectural-access-board"],IL:["Illinois Accessibility Code (2018), Capital Development Board. Takes the stricter of state or federal rules","CDB 2018 IAC","https://cdb.illinois.gov/content/dam/soi/en/web/cdb/business/library/documents/2018-illinois-accessibility-code.pdf"]};
 function cell(t,v){return"<div><b>"+t+"</b>"+(v?esc(v):'<span class="u">'+LB+" (unverified)</span>")+"</div>"}
 function sum(){var k=localStorage.getItem("hhState")||"",s=SD[k];q("cdSt").value=k;
  if(!s){q("cdSum").innerHTML='<div class="hint" style="margin-top:6px">Pick your state to see which code editions apply there.</div>';return}
- q("cdSum").innerHTML='<div class="cdS">'+cell("IBC (building)",s.ibc&&"IBC "+s.ibc)+cell("IRC (residential)",s.irc&&"IRC "+s.irc)+cell("NEC (electrical)",s.nec&&"NEC "+s.nec)+cell("Plumbing",s.pl)+'<div style="grid-column:1/3"><b>OSHA STATE PLAN</b>'+esc(s.osha)+"</div></div>"+(s.note?'<div class="hint" style="margin-top:6px;color:#cfd6df">📌 '+esc(s.note)+"</div>":"")+'<span class="cdTag '+(s.v?'ok">✓ VERIFIED (statewide editions found)':'no">⚠ PARTLY UNVERIFIED — local adoption')+'</span><div class="cdSrc">As of '+ASOF+". Sources: "+s.src.map(function(x){return'<a href="'+x[1]+'" target="_blank" rel="noopener">'+esc(x[0])+"</a>"}).join(" · ")+"</div>"}
+ q("cdSum").innerHTML='<div class="cdS">'+cell("IBC (building)",s.ibc&&"IBC "+s.ibc)+cell("IRC (residential)",s.irc&&"IRC "+s.irc)+cell("NEC (electrical)",s.nec&&"NEC "+s.nec)+cell("Plumbing",s.pl)+'<div style="grid-column:1/3"><b>OSHA STATE PLAN</b>'+esc(s.osha)+"</div></div>"+(s.note?'<div class="hint" style="margin-top:6px;color:#cfd6df">📌 '+esc(s.note)+"</div>":"")+(ADAST[k]?'<div class="hint" style="margin-top:6px;color:#ffd27a">♿ State accessibility code: '+esc(ADAST[k][0])+' — <a href="'+ADAST[k][2]+'" target="_blank" rel="noopener">'+esc(ADAST[k][1])+'</a>. Follow whichever rule (state or ADA) gives more access.</div>':'<div class="hint" style="margin-top:6px">♿ Accessibility: 2010 ADA Standards for public/commercial work, plus the accessibility chapter of the state building code (check with the AHJ).</div>')+'<span class="cdTag '+(s.v?'ok">✓ VERIFIED (statewide editions found)':'no">⚠ PARTLY UNVERIFIED — local adoption')+'</span><div class="cdSrc">As of '+ASOF+". Sources: "+s.src.map(function(x){return'<a href="'+x[1]+'" target="_blank" rel="noopener">'+esc(x[0])+"</a>"}).join(" · ")+"</div>"}
 function body(){var fq=(q("cdQ").value||"").toLowerCase().trim(),fg=FG[localStorage.getItem("hhField")]||"",ts=TR.slice().sort(function(a,b){return(b[0]==fg)-(a[0]==fg)});
  var html=ts.map(function(t){var it=t[2].filter(function(i){return!fq||(i.join(" ")+" "+t[1]).toLowerCase().indexOf(fq)>=0});if(!it.length)return"";
-  return'<details class="ms"'+(fq||t[0]==fg?" open":"")+"><summary>"+t[1]+(t[0]==fg?" ★":"")+" <small style=\"color:#7c8594\">("+it.length+")</small></summary>"+it.map(function(i){return'<div class="cdI"><b>'+esc(i[0])+"</b><br>"+esc(i[1])+"<br><small>"+esc(i[2])+"</small></div>"}).join("")+"</details>"}).join("");
+  return'<details class="ms"'+(t[0]=="ada"?' id="cdADA"':"")+(fq||t[0]==fg?" open":"")+"><summary>"+t[1]+(t[0]==fg?" ★":"")+" <small style=\"color:#7c8594\">("+it.length+")</small></summary>"+it.map(function(i){return'<div class="cdI"><b>'+esc(i[0])+"</b><br>"+esc(i[1])+"<br><small>"+esc(i[2])+"</small>"+(i[3]=="ada"?' <a href="#" class="cdAda" style="color:#ffb020;font-weight:700">→ ADA section</a>':"")+"</div>"}).join("")+"</details>"}).join("");
  q("cdBody").innerHTML=html||'<div class="card hint">No matches.</div>'}
 window.cdRender=function(){sum();body()};
 q("cdSt").onchange=function(){if(this.value)localStorage.setItem("hhState",this.value);else localStorage.removeItem("hhState");sum()};
-q("cdQ").oninput=body;cdRender()})();
+q("cdQ").oninput=body;q("cdBody").addEventListener("click",function(e){var a=e.target.closest(".cdAda");if(!a)return;e.preventDefault();if(q("cdQ").value){q("cdQ").value="";body()}var d=document.getElementById("cdADA");if(d){d.open=true;d.scrollIntoView({behavior:"smooth",block:"start"})}});cdRender()})();
 // ---- Share app + onboarding (v8) ----
 var APP_URL="https://atticushaydenhinkle-create.github.io/HH/";
 var SHARE_TEXT="Papa's Shop - shop math for every trade.\n\nOpen the link, then add it to your Home Screen:\niPhone: open in Safari, tap Share (square with up arrow) > Add to Home Screen.\nAndroid: open in Chrome, tap \u22ee menu > Add to Home screen / Install app.";
@@ -1035,7 +1063,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script>
 <script>
-var APP_VERSION="v22";
+var APP_VERSION="v23";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
@@ -1160,7 +1188,7 @@ setTimeout(maybeInstallTip,1500);
 (function(){
 var W=390,H=844,cv,cx,ov,raf=0,st="start",muted=localStorage.getItem("ppMute")==="1",ac=null;
 var hs=+localStorage.getItem("ppHigh")||0,score,timeLeft,combo,lastHit,wr=[],pops=[],ap,cover,aim=null,last=0,shake=0;
-var LINES=["Sorry boss!","I'll get the left-handed hammer!","Is it lunch yet?","Ow! My hard hat!","I swept already!","Was that a metric one?","OSHA's gonna hear about this!","I'll go find the board stretcher!","Not the 9/16ths!","Who's on break?"];
+var LINES=["Sorry JED!","JED, that hurt!","Sorry boss!","I'll get the left-handed hammer!","Is it lunch yet?","Ow! My hard hat!","I swept already!","Was that a metric one?","OSHA's gonna hear about this!","I'll go find the board stretcher!","Not the 9/16ths!","Who's on break?"];
 var PP={x:14,y:H-250,w:130,h:200},HAND={x:110,y:H-150};
 function snd(f,d,t,v,f2){if(muted)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain(),n=ac.currentTime;o.type=t||"square";o.frequency.setValueAtTime(f,n);if(f2)o.frequency.exponentialRampToValueAtTime(f2,n+d);g.gain.setValueAtTime(v||.15,n);g.gain.exponentialRampToValueAtTime(.001,n+d);o.connect(g);g.connect(ac.destination);o.start(n);o.stop(n+d)}catch(e){}}
 function bonk(){snd(260,.15,"square",.22,90);setTimeout(function(){snd(1200,.25,"sine",.12,500)},90);setTimeout(boing,160)}
@@ -1253,6 +1281,7 @@ function draw(){var c=cx;c.save();if(shake)c.translate((Math.random()-.5)*6,(Mat
  pops.forEach(function(p){if(p.b){burst(p.x,p.y,p.s,p.t);return}c.globalAlpha=Math.min(1,p.t*2);c.fillStyle=p.c;c.font="900 22px sans-serif";c.textAlign="center";c.fillText(p.s,p.x,p.y);c.globalAlpha=1});c.textAlign="left";
  if(st!=="start"){rr(10,72,180,58,10,"rgba(0,0,0,.55)");c.fillStyle="#fff";c.font="900 20px sans-serif";c.fillText("Score "+score,20,96);c.font="bold 14px sans-serif";c.fillText("⏱ "+Math.ceil(timeLeft)+"s   Best "+hs+(combo>1?"  x"+combo:""),20,120)}
  if(st=="start"||st=="over")panel();c.restore();if(boom&&boom.fl>0){c.fillStyle="rgba(255,255,255,"+Math.min(1,boom.fl*2.2)+")";c.fillRect(0,0,cv.width,cv.height)}}
+function nameTag(c,x,y,t,w,h){c.save();c.lineJoin="round";c.fillStyle="#fff";c.strokeStyle="#111";c.lineWidth=2.5;c.beginPath();c.rect(x-w/2,y-h/2,w,h);c.fill();c.stroke();c.strokeStyle="rgba(0,0,0,.45)";c.lineWidth=.8;c.setLineDash([2,2]);c.strokeRect(x-w/2+2.5,y-h/2+2.5,w-5,h-5);c.setLineDash([]);c.fillStyle="#111";c.font="900 "+(h-4)+"px Arial Black,Impact,sans-serif";c.textAlign="center";c.textBaseline="middle";var fw=c.measureText(t).width;if(fw>w-4){c.font="900 "+((h-4)*(w-4)/fw).toFixed(1)+"px Arial Black,Impact,sans-serif"}c.fillText(t,x,y+.5);c.restore()}
 function drawAp(){var c=cx,x=ap.x,y=ap.y,du=ap.duck>0,ph=ap.t*12,L=Math.sin(ph),sq=ap.dent>.5?1.12:1,d=ap.dir;shadow(x,y+3,26,6);c.save();c.translate(x,y);c.scale(sq,1/sq);if(ap.skid>0)c.rotate(-d*.22);c.translate(-x,-y);
  var hipY=du?y-30:y-44,shY=du?y-58:y-76,lean=du?d*6:d*3;
  function leg(s){var kx=x+s*4+(du?d*12:L*s*9),ky=du?y-16:y-22,fx=x+s*5+(du?d*4:L*s*12),fy=y-(du?0:Math.max(0,-L*s)*5);seg(c,[[x+s*5,hipY],[kx,ky],[fx,fy-4]],8,"#3a4f7a");c.fillStyle="#5a3a1e";c.beginPath();c.moveTo(fx-6,fy-9);c.lineTo(fx+4,fy-9);c.lineTo(fx+11*d*.9+ (d>0?0:0),fy);c.lineTo(fx-7,fy);c.closePath();c.fill();ol();c.fillStyle="#2a1a0c";c.fillRect(fx-7,fy-2,16,2)}
@@ -1265,6 +1294,7 @@ function drawAp(){var c=cx,x=ap.x,y=ap.y,du=ap.duck>0,ph=ap.t*12,L=Math.sin(ph),
  // arms with elbows + gloves
  function arm(s){var sx=x+s*13+lean,sy=shY+6,sw=du?0:-L*s,ex,ey,hx,hy;if(du){ex=sx+s*4;ey=sy-12;hx=x+s*4+lean;hy=shY-20}else{ex=sx+s*3+sw*8;ey=sy+15;hx=ex+sw*10+d*4;hy=ey+13}seg(c,[[sx,sy],[ex,ey],[hx,hy]],6,"#6b8fbf");c.fillStyle="#d8b04a";c.beginPath();c.arc(hx,hy,4.6,0,7);c.fill();ol()}
  arm(-1);arm(1);
+ nameTag(c,x+lean*.6,(hipY+shY)/2-5,"JESSY",38,13);
  // neck + head
  c.fillStyle="#e8b88a";c.fillRect(x-4+lean,shY-7,8,8);var hx=x+lean,hy=shY-17;c.fillStyle="#f1c69a";c.beginPath();c.ellipse(hx,hy,10,12,0,0,7);c.fill();ol();c.beginPath();c.ellipse(hx-d*9,hy+1,2.5,4,0,0,7);c.fill();ol();
  var ex=d*3;[-4,4].forEach(function(o){c.fillStyle="#fff";c.beginPath();c.ellipse(hx+ex+o,hy-1,3.3,4.5,0,0,7);c.fill();c.lineWidth=1.5;c.strokeStyle="#111";c.stroke();c.fillStyle="#111";if(ap.dent>0){c.font="bold 8px sans-serif";c.fillText("x",hx+ex+o-2.5,hy+2)}else{c.beginPath();c.arc(hx+ex+o+d,hy,1.7,0,7);c.fill()}});
@@ -1298,6 +1328,7 @@ function drawPP(){var c=cx,p=PP;ppShell(c,p);
  c.fillStyle="#ffd600";c.beginPath();c.ellipse(Hx,Hy-9,17,4.5,0,0,7);c.fill();ol();c.beginPath();c.arc(Hx,Hy-10,13,Math.PI,0);c.closePath();c.fill();ol();
  // throwing arm: shoulder-elbow-hand
  var sx=hx+15,sy=p.y+70,hh=aim&&st=="play"?{x:sx-6,y:sy-40}:{x:HAND.x,y:HAND.y},ex=aim&&st=="play"?sx+18:sx+12,ey=aim&&st=="play"?sy-12:sy+20;seg(c,[[sx,sy],[ex,ey],[hh.x,hh.y]],8,"#6d4c41");c.fillStyle="#f1c27d";c.beginPath();c.arc(hh.x,hh.y,5,0,7);c.fill();ol();if(aim||st!="play")wrench(hh.x+4,hh.y-6,aim?-1.2:-.5,.7);
+ nameTag(c,hx+3,p.y+77,"JED",28,14);
  c.fillStyle="#fff";c.font="900 12px sans-serif";c.fillText("SHOP CAN",p.x+30,p.y+2);
  // door with ribs + latch
  var dw=door?34:-p.w;cx._dd=(cx._dd===undefined?dw:cx._dd+(dw-cx._dd)*.25);var d=cx._dd;var dg=c.createLinearGradient(p.x+p.w,0,p.x+p.w+d,0);dg.addColorStop(0,"#1c63c4");dg.addColorStop(1,"#4aa0ff");c.fillStyle=dg;c.beginPath();c.moveTo(p.x+p.w,p.y);c.lineTo(p.x+p.w+d,p.y+14);c.lineTo(p.x+p.w+d,p.y+p.h-6);c.lineTo(p.x+p.w,p.y+p.h);c.closePath();c.fill();ol();
@@ -1321,7 +1352,7 @@ function drawBoom(){var c=cx,b=boom,t=bt;
  if(t<1.1){var R=40+t*230,al=Math.max(0,1-t/1.1);var g=c.createRadialGradient(b.x,b.y,0,b.x,b.y,R);g.addColorStop(0,"rgba(255,255,220,"+al+")");g.addColorStop(.35,"rgba(255,200,40,"+al+")");g.addColorStop(.7,"rgba(255,90,0,"+al*.9+")");g.addColorStop(1,"rgba(120,20,0,0)");c.fillStyle=g;c.beginPath();for(var i=0;i<20;i++){var a=i/20*6.283,r=R*(i%2?.78:1);c.lineTo(b.x+Math.cos(a)*r,b.y+Math.sin(a)*r)}c.closePath();c.fill()}
  b.parts.forEach(function(q){c.save();c.translate(q.x,q.y);c.rotate(q.a);if(q.k=="door"){rr(-17,-50,34,100,3,"#3b93f5");c.fillStyle="#d32f2f";c.fillRect(6,-10,8,6);for(var i=-1;i<=1;i++){c.fillStyle="rgba(255,255,255,.25)";c.fillRect(i*9,-40,2,80)}}else if(q.k=="roof"){c.beginPath();c.moveTo(-70,8);c.quadraticCurveTo(0,-26,70,8);c.closePath();c.fillStyle="#3b93f5";c.fill();ol();rr(30,-28,12,20,2,"#1e4f8f")}else if(q.k=="tp"){c.restore();c.strokeStyle="#fff";c.lineWidth=7;c.beginPath();q.tr.forEach(function(p,i){i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1])});c.stroke();c.save();c.translate(q.x,q.y);c.rotate(q.a);rr(-8,-7,16,14,4,"#fafafa");c.fillStyle="#bbb";c.beginPath();c.arc(-8,0,3,0,7);c.fill()}else{c.fillStyle="#2b7fe0";c.beginPath();c.moveTo(-q.s,-q.s/2);c.lineTo(q.s,-q.s);c.lineTo(q.s/2,q.s);c.closePath();c.fill();c.lineWidth=1.5;c.strokeStyle="#111";c.stroke()}c.restore()});
  // launched worker (PG: newspaper stays)
- var w=b.wk;c.save();c.translate(w.x,w.y);c.rotate(w.a);seg(c,[[-4,10],[6,30],[4,46]],10,"#c99b70");seg(c,[[4,10],[16,26],[18,44]],10,"#b88b62");rr(-2,42,28,10,5,"#3b5b8c");rr(-16,-26,32,40,8,"#6d4c41");rr(-14,4,30,18,2,"#f2efe4");seg(c,[[14,-20],[30,-34],[38,-52]],7,"#6d4c41");wrench(42,-58,-.9,.75);seg(c,[[-14,-20],[-30,-30],[-36,-46]],7,"#6d4c41");
+ var w=b.wk;c.save();c.translate(w.x,w.y);c.rotate(w.a);seg(c,[[-4,10],[6,30],[4,46]],10,"#c99b70");seg(c,[[4,10],[16,26],[18,44]],10,"#b88b62");rr(-2,42,28,10,5,"#3b5b8c");rr(-16,-26,32,40,8,"#6d4c41");rr(-14,4,30,18,2,"#f2efe4");nameTag(c,0,-13,"JED",28,14);seg(c,[[14,-20],[30,-34],[38,-52]],7,"#6d4c41");wrench(42,-58,-.9,.75);seg(c,[[-14,-20],[-30,-30],[-36,-46]],7,"#6d4c41");
  c.fillStyle="#f1c27d";c.beginPath();c.ellipse(0,-40,12,14,0,0,7);c.fill();ol();c.font="bold 9px sans-serif";c.fillStyle="#111";c.fillText("x",-7,-38);c.fillText("x",2,-38);c.beginPath();c.arc(0,-31,3,0,7);c.fill();c.fillStyle="#ffd600";c.beginPath();c.arc(0,-50,12,Math.PI,0);c.closePath();c.fill();ol();c.restore();
  if(w.vy>=0||w.y>=H-40){for(var k=0;k<3;k++){var a2=t*5+k*2.09,sx=w.x+Math.cos(a2)*20,sy=w.y-55+Math.sin(a2)*5;c.fillStyle="#ffe94d";c.beginPath();c.arc(sx,sy,3.5,0,7);c.fill()}}
  if(t>1.25){var u=t-1.25,sc=u<.25?2.6-6.4*u:1+Math.sin(u*18)*.08*Math.max(0,1-u*1.5);c.save();c.translate(W/2+(u<.6?(Math.random()-.5)*8:0),H/2-120);c.rotate(-.06);c.scale(sc,sc);c.textAlign="center";c.font="900 38px Impact,'Arial Black',sans-serif";c.lineJoin="round";["GET OFF THE POT","AND GET BACK","TO WORK!"].forEach(function(s,i){var yy=-44+i*44;c.lineWidth=10;c.strokeStyle="#111";c.strokeText(s,0,yy);c.fillStyle=i==2?"#e3170a":"#ffd600";c.fillText(s,0,yy)});c.restore();c.textAlign="left";
@@ -1330,9 +1361,184 @@ function panel(){var c=cx;rr(30,H/2-230,W-60,400,22,"rgba(15,20,30,.88)");c.text
  if(st=="start"){["Drag to aim, let go to throw.","Bonk the apprentice. Chain hits","for combo points. 60 seconds!"].forEach(function(s,i){c.fillText(s,W/2,H/2-80+i*22)})}else{c.font="900 26px sans-serif";c.fillText("Game Over",W/2,H/2-82);c.font="bold 18px sans-serif";c.fillText("Score "+score+(score>=hs&&score>0?"  NEW BEST!":""),W/2,H/2-50);c.fillText("Best "+hs,W/2,H/2-24)}
  rr(W/2-145,H/2+10,155,60,30,"#ff7a00");c.fillStyle="#fff";c.font="900 21px sans-serif";c.fillText(st=="start"?"START":"PLAY AGAIN",W/2-67,H/2+48);rr(W/2+20,H/2+10,125,60,30,"#e3170a");c.fillStyle="#fff";c.fillText("EXIT",W/2+82,H/2+48);c.font="bold 12px sans-serif";c.fillStyle="#aaa";c.fillText("Best: "+hs,W/2,H/2+110);c.textAlign="left"}
 // trigger: 3 taps on header logo within 1.5s
-var lg=document.querySelector("header svg");if(lg){lg.id="hhLogo";lg.style.touchAction="manipulation";lg.style.cursor="default";var taps=[];lg.addEventListener("pointerdown",function(){var n=Date.now();taps=taps.filter(function(t){return n-t<1500});taps.push(n);if(taps.length>=3){taps=[];open()}})}
+var lg=document.querySelector("header svg");if(lg){lg.id="hhLogo";lg.style.touchAction="manipulation";lg.style.cursor="default";var taps=[];lg.addEventListener("pointerdown",function(){var n=Date.now();taps=taps.filter(function(t){return n-t<1500});taps.push(n);if(taps.length>=3){taps=[];window.__gameMenu?window.__gameMenu():open()}})}
 })();
 </script>
+<script>
+/* Potty Wars - original slinger game, custom 2D physics */
+(function(){
+var cv,cx,ov,raf=0,W=600,H=900,G=780,S=1,DPR=1,last=0,muted=localStorage.getItem("ppMute")==="1",ac=null;
+var bodies=[],parts=[],pops=[],st="levels",lvl=0,shots=[],cur=null,proj=null,pull=null,score=0,turnT=0,endT=0,shake=0,btns=[],jedT=0;
+var SAVE=JSON.parse(localStorage.getItem("pwSave")||'{"un":1,"best":[],"stars":[]}');
+function save(){localStorage.setItem("pwSave",JSON.stringify(SAVE))}
+function snd(f,d,t,v,f2){if(muted)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain(),n=ac.currentTime;o.type=t||"square";o.frequency.setValueAtTime(f,n);if(f2)o.frequency.exponentialRampToValueAtTime(f2,n+d);g.gain.setValueAtTime(v||.15,n);g.gain.exponentialRampToValueAtTime(.001,n+d);o.connect(g);g.connect(ac.destination);o.start(n);o.stop(n+d)}catch(e){}}
+function noise(d,v){if(muted)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();var n=ac.sampleRate*d,b=ac.createBuffer(1,n,ac.sampleRate),x=b.getChannelData(0);for(var i=0;i<n;i++)x[i]=(Math.random()*2-1)*Math.pow(1-i/n,2);var s=ac.createBufferSource(),g=ac.createGain();s.buffer=b;g.gain.value=v||.4;s.connect(g);g.connect(ac.destination);s.start()}catch(e){}}
+/* ---------- physics ---------- */
+var GR=900,MAT={ply:{d:.0012,hp:90,c:"#e0b46c"},pal:{d:.0013,hp:110,c:"#b07a3c"},beam:{d:.004,hp:520,c:"#8a929c"},potty:{d:.0006,hp:170,c:"#2b85f0"},cone:{d:.001,hp:40,c:"#ff6d00"},fore:{d:.0016,hp:100},insp:{d:.0016,hp:130},tp:{d:.0022},plunger:{d:.006},wrench:{d:.003},bomb:{d:.0025},ground:{d:0}};
+function body(k,x,y,o){var m=MAT[k],b={k:k,x:x,y:y,a:0,vx:0,vy:0,w:0,sl:false,st:0,hp:m.hp||1e9,mh:m.hp||1e9};
+ if(o.r){b.t="c";b.r=o.r;b.m=Math.PI*o.r*o.r*m.d;b.I=.5*b.m*o.r*o.r;b.br=o.r}else{b.t="b";b.hw=o.w/2;b.hh=o.h/2;b.m=o.w*o.h*m.d;b.I=b.m*(o.w*o.w+o.h*o.h)/12;b.br=Math.hypot(b.hw,b.hh)}
+ b.im=b.m?1/b.m:0;b.iI=b.I?1/b.I:0;if(!b.m)b.stat=1;b.tg=(k=="fore"||k=="insp");bodies.push(b);return b}
+function rot(x,y,a){var c=Math.cos(a),s=Math.sin(a);return[x*c-y*s,x*s+y*c]}
+function verts(b){var c=Math.cos(b.a),s=Math.sin(b.a),r=[];[[-1,-1],[1,-1],[1,1],[-1,1]].forEach(function(q){var x=q[0]*b.hw,y=q[1]*b.hh;r.push([b.x+x*c-y*s,b.y+x*s+y*c])});return r}
+function inBox(b,p,t){var l=rot(p[0]-b.x,p[1]-b.y,-b.a);return Math.abs(l[0])<=b.hw+t&&Math.abs(l[1])<=b.hh+t}
+function boxCirc(A,B){var l=rot(B.x-A.x,B.y-A.y,-A.a),cx=Math.max(-A.hw,Math.min(A.hw,l[0])),cy=Math.max(-A.hh,Math.min(A.hh,l[1])),dx=l[0]-cx,dy=l[1]-cy,d2=dx*dx+dy*dy,n,pen;
+ if(d2>B.r*B.r)return null;if(d2>1e-6){var d=Math.sqrt(d2);n=[dx/d,dy/d];pen=B.r-d}else{var ox=A.hw-Math.abs(l[0]),oy=A.hh-Math.abs(l[1]);if(ox<oy){n=[l[0]<0?-1:1,0];pen=ox+B.r}else{n=[0,l[1]<0?-1:1];pen=oy+B.r}}
+ var wn=rot(n[0],n[1],A.a);return{n:wn,pen:pen,cs:[[B.x-wn[0]*B.r,B.y-wn[1]*B.r]]}}
+function collide(A,B){var dx=B.x-A.x,dy=B.y-A.y;
+ if(A.t=="c"&&B.t=="c"){var d=Math.hypot(dx,dy);if(d>=A.r+B.r||d<1e-6)return null;var n=[dx/d,dy/d];return{n:n,pen:A.r+B.r-d,cs:[[A.x+n[0]*A.r,A.y+n[1]*A.r]]}}
+ if(A.t=="b"&&B.t=="c")return boxCirc(A,B);
+ if(A.t=="c"&&B.t=="b"){var r=boxCirc(B,A);if(r){r.n=[-r.n[0],-r.n[1]]}return r}
+ var ax=[rot(1,0,A.a),rot(0,1,A.a),rot(1,0,B.a),rot(0,1,B.a)],best=1e9,bn=null;
+ for(var i=0;i<4;i++){var u=ax[i],pa=A.hw*Math.abs(ax[0][0]*u[0]+ax[0][1]*u[1])+A.hh*Math.abs(ax[1][0]*u[0]+ax[1][1]*u[1]),pb=B.hw*Math.abs(ax[2][0]*u[0]+ax[2][1]*u[1])+B.hh*Math.abs(ax[3][0]*u[0]+ax[3][1]*u[1]),dd=dx*u[0]+dy*u[1],o=pa+pb-Math.abs(dd);if(o<0)return null;if(o<best){best=o;bn=dd<0?[-u[0],-u[1]]:u}}
+ var cs=[],t=Math.min(2,best+.5);verts(B).forEach(function(p){if(inBox(A,p,t))cs.push(p)});verts(A).forEach(function(p){if(inBox(B,p,t))cs.push(p)});
+ if(!cs.length)cs.push([(A.x+B.x)/2,(A.y+B.y)/2]);if(cs.length>4)cs=cs.slice(0,4);return{n:bn,pen:best,cs:cs}}
+function wake(b){if(b.stat)return;b.sl=false;b.st=0}
+function wakeN(b){bodies.forEach(function(o){if(o!==b&&o.sl&&Math.abs(o.x-b.x)<o.br+b.br+4&&Math.abs(o.y-b.y)<o.br+b.br+4)wake(o)})}
+function dmg(b,v){if(b.stat||b.dead||v<=0)return;b.hp-=v;if(b.k!="tp"&&b.k!="plunger"&&b.k!="wrench"&&b.k!="bomb"){score+=Math.round(v)|0}if(b.hp<=0)kill(b)}
+function kill(b){if(b.dead)return;b.dead=1;var tg=b.tg;score+=tg?5000:500;pops.push({x:b.x,y:b.y-20,s:tg?"+5000":"+500",t:1,c:tg?"#ffd600":"#fff"});
+ for(var i=0;i<(tg?14:9);i++)parts.push({x:b.x,y:b.y,vx:(Math.random()-.5)*400,vy:-Math.random()*400,t:1,c:tg?"#fff":MAT[b.k].c,s:3+Math.random()*5,a:0});
+ if(tg){snd(300,.25,"sawtooth",.15,80);snd(900,.3,"triangle",.12,1400)}else snd(140,.15,"square",.12,70);wakeN(b)}
+function step(dt){var B=bodies,i,j,cs=[];
+ for(i=0;i<B.length;i++){var b=B[i];if(b.stat||b.sl)continue;if(Math.abs(b.vx)+Math.abs(b.vy)>40)wakeN(b);b.vy+=GR*dt;b.vx*=.999;b.vy*=.999;b.w*=.995}
+ for(i=0;i<B.length;i++)for(j=i+1;j<B.length;j++){var A=B[i],C=B[j];if(A.dead||C.dead)continue;var sa=A.stat||A.sl,sc=C.stat||C.sl;if(sa&&sc)continue;
+  if(A.stat){if(C.y+C.br<A.y-A.hh-2)continue}else if(C.stat){if(A.y+A.br<C.y-C.hh-2)continue}else if(Math.abs(A.x-C.x)>A.br+C.br||Math.abs(A.y-C.y)>A.br+C.br)continue;
+  var m=collide(A,C);if(!m)continue;
+  // relative approach speed at center contact
+  var p0=m.cs[0],ra=[p0[0]-A.x,p0[1]-A.y],rb=[p0[0]-C.x,p0[1]-C.y],rvx=(C.vx-C.w*rb[1])-(A.vx-A.w*ra[1]),rvy=(C.vy+C.w*rb[0])-(A.vy+A.w*ra[0]),vn=rvx*m.n[0]+rvy*m.n[1];
+  if(A.sl&&-vn>45){wake(A);wakeN(A);sa=0}if(C.sl&&-vn>45){wake(C);wakeN(C);sc=0}
+  var imA=sa?0:A.im,iIA=sa?0:A.iI,imC=sc?0:C.im,iIC=sc?0:C.iI;if(!imA&&!imC)continue;
+  if(-vn>110){var me=1/((A.im||0)+(C.im||0)||1),J=-vn*me;var dv=(J-60)*.55;if(dv>0){dmg(A,dv*(C.stat?1:Math.min(1.6,C.m/(A.m+C.m)*2)));dmg(C,dv*(A.stat?1:Math.min(1.6,A.m/(A.m+C.m)*2)));if(-vn>260&&Math.random()<.5)snd(200+Math.random()*200,.07,"square",.06,90)}}
+  m.A=A;m.C=C;m.imA=imA;m.iIA=iIA;m.imC=imC;m.iIC=iIC;m.pts=m.cs.map(function(p){var ra=[p[0]-A.x,p[1]-A.y],rb=[p[0]-C.x,p[1]-C.y],n=m.n,t=[-n[1],n[0]],rnA=ra[0]*n[1]-ra[1]*n[0],rnC=rb[0]*n[1]-rb[1]*n[0],rtA=ra[0]*t[1]-ra[1]*t[0],rtC=rb[0]*t[1]-rb[1]*t[0];
+   var rvx=(C.vx-C.w*rb[1])-(A.vx-A.w*ra[1]),rvy=(C.vy+C.w*rb[0])-(A.vy+A.w*ra[0]),v=rvx*n[0]+rvy*n[1];
+   return{ra:ra,rb:rb,t:t,kn:1/(imA+imC+rnA*rnA*iIA+rnC*rnC*iIC),kt:1/(imA+imC+rtA*rtA*iIA+rtC*rtC*iIC),bias:v<-120?-.2*v:0,jn:0,jt:0}});cs.push(m)}
+ for(var it=0;it<10;it++)cs.forEach(function(m){var A=m.A,C=m.C,n=m.n;m.pts.forEach(function(q){var ra=q.ra,rb=q.rb,rvx=(C.vx-C.w*rb[1])-(A.vx-A.w*ra[1]),rvy=(C.vy+C.w*rb[0])-(A.vy+A.w*ra[0]),vn=rvx*n[0]+rvy*n[1];
+   var j=q.kn*(-vn+q.bias),o=q.jn;q.jn=Math.max(0,o+j);j=q.jn-o;app(m,n,j,ra,rb);
+   rvx=(C.vx-C.w*rb[1])-(A.vx-A.w*ra[1]);rvy=(C.vy+C.w*rb[0])-(A.vy+A.w*ra[0]);var vt=rvx*q.t[0]+rvy*q.t[1],jt=-vt*q.kt,ot=q.jt,mx=q.jn*.6;q.jt=Math.max(-mx,Math.min(mx,ot+jt));jt=q.jt-ot;app(m,q.t,jt,ra,rb)})});
+ for(i=0;i<B.length;i++){b=B[i];if(b.stat||b.sl)continue;b.x+=b.vx*dt;b.y+=b.vy*dt;b.a+=b.w*dt;
+  if(Math.abs(b.vx)<14&&Math.abs(b.vy)<14&&Math.abs(b.w)<.25){b.st+=dt;if(b.st>.5&&b!==proj){b.sl=true;b.vx=b.vy=b.w=0}else if(b.st>.5&&b===proj){b.sl=true;b.vx=b.vy=b.w=0}}else b.st=0;
+  if(b.y>H+200||b.x>W+300||b.x<-300){if(b.tg)kill(b);b.dead=1}}
+ cs.forEach(function(m){var c=Math.max(0,m.pen-.4)*.35/((m.imA+m.imC)||1);if(m.imA){m.A.x-=m.n[0]*c*m.imA;m.A.y-=m.n[1]*c*m.imA}if(m.imC){m.C.x+=m.n[0]*c*m.imC;m.C.y+=m.n[1]*c*m.imC}});
+ bodies=bodies.filter(function(b){return !b.dead||b===proj&&false})}
+function app(m,n,j,ra,rb){var A=m.A,C=m.C,px=n[0]*j,py=n[1]*j;A.vx-=px*m.imA;A.vy-=py*m.imA;A.w-=(ra[0]*py-ra[1]*px)*m.iIA;C.vx+=px*m.imC;C.vy+=py*m.imC;C.w+=(rb[0]*py-rb[1]*px)*m.iIC}
+/* ---------- levels ---------- */
+var AMMO={tp:{r:12,n:"TP Roll",sp:1},plunger:{r:12,n:"Heavy Plunger",sp:.92},wrench:{r:10,n:"Speed Wrench",sp:1.3},bomb:{r:12,n:"Deuce Bomb (tap!)",sp:1}};
+function blk(k,x,yb,w,h){return body(k,x,G-yb-h/2,{w:w,h:h})}
+function man(k,x,yb){return body(k,x,G-yb-14,{r:14})}
+function frame(x,yb,w,h,pk,k){k=k||"ply";blk(k,x-w/2+6,yb,12,h);blk(k,x+w/2-6,yb,12,h);blk(pk||k,x,yb+h,w+16,12);return yb+h+12}
+var LV=[
+ {ammo:["tp","tp","tp"],b:function(){var t=frame(415,0,80,60);man("fore",415,t)}},
+ {ammo:["tp","wrench","tp","tp"],b:function(){blk("potty",360,0,42,84);man("fore",360,84);blk("pal",480,0,64,14);blk("pal",480,14,64,14);blk("pal",480,28,64,14);man("insp",480,42);blk("cone",420,0,18,26)}},
+ {ammo:["tp","wrench","plunger","tp"],b:function(){var t=frame(430,0,110,70);man("fore",430,0);t=frame(430,t,70,56);man("insp",430,t);blk("cone",350,0,18,26);blk("cone",520,0,18,26)}},
+ {ammo:["plunger","wrench","bomb","tp","tp"],b:function(){var t=frame(400,0,90,80,"beam","beam");blk("potty",400,t,42,84);man("fore",400,t+84);man("insp",400,0);blk("potty",520,0,42,84);man("fore",520,84);blk("cone",460,0,18,26)}},
+ {ammo:["bomb","plunger","wrench","bomb","tp"],b:function(){var t=frame(370,0,70,70);t=frame(370,t,70,60);man("fore",370,t);man("insp",370,0);var u=frame(500,0,90,90,"beam","beam");blk("potty",478,u,42,84);blk("potty",522,u,42,84);man("fore",500,0);man("insp",478,u+84);blk("pal",435,0,40,14);blk("pal",435,14,40,14)}},
+ {ammo:["bomb","tp","plunger","wrench","bomb"],b:function(){[392,436,480].forEach(function(x){blk("potty",x,0,42,84)});blk("ply",436,84,150,12);[414,458].forEach(function(x){blk("potty",x,96,42,84)});blk("ply",436,180,110,12);blk("potty",436,192,42,84);man("fore",436,276);man("insp",370,0);man("fore",540,0);blk("cone",510,0,18,26)}}
+];
+function load(i){lvl=i;bodies=[];parts=[];pops=[];score=0;proj=null;pull=null;shake=0;body("ground",W/2,G+200,{w:W*4,h:400});LV[i].b();
+ for(var k=0;k<150;k++)step(1/120);bodies.forEach(function(b){if(!b.stat){b.sl=true;b.vx=b.vy=b.w=0;b.hp=b.mh;b.st=0}});score=0;pops=[];parts=[];
+ shots=LV[i].ammo.slice();cur=shots.shift();st="aim";snd(660,.1);snd(880,.15)}
+var SL={x:110};function anchor(){return{x:SL.x,y:G-120}}
+function launch(vx,vy){var a=anchor(),d=AMMO[cur],p=pull||{x:0,y:0};proj=body(cur,a.x+p.x,a.y+p.y,{r:d.r});proj.vx=vx*d.sp;proj.vy=vy*d.sp;proj.w=6;proj.am=cur;pull=null;st="fly";turnT=0;jedT=.6;snd(240,.18,"sawtooth",.08,900);noise(.12,.15)}
+function boom(x,y){var R=150;shake=.6;noise(.6,.7);snd(70,.5,"sawtooth",.25,30);bodies.forEach(function(b){if(b.stat||b===proj)return;var dx=b.x-x,dy=b.y-y,d=Math.hypot(dx,dy);if(d<R){var f=(1-d/R);wake(b);b.vx+=dx/(d||1)*700*f/Math.max(.6,b.m);b.vy+=(dy/(d||1)*700*f-200*f)/Math.max(.6,b.m);b.w+=(Math.random()-.5)*8*f;dmg(b,170*f)}});
+ for(var i=0;i<30;i++){var a=Math.random()*6.28,s=100+Math.random()*450;parts.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,t:1,c:["#ffd600","#ff6d00","#6d4c41","#fff"][i%4],s:4+Math.random()*7})}
+ pops.push({x:x,y:y-40,s:"KA-PLOOEY!",t:1.2,c:"#ff6d00",big:1});if(proj){proj.dead=1;bodies=bodies.filter(function(b){return b!==proj})}proj=null}
+function targetsLeft(){return bodies.filter(function(b){return b.tg&&!b.dead}).length}
+function calm(){return bodies.every(function(b){return b.stat||b.sl})}
+function upd(dt){shake=Math.max(0,shake-dt);jedT=Math.max(0,jedT-dt);
+ parts.forEach(function(p){p.vy+=GR*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.t-=dt*.8});parts=parts.filter(function(p){return p.t>0});pops.forEach(function(p){p.t-=dt;p.y-=30*dt});pops=pops.filter(function(p){return p.t>0});
+ if(st!="aim"&&st!="fly")return;for(var k=0;k<2;k++)step(dt/2);
+ if(proj&&proj.am=="bomb"){if(proj.hitT===undefined&&(Math.abs(proj.vx)<proj.lvx*0.6))proj.hitT=0;proj.lvx=Math.abs(proj.vx)||proj.lvx||1;if(proj.hitT!==undefined){proj.hitT+=dt;if(proj.hitT>.9)boom(proj.x,proj.y)}}
+ if(proj&&proj.dead)proj=null;
+ if(st=="fly"){turnT+=dt;var done=(!proj||proj.sl)&&calm()||turnT>8;if(targetsLeft()==0&&(calm()||turnT>3))done=1;
+  if(done){if(proj){proj.dead=1;bodies=bodies.filter(function(b){return b!==proj});proj=null}
+   if(targetsLeft()==0)win();else if(shots.length){cur=shots.shift();st="aim"}else{st="lost";endT=0;snd(330,.4,"triangle",.2,110)}}}}
+function win(){var left=shots.length+(0);score+=left*3000;var stars=left>=2?3:left>=1?2:1;st="won";endT=0;win.stars=stars;
+ SAVE.best[lvl]=Math.max(SAVE.best[lvl]||0,score);SAVE.stars[lvl]=Math.max(SAVE.stars[lvl]||0,stars);SAVE.un=Math.max(SAVE.un,Math.min(LV.length,lvl+2));save();
+ [0,1,2].forEach(function(i){setTimeout(function(){snd(660+i*220,.18,"square",.12)},i*150)})}
+/* ---------- drawing ---------- */
+function ol(c,w){c.lineWidth=w||2.5;c.strokeStyle="#111";c.stroke()}
+function rr(c,x,y,w,h,r,f){c.beginPath();c.roundRect?c.roundRect(x,y,w,h,r):c.rect(x,y,w,h);c.fillStyle=f;c.fill()}
+function face(c,b){var r=b.r,hurt=b.hp<b.mh*.6;c.fillStyle=b.k=="insp"?"#f6cfa5":"#e9b98a";c.beginPath();c.arc(0,0,r,0,7);c.fill();ol(c);
+ c.fillStyle="#fff";c.beginPath();c.ellipse(-5,-2,3.6,4.4,0,0,7);c.ellipse(5,-2,3.6,4.4,0,0,7);c.fill();c.lineWidth=1.3;c.stroke();c.fillStyle="#111";
+ if(hurt){c.font="bold 8px sans-serif";c.textAlign="center";c.fillText("x",-5,1);c.fillText("x",5,1)}else{c.beginPath();c.arc(-6,-1,1.6,0,7);c.arc(4,-1,1.6,0,7);c.fill()}
+ if(b.k=="fore"){c.fillStyle="#5d4037";c.beginPath();c.moveTo(-8,5);c.quadraticCurveTo(0,1,8,5);c.quadraticCurveTo(0,9,-8,5);c.fill()}else{c.strokeStyle="#111";c.lineWidth=1.5;c.beginPath();c.arc(-5,-2,4.6,0,7);c.moveTo(9.6,-2);c.arc(5,-2,4.6,0,7);c.stroke();c.beginPath();c.moveTo(-3,7);c.lineTo(3,7);c.stroke()}
+ c.fillStyle=b.k=="insp"?"#ff8f00":"#fafafa";c.beginPath();c.arc(0,-6,r*.95,Math.PI,0);c.closePath();c.fill();ol(c,2);c.beginPath();c.ellipse(0,-6,r+4,3,0,0,7);c.fill();ol(c,2);if(b.k=="insp"){c.fillStyle="#111";c.font="900 5px sans-serif";c.textAlign="center";c.fillText("INSP",0,-9)}c.textAlign="left"}
+function drawBody(c,b){if(b.stat)return;c.save();c.translate(b.x,b.y);c.rotate(b.a);var w=b.hw*2,h=b.hh*2,k=b.k,cr=b.hp<b.mh*.5;
+ if(b.t=="c"){if(b.tg)face(c,b);else ammoArt(c,k,b.r)}
+ else if(k=="ply"){rr(c,-b.hw,-b.hh,w,h,2,"#e0b46c");ol(c);c.strokeStyle="rgba(120,70,20,.45)";c.lineWidth=1;c.beginPath();if(w>h){c.moveTo(-b.hw+4,-1);c.lineTo(b.hw-4,1)}else{c.moveTo(-1,-b.hh+4);c.lineTo(1,b.hh-4)}c.stroke()}
+ else if(k=="pal"){rr(c,-b.hw,-b.hh,w,h,2,"#7a5229");ol(c);c.fillStyle="#b07a3c";for(var x=-b.hw+2;x<b.hw-6;x+=12)c.fillRect(x,-b.hh+2,9,h-4)}
+ else if(k=="beam"){c.fillStyle="#8a929c";if(w>h){c.fillRect(-b.hw,-b.hh,w,4);c.fillRect(-b.hw,b.hh-4,w,4);c.fillStyle="#6f7782";c.fillRect(-b.hw,-2,w,4)}else{c.fillRect(-b.hw,-b.hh,4,h);c.fillRect(b.hw-4,-b.hh,4,h);c.fillStyle="#6f7782";c.fillRect(-2,-b.hh,4,h)}c.beginPath();c.rect(-b.hw,-b.hh,w,h);ol(c,2);c.fillStyle="#c0592b";c.fillRect(-b.hw+1,-b.hh+1,4,4)}
+ else if(k=="potty"){var g=c.createLinearGradient(-b.hw,0,b.hw,0);g.addColorStop(0,"#155bb8");g.addColorStop(.4,"#3b93f5");g.addColorStop(1,"#0f468f");rr(c,-b.hw,-b.hh+6,w,h-6,3,g);ol(c);c.beginPath();c.moveTo(-b.hw-3,-b.hh+7);c.quadraticCurveTo(0,-b.hh-8,b.hw+3,-b.hh+7);c.closePath();c.fillStyle="#5aa8ff";c.fill();ol(c,2);c.fillStyle="#d32f2f";c.fillRect(b.hw-10,-4,6,5);c.fillStyle="#fff";c.font="900 7px sans-serif";c.textAlign="center";c.fillText("JOHN",0,-b.hh+20);c.textAlign="left"}
+ else if(k=="cone"){c.fillStyle="#ff6d00";c.beginPath();c.moveTo(-b.hw,b.hh);c.lineTo(-3,-b.hh);c.lineTo(3,-b.hh);c.lineTo(b.hw,b.hh);c.closePath();c.fill();ol(c,2);c.fillStyle="#fff";c.fillRect(-5,-2,10,4);c.fillStyle="#333";c.fillRect(-b.hw-1,b.hh-3,w+2,3)}
+ if(cr&&b.t=="b"){c.strokeStyle="rgba(0,0,0,.6)";c.lineWidth=1.4;c.beginPath();c.moveTo(-b.hw*.5,-b.hh*.6);c.lineTo(0,0);c.lineTo(-b.hw*.2,b.hh*.5);c.moveTo(0,0);c.lineTo(b.hw*.5,-b.hh*.2);c.stroke()}
+ c.restore()}
+function ammoArt(c,k,r){if(k=="tp"){c.fillStyle="#fafafa";c.beginPath();c.arc(0,0,r,0,7);c.fill();ol(c);c.fillStyle="#c9b28a";c.beginPath();c.arc(0,0,r*.38,0,7);c.fill();ol(c,1.5);c.strokeStyle="#ddd";c.lineWidth=1;c.beginPath();c.arc(0,0,r*.7,0,7);c.stroke()}
+ else if(k=="plunger"){c.fillStyle="#b5651d";c.fillRect(-2.5,-r-6,5,r+4);c.strokeStyle="#111";c.lineWidth=1.5;c.strokeRect(-2.5,-r-6,5,r+4);c.fillStyle="#d32f2f";c.beginPath();c.arc(0,r*.35,r*.85,Math.PI,0);c.lineTo(r*.85,r*.6);c.lineTo(-r*.85,r*.6);c.closePath();c.fill();ol(c,2)}
+ else if(k=="wrench"){c.fillStyle="#b9c2cc";c.fillRect(-r-2,-2.5,2*r+4,5);c.beginPath();c.arc(r+2,0,5,.7,5.6);c.lineTo(r+2,0);c.fill();c.beginPath();c.arc(-r-2,0,4.5,0,7);c.fill();c.strokeStyle="#333";c.lineWidth=1.5;c.strokeRect(-r-2,-2.5,2*r+4,5)}
+ else if(k=="bomb"){c.fillStyle="#6d4c41";c.beginPath();c.arc(0,0,r,0,7);c.fill();ol(c);c.fillStyle="#3e2723";c.beginPath();c.arc(-3,-3,r*.4,0,7);c.fill();c.strokeStyle="#ccc";c.lineWidth=2;c.beginPath();c.moveTo(2,-r);c.quadraticCurveTo(6,-r-8,10,-r-6);c.stroke();c.fillStyle=Math.random()<.5?"#ffd600":"#ff6d00";c.beginPath();c.arc(10,-r-6,3.5,0,7);c.fill();c.fillStyle="#fff";c.font="900 6px sans-serif";c.textAlign="center";c.fillText("💩",0,r*.5);c.textAlign="left"}}
+function rebar(c,x1,y1,x2,y2){c.strokeStyle="#111";c.lineWidth=9;c.lineCap="round";c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();c.strokeStyle="#8d4a23";c.lineWidth=6;c.stroke();c.strokeStyle="#5a2d12";c.lineWidth=1.5;var L=Math.hypot(x2-x1,y2-y1);for(var t=6;t<L;t+=7){var u=t/L,px=x1+(x2-x1)*u,py=y1+(y2-y1)*u;c.beginPath();c.moveTo(px-3,py+2);c.lineTo(px+3,py-2);c.stroke()}}
+function sling(c,back){var a=anchor(),x=SL.x;if(back){rebar(c,x,G,x,G-80);rebar(c,x,G-80,x-16,G-124)}else{rebar(c,x,G-80,x+16,G-124)}}
+function band(c,px,py,side){var x=SL.x+(side?16:-16),y=G-122;c.strokeStyle="#111";c.lineWidth=6;c.beginPath();c.moveTo(x,y);c.lineTo(px,py);c.stroke();c.strokeStyle=side?"#2b2b2b":"#3a3a3a";c.lineWidth=3.5;c.stroke();c.fillStyle="#ff6d00";c.beginPath();c.arc(x,y,3,0,7);c.fill()}
+function nameTag(c,x,y,t,w,h){c.save();c.fillStyle="#fff";c.strokeStyle="#111";c.lineWidth=2.5;c.beginPath();c.rect(x-w/2,y-h/2,w,h);c.fill();c.stroke();c.fillStyle="#111";c.font="900 "+(h-4)+"px Arial Black,Impact,sans-serif";c.textAlign="center";c.textBaseline="middle";var fw=c.measureText(t).width;if(fw>w-4){c.font="900 "+((h-4)*(w-4)/fw).toFixed(1)+"px Arial Black,Impact,sans-serif"}c.fillText(t,x,y+.5);c.restore()}
+function jed(c){var x=SL.x-58,y=G,pl=pull?Math.min(1,Math.hypot(pull.x,pull.y)/110):0,cheer=jedT>0;
+ c.fillStyle="rgba(0,0,0,.2)";c.beginPath();c.ellipse(x,y+2,22,5,0,0,7);c.fill();
+ c.strokeStyle="#3a4f7a";c.lineWidth=9;c.lineCap="round";c.beginPath();c.moveTo(x-5,y-40);c.lineTo(x-9,y-4);c.moveTo(x+5,y-40);c.lineTo(x+10,y-4);c.stroke();c.fillStyle="#4a2f17";c.fillRect(x-17,y-8,14,8);c.fillRect(x+4,y-8,15,8);
+ rr(c,x-15,y-80,30,44,8,"#6d4c41");ol(c);c.fillStyle="#e8ff3a";c.fillRect(x-15,y-55,30,3);nameTag(c,x,y-68,"JED",22,11);
+ c.strokeStyle="#6d4c41";c.lineWidth=7;c.beginPath();if(cheer){c.moveTo(x+13,y-76);c.lineTo(x+24,y-104)}else{c.moveTo(x+13,y-76);c.lineTo(x+30+pl*0,y-70+pl*10)}c.moveTo(x-13,y-76);c.lineTo(x-24,y-58);c.stroke();
+ c.fillStyle="#f1c27d";c.beginPath();c.ellipse(x,y-95,12,14,0,0,7);c.fill();ol(c);c.fillStyle="#5d4037";c.beginPath();c.moveTo(x-10,y-92);c.quadraticCurveTo(x,y-76,x+10,y-92);c.lineTo(x+6,y-88);c.lineTo(x-6,y-88);c.closePath();c.fill();
+ c.fillStyle="#111";c.fillRect(x-5,y-99,2.5,2.5);c.fillRect(x+4,y-99,2.5,2.5);c.fillStyle="#ffd600";c.beginPath();c.ellipse(x,y-104,17,4.5,0,0,7);c.fill();ol(c,2);c.beginPath();c.arc(x,y-105,13,Math.PI,0);c.closePath();c.fill();ol(c,2);
+ if(cheer||st=="won"){c.font="bold 13px sans-serif";var s=st=="won"?"GET BACK TO WORK!":"FIRE IN THE HOLE!",tw=c.measureText(s).width+16;rr(c,x-20,y-150,tw,26,10,"#fff");c.fillStyle="#111";c.fillText(s,x-12,y-132)}}
+function bg(c){var g=c.createLinearGradient(0,0,0,G);g.addColorStop(0,"#5fb4ee");g.addColorStop(1,"#bfe6fb");c.fillStyle=g;c.fillRect(-50,-50,W+100,G+50);
+ c.fillStyle="#fff";[[90,140],[380,90],[520,220]].forEach(function(p){c.beginPath();c.arc(p[0],p[1],24,0,7);c.arc(p[0]+28,p[1]-10,30,0,7);c.arc(p[0]+58,p[1],22,0,7);c.fill()});
+ c.strokeStyle="#c0592b";c.lineWidth=7;c.strokeRect(W-170,G-330,150,120);c.beginPath();c.moveTo(W-95,G-330);c.lineTo(W-95,G-210);c.moveTo(W-170,G-330);c.lineTo(W-95,G-210);c.stroke();c.fillStyle="#d7c39a";c.fillRect(-50,G-200,W+100,200);
+ c.fillStyle="#a58f6a";c.fillRect(-50,G,W+100,H-G+60);c.fillStyle="#8b7553";c.fillRect(-50,G,W+100,6);c.fillStyle="#97805c";for(var i=0;i<W;i+=37)c.fillRect(i,G+20+(i*7%30),14,4)}
+function traj(c){if(!pull)return;var a=anchor(),d=AMMO[cur],vx=-pull.x*7.5*d.sp,vy=-pull.y*7.5*d.sp,x=a.x+pull.x,y=a.y+pull.y;c.fillStyle="rgba(255,255,255,.9)";for(var t=.06;t<1.4;t+=.07){var px=x+vx*t,py=y+vy*t+.5*GR*t*t;if(py>G)break;c.beginPath();c.arc(px,py,3.2-t*1.4,0,7);c.fill()}}
+function btn(c,x,y,w,h,t,col,fn){rr(c,x,y,w,h,h/2,col||"#ff7a00");c.lineWidth=3;c.strokeStyle="#111";c.stroke();c.fillStyle="#fff";c.font="900 "+Math.round(h*.42)+"px sans-serif";c.textAlign="center";c.fillText(t,x+w/2,y+h*.64);c.textAlign="left";btns.push({x:x,y:y,w:w,h:h,f:fn})}
+function stars(c,x,y,n,s){for(var i=0;i<3;i++){var cx0=x+(i-1)*s*2.2;c.beginPath();for(var j=0;j<10;j++){var r=j%2?s*.45:s,a=j/10*6.283-1.57;c.lineTo(cx0+Math.cos(a)*r,y+Math.sin(a)*r)}c.closePath();c.fillStyle=i<n?"#ffd600":"#555";c.fill();ol(c,2)}}
+function title(c,y){c.textAlign="center";c.font="900 54px Impact,'Arial Black',sans-serif";c.lineJoin="round";c.lineWidth=10;c.strokeStyle="#111";c.strokeText("POTTY WARS",W/2,y);c.fillStyle="#ffd600";c.fillText("POTTY WARS",W/2,y);c.textAlign="left"}
+function draw(){var c=cx;btns=[];c.setTransform(S*DPR,0,0,S*DPR,0,0);c.save();if(shake)c.translate((Math.random()-.5)*8*shake,(Math.random()-.5)*8*shake);bg(c);
+ if(st=="levels"){c.restore();title(c,200);c.fillStyle="#111";c.font="bold 17px sans-serif";c.textAlign="center";c.fillText("Sling it at the foremen. Knock it all down!",W/2,240);c.textAlign="left";
+  for(var i=0;i<LV.length;i++){(function(i){var col=i%3,row=i/3|0,x=W/2-195+col*135,y=290+row*170,lock=i+1>SAVE.un;rr(c,x,y,120,140,18,lock?"#666":"#2b3442");c.lineWidth=3;c.strokeStyle="#111";c.stroke();c.fillStyle=lock?"#999":"#ffd600";c.font="900 46px sans-serif";c.textAlign="center";c.fillText(lock?"🔒":String(i+1),x+60,y+62);c.textAlign="left";if(!lock){stars(c,x+60,y+90,SAVE.stars[i]||0,10);c.fillStyle="#fff";c.font="bold 13px sans-serif";c.textAlign="center";c.fillText("Best "+(SAVE.best[i]||0),x+60,y+126);c.textAlign="left";btns.push({x:x,y:y,w:120,h:140,f:function(){load(i)}})}})(i)}
+  return}
+ sling(c,1);var a=anchor(),pp=pull?{x:a.x+pull.x,y:a.y+pull.y}:a;if(st=="aim")band(c,pp.x,pp.y,0);
+ bodies.forEach(function(b){drawBody(c,b)});
+ if(st=="aim"){c.save();c.translate(pp.x,pp.y);ammoArt(c,cur,AMMO[cur].r);c.restore();band(c,pp.x,pp.y,1)}else{c.strokeStyle="#2b2b2b";c.lineWidth=4;c.beginPath();c.moveTo(SL.x-16,G-122);c.quadraticCurveTo(SL.x,G-112,SL.x+16,G-122);c.stroke()}
+ sling(c,0);traj(c);jed(c);
+ shots.forEach(function(k,i){c.save();c.translate(SL.x-110+i*0+(-i*0),G-14);c.translate(i*-0,0);c.restore()});
+ shots.forEach(function(k,i){c.save();c.translate(18+i*28,G+40);ammoArt(c,k,AMMO[k].r);c.restore()});
+ parts.forEach(function(p){c.globalAlpha=Math.max(0,p.t);c.fillStyle=p.c;c.fillRect(p.x-p.s/2,p.y-p.s/2,p.s,p.s);c.globalAlpha=1});
+ pops.forEach(function(p){c.globalAlpha=Math.min(1,p.t*2);c.textAlign="center";c.font="900 "+(p.big?40:24)+"px Impact,'Arial Black',sans-serif";c.lineWidth=6;c.strokeStyle="#111";c.strokeText(p.s,p.x,p.y);c.fillStyle=p.c;c.fillText(p.s,p.x,p.y);c.globalAlpha=1;c.textAlign="left"});
+ c.restore();
+ // HUD
+ rr(c,10,60,250,62,12,"rgba(0,0,0,.6)");c.fillStyle="#fff";c.font="900 22px sans-serif";c.fillText("Level "+(lvl+1)+"   "+score,22,88);c.font="bold 14px sans-serif";c.fillText((st=="aim"?AMMO[cur].n+"  •  ":"")+"Shots left "+(shots.length+(st=="aim"?1:0))+"  •  Targets "+targetsLeft(),22,110);
+ btn(c,10,130,96,40,"↻ Retry","#555",function(){load(lvl)});btn(c,114,130,104,40,"Levels","#555",function(){st="levels"});
+ if(st=="won"||st=="lost"){rr(c,W/2-230,H/2-200,460,330,24,"rgba(15,20,30,.92)");c.textAlign="center";c.font="900 44px Impact,'Arial Black',sans-serif";c.fillStyle=st=="won"?"#ffd600":"#ff5252";c.fillText(st=="won"?"SITE CLEARED!":"STILL STANDING!",W/2,H/2-130);
+  if(st=="won")stars(c,W/2,H/2-75,win.stars,22);c.fillStyle="#fff";c.font="bold 22px sans-serif";c.fillText("Score "+score+"   Best "+(SAVE.best[lvl]||0),W/2,H/2-20);c.textAlign="left";
+  btn(c,W/2-210,H/2+30,130,64,"Retry","#555",function(){load(lvl)});btn(c,W/2-65,H/2+30,130,64,"Levels","#2b3442",function(){st="levels"});
+  if(st=="won"&&lvl+1<LV.length)btn(c,W/2+80,H/2+30,130,64,"Next ▶","#2e7d32",function(){load(lvl+1)});}}
+/* ---------- input / lifecycle ---------- */
+function pt(e){var r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)/S,y:(e.clientY-r.top)/S}}
+function pd(e){e.preventDefault();var p=pt(e);for(var i=btns.length-1;i>=0;i--){var b=btns[i];if(p.x>b.x&&p.x<b.x+b.w&&p.y>b.y&&p.y<b.y+b.h){snd(500,.06);b.f();return}}
+ if(st=="fly"&&proj&&proj.am=="bomb"){boom(proj.x,proj.y);return}
+ if(st=="aim"&&p.x<W*.6&&p.y>G-420){pull={x:0,y:0};try{cv.setPointerCapture(e.pointerId)}catch(_){}pm(e)}}
+function pm(e){if(!pull)return;var p=pt(e),a=anchor(),dx=p.x-a.x,dy=p.y-a.y,d=Math.hypot(dx,dy),M=110;if(d>M){dx*=M/d;dy*=M/d}pull={x:dx,y:dy};if(Math.random()<.15)snd(120+d,.03,"sine",.03)}
+function pu(e){if(!pull)return;var d=Math.hypot(pull.x,pull.y);if(d<18){pull=null;return}launch(-pull.x*7.5,-pull.y*7.5)}
+function resize(){if(!cv)return;DPR=Math.min(2,window.devicePixelRatio||1);var iw=innerWidth,ih=innerHeight;S=Math.min(iw/600,ih/700);W=iw/S;H=ih/S;G=H-Math.max(110,H*.14);SL.x=110;cv.width=Math.round(iw*DPR);cv.height=Math.round(ih*DPR);cx=cv.getContext("2d")}
+function loop(n){raf=requestAnimationFrame(loop);var dt=Math.min(.033,(n-last)/1000);last=n;if(document.hidden)return;upd(dt);draw()}
+function open(){if(ov)return;ov=document.createElement("div");ov.id="pwGame";ov.style.cssText="position:fixed;inset:0;z-index:99999;background:#5fb4ee;touch-action:none;user-select:none;-webkit-user-select:none";
+ cv=document.createElement("canvas");cv.style.cssText="width:100%;height:100%;display:block;touch-action:none";ov.appendChild(cv);
+ var x=document.createElement("button");x.textContent="EXIT";x.setAttribute("aria-label","Exit game");x.style.cssText="position:absolute;top:calc(env(safe-area-inset-top) + 8px);right:10px;min-width:96px;height:48px;border-radius:24px;border:3px solid #111;background:#e3170a;color:#fff;font:900 20px sans-serif;z-index:2;box-shadow:0 3px 0 #111";x.onclick=close;ov.appendChild(x);
+ var m=document.createElement("button");m.style.cssText="position:absolute;top:calc(env(safe-area-inset-top) + 8px);right:114px;width:48px;height:48px;border-radius:24px;border:3px solid #111;background:rgba(0,0,0,.55);color:#fff;font-size:20px;z-index:2";m.textContent=muted?"🔇":"🔊";m.onclick=function(){muted=!muted;localStorage.setItem("ppMute",muted?"1":"0");m.textContent=muted?"🔇":"🔊"};ov.appendChild(m);
+ document.body.appendChild(ov);resize();window.addEventListener("resize",resize);st="levels";
+ cv.addEventListener("pointerdown",pd);cv.addEventListener("pointermove",pm);cv.addEventListener("pointerup",pu);cv.addEventListener("pointercancel",function(){pull=null});last=performance.now();raf=requestAnimationFrame(loop)}
+function close(){cancelAnimationFrame(raf);raf=0;window.removeEventListener("resize",resize);if(ov)ov.remove();ov=null;cv=null}
+window.__pwOpen=open;window.__pw={load:load,launch:function(vx,vy){if(st=="aim")launch(vx,vy)},get:function(){return{st:st,score:score,targets:targetsLeft(),bodies:bodies.length,awake:bodies.filter(function(b){return !b.stat&&!b.sl}).length,G:G,W:W,H:H}}};
+/* game chooser */
+window.__gameMenu=function(){if(document.getElementById("gmMenu")||document.getElementById("ppGame")||ov)return;var d=document.createElement("div");d.id="gmMenu";d.style.cssText="position:fixed;inset:0;z-index:99998;background:rgba(10,14,20,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:20px;touch-action:manipulation";
+ d.innerHTML='<div style="font:900 34px Impact,\'Arial Black\',sans-serif;color:#ffd600;-webkit-text-stroke:1.5px #111;letter-spacing:1px;margin-bottom:6px">SHOP BREAK</div>'+[["pp","🚽 Porta Potty Pitch","Bonk JESSY with wrenches","#ff7a00"],["pw","🧻 Potty Wars","Sling stuff at the foremen","#2b85f0"]].map(function(g){return '<button data-g="'+g[0]+'" style="width:min(320px,90vw);padding:18px;border-radius:20px;border:3px solid #111;background:'+g[3]+';color:#fff;font:900 24px sans-serif;box-shadow:0 4px 0 #111">'+g[1]+'<div style="font:600 14px sans-serif;margin-top:4px">'+g[2]+'</div></button>'}).join("")+'<button data-g="x" style="margin-top:10px;min-width:140px;height:52px;border-radius:26px;border:3px solid #111;background:#e3170a;color:#fff;font:900 22px sans-serif">EXIT</button>';
+ d.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var g=b.getAttribute("data-g");d.remove();if(g=="pp"&&window.__ppOpen)window.__ppOpen();else if(g=="pw")open()});document.body.appendChild(d)};
+})();
+</script>
+
 <script id="autoupd">(function(){var SS=sessionStorage;
  var from=SS.getItem("hhUpdFrom");if(from){SS.removeItem("hhUpdFrom");if(from!=APP_VERSION)setTimeout(function(){toast("Updated to "+APP_VERSION,2200)},600)}
  function dirty(){var a=document.activeElement;if(a&&(a.tagName=="INPUT"||a.tagName=="TEXTAREA"||a.tagName=="SELECT"))return true;
