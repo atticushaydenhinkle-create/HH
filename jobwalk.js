@@ -182,13 +182,13 @@ function laborHtml(d){var t=sums(d);
  '<div class="g3"><div><label>Hourly rate $</label><input data-cr="rate" inputmode="decimal" placeholder="0"></div><div><label>Burden x (opt.)</label><input data-cr="burden" inputmode="decimal" placeholder="1.0"></div><div><label>OT x (opt.)</label><input data-cr="otMult" inputmode="decimal" placeholder="1.5"></div></div>'+
  '<button style="width:100%;margin-top:6px" data-act="addCrew">+ Add employee</button>'+
  '<div style="margin-top:12px;border-top:1px solid #2a313c;padding-top:8px"><b>Labor entries</b><table><tr><th>Date</th><th>Employee</th><th class="r">Hrs</th><th class="r">Cost</th><th></th></tr>'+
- d.labor.map(function(l){return '<tr><td>'+esc(dOnly(l.date))+'</td><td>'+esc(crewName(d,l.empId))+(l.ot?' <span class="tag">OT</span>':'')+'</td><td class="r">'+dec(num(l.hours))+'</td><td class="r">'+money(lCost(l))+'</td><td class="r"><button class="sm dng" data-act="delLabor" data-id="'+l.id+'" aria-label="Delete">✕</button></td></tr>'}).join('')+
+ d.labor.map(function(l){return '<tr><td>'+esc(dOnly(l.date))+'</td><td>'+esc(l.empName||crewName(d,l.empId))+(l.ot?' <span class="tag">OT</span>':'')+'</td><td class="r">'+dec(num(l.hours))+'</td><td class="r">'+((l.rate===''||l.rate==null)?'<button class="sm" data-act="editLabor" data-id="'+l.id+'">set $/hr</button>':money(lCost(l)))+'</td><td class="r"><button class="sm dng" data-act="delLabor" data-id="'+l.id+'" aria-label="Delete">✕</button></td></tr>'}).join('')+
  (d.labor.length?'':'<tr><td colspan="5" class="mu">No labor logged yet.</td></tr>')+'</table>'+
  (d.crew.length?'<div class="g3" style="margin-top:6px"><div><label>Employee</label><select data-lb="empId">'+d.crew.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join('')+'</select></div><div><label>Date</label><input type="date" data-lb="date" value="'+today()+'"></div><div><label>Hours</label><input data-lb="hours" inputmode="decimal" placeholder="8"></div></div>'+
   '<label style="display:flex;align-items:center;gap:8px;color:#f2f4f7"><input type="checkbox" data-lb="ot" style="width:22px;min-height:22px"> Overtime</label><button style="width:100%;margin-top:6px" data-act="addLabor">+ Add labor</button>':'<div class="mu" style="margin-top:6px">Add an employee to log hours. Cost = hours × rate × burden (× OT multiplier if OT).</div>')+
  '<div class="row" style="margin-top:8px"><b class="grow">Labor subtotal</b><span class="tot">'+money(t.L)+'</span></div></div></div>';
  h+='<h3>Materials</h3><div class="card"><table><tr><th>Item</th><th class="r">Qty</th><th class="r">Unit $</th><th class="r">Total</th><th></th></tr>'+
- d.mats.map(function(m){return '<tr><td>'+esc(m.item)+(m.supplier?'<div class="mu">'+esc(m.supplier)+'</div>':'')+'</td><td class="r">'+dec(num(m.qty))+' '+esc(m.unit||'')+'</td><td class="r">'+money(num(m.price))+'</td><td class="r">'+money(mCost(m))+'</td><td class="r"><button class="sm dng" data-act="delMat" data-id="'+m.id+'" aria-label="Delete">✕</button></td></tr>'}).join('')+
+ d.mats.map(function(m){return '<tr><td>'+esc(m.item)+(m.supplier?'<div class="mu">'+esc(m.supplier)+'</div>':'')+'</td><td class="r">'+dec(num(m.qty))+' '+esc(m.unit||'')+'</td><td class="r"><button class="sm" data-act="editMat" data-id="'+m.id+'" aria-label="Edit price">'+(m.price===''||m.price==null?'set $':money(num(m.price)))+'</button></td><td class="r">'+money(mCost(m))+'</td><td class="r"><button class="sm dng" data-act="delMat" data-id="'+m.id+'" aria-label="Delete">✕</button></td></tr>'}).join('')+
  (d.mats.length?'':'<tr><td colspan="5" class="mu">No materials yet.</td></tr>')+'</table>'+
  '<div class="g2" style="margin-top:6px"><div><label>Item</label><input data-mt="item" placeholder="2x2x1/4 angle"></div><div><label>Supplier</label><input data-mt="supplier" placeholder="optional"></div></div>'+
  '<div class="g3"><div><label>Qty</label><input data-mt="qty" inputmode="decimal" placeholder="1"></div><div><label>Unit</label><input data-mt="unit" placeholder="ft, ea"></div><div><label>Unit price $</label><input data-mt="price" inputmode="decimal" placeholder="0"></div></div>'+
@@ -288,6 +288,8 @@ function onClick(ev){var t=ev.target.closest('[data-act]');if(!t||!root.contains
   delCrew:function(){confirmBox('Remove this employee from the roster? Their logged labor stays.','Remove').then(function(ok){if(ok)db.del('crew',id).then(render)})},
   addLabor:function(){var g=function(k){return $('[data-lb="'+k+'"]',root)};var hrs=num(g('hours').value);if(!hrs){toast('Enter hours');return}var eid=g('empId').value;
     db.get('crew',eid).then(function(c){if(!c)return;return db.put('labor',{id:uid(),jobId:view.id,empId:eid,empName:c.name,date:g('date').value,hours:hrs,ot:g('ot').checked,rate:num(c.rate),burden:num(c.burden)||1,otMult:num(c.otMult)||1.5,created:Date.now()})}).then(function(){touchJob(view.id);render()})},
+  editMat:function(){db.get('mats',id).then(function(m){if(!m)return;return ask('Unit price $ for '+(m.item||'item'),m.price===''?'':String(m.price),'Qty '+dec(num(m.qty))+' '+(m.unit||'')).then(function(v){if(v==null)return;m.price=String(v).trim()===''?'':num(v);return db.put('mats',m).then(function(){touchJob(view.id);render()})})})},
+  editLabor:function(){db.get('labor',id).then(function(l){if(!l)return;return ask('Hourly rate $ for '+(l.empName||'labor'),'',dec(num(l.hours))+' hr').then(function(v){if(v==null||String(v).trim()==='')return;l.rate=num(v);return db.put('labor',l).then(function(){touchJob(view.id);render()})})})},
   delLabor:function(){confirmBox('Delete this labor entry?').then(function(ok){if(ok)db.del('labor',id).then(render)})},
   addMat:function(){var g=function(k){return $('[data-mt="'+k+'"]',root).value.trim()};if(!g('item')){toast('Enter an item');return}
     db.put('mats',{id:uid(),jobId:view.id,item:g('item'),qty:g('qty')===''?1:num(g('qty')),unit:g('unit'),price:num(g('price')),supplier:g('supplier'),created:Date.now()}).then(function(){touchJob(view.id);render()})},
@@ -408,7 +410,17 @@ function importJson(file){return file.text().then(function(t){var d=JSON.parse(t
 
 // ---------- mount ----------
 function mount(el){if(!document.getElementById('jw-css')){var s=document.createElement('style');s.id='jw-css';s.textContent=CSS;document.head.appendChild(s)}
- unmount();root=el;el.classList.add('jw');el.addEventListener('click',onClick);el.addEventListener('change',onChange);el.addEventListener('input',onChange);view={name:'list'};return open().then(render)}
+ unmount();root=el;el.classList.add('jw');el.addEventListener('click',onClick);el.addEventListener('change',onChange);el.addEventListener('input',onChange);view=window.__jwOpen?{name:'job',id:window.__jwOpen}:{name:'list'};window.__jwOpen=null;return open().then(render)}
 function unmount(){if(!root)return;root.removeEventListener('click',onClick);root.removeEventListener('change',onChange);root.removeEventListener('input',onChange);root.classList.remove('jw');root.innerHTML='';freeUrls();root=null}
-window.JobWalk={version:VERSION,mount:mount,unmount:unmount,go:go,db:db,openReport:openReport,exportJson:exportJson,importJson:importJson,_util:{fracIn:fracIn,parseLen:parseLen,money:money,dec:dec}};
+
+// ---------- public helpers (work without mount) ----------
+function listJobs(all){return db.all('jobs').then(function(js){return js.filter(function(j){return all||j.status!=='Done'}).sort(function(a,b){return (b.updated||b.created||0)-(a.updated||a.created||0)})})}
+function createJob(name,addr){var j={id:uid(),name:name,address:addr||'',status:'Active',start:today(),created:Date.now(),updated:Date.now()};return db.put('jobs',j)}
+function pz(v){return v===''||v==null||!isFinite(parseFloat(v))?'':num(v)}
+function addItems(jobId,it){it=it||{};return db.get('jobs',jobId).then(function(j){if(!j)throw new Error('Job not found');var t=Date.now(),k=0,ps=[];
+ (it.materials||[]).forEach(function(m){ps.push(db.put('mats',{id:uid(),jobId:jobId,item:String(m.item||''),qty:m.qty===''||m.qty==null?1:num(m.qty),unit:m.unit||'',price:pz(m.price),supplier:m.supplier||'',src:m.src||'',created:t+(k++)}))});
+ (it.labor||[]).forEach(function(l){ps.push(db.put('labor',{id:uid(),jobId:jobId,empId:null,empName:String(l.desc||l.name||'Labor'),date:l.date||today(),hours:num(l.hours),ot:false,rate:pz(l.rate),burden:1,otMult:1.5,created:t+(k++)}))});
+ return Promise.all(ps).then(function(){return touchJob(jobId)}).then(function(){return j})})}
+function openJob(id){if(root)go({name:'job',id:id});else window.__jwOpen=id}
+window.JobWalk={version:VERSION,listJobs:listJobs,createJob:createJob,addItems:addItems,openJob:openJob,mount:mount,unmount:unmount,go:go,db:db,openReport:openReport,exportJson:exportJson,importJson:importJson,_util:{fracIn:fracIn,parseLen:parseLen,money:money,dec:dec}};
 })();
