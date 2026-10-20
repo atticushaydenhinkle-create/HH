@@ -202,7 +202,7 @@ a{color:#4da3ff}
 <div class="fld"><label>Total turn (°)<input id="mtA" inputmode="decimal" value="90"></label><label>Pipe OD (in)<input id="mtOD" inputmode="decimal" value="6.625"></label>
 <label class="w">Centerline radius (in)<input id="mtR" inputmode="decimal" value="9"></label></div><div id="mtOut"></div></div>
 <div class="card"><h3>BRANCH / LATERAL</h3><div class="fld"><label>Branch OD (in)<input id="brOD" inputmode="decimal" value="2.375"></label><label>Branch wall (in)<input id="brW" inputmode="decimal" value=".154"></label>
-<label>Header OD (in)<input id="brH" inputmode="decimal" value="6.625"></label><label>Angle (°)<input id="brA" inputmode="decimal" value="90"></label></div><div id="brOut"></div>
+<label>Header OD (in)<input id="brH" inputmode="decimal" value="6.625"></label><label>Angle (°)<input id="brA" inputmode="decimal" value="90"></label></div><div id="bhOut"></div>
 <button class="btn am" id="brCope" style="width:100%;margin-top:8px">Open cope template on Angles →</button></div>
 </section>
 <section class="screen" id="gates"></section>
@@ -275,7 +275,7 @@ a{color:#4da3ff}
 <label class="ccC"><span id="ccCL">Thickness (in)</span><input id="ccC" inputmode="decimal" value="4"></label>
 <label>Quantity<input id="ccQ" inputmode="decimal" value="1"></label>
 <label>Waste %<input id="ccW" inputmode="decimal" value="10"></label></div><div id="ccOut"></div>
-<div class="hint">Bags: 80 lb ≈ .60 cu ft, 60 lb ≈ .45 cu ft yield. Order ready-mix by the yard above ~1 yd.</div></div>
+<div class="hint">Bags (QUIKRETE/Sakrete data sheets): 80 lb ≈ .60 cu ft, 60 lb ≈ .45, 40 lb ≈ .30 cu ft yield (45 / 60 / 90 bags per yd³). Order ready-mix by the yard above ~1 yd.</div></div>
 <div class="card" id="rbCard"><h3>REBAR</h3>
 <div class="seg" id="rbM"><button data-m="slab" class="on">Slab</button><button data-m="foot">Footing</button><button data-m="wall">Wall</button></div><div class="fld">
 <label><span id="rbAL">Length (ft)</span><input id="rbA" inputmode="decimal" value="20"></label>
@@ -682,7 +682,7 @@ function pall(){
  if(n>2)h+='<div class="hint">Middle pieces ('+(n-2)+'):</div>'+tv("Middle – centerline",m.midCL)+tv("Middle – long side",m.midLong)+tv("Middle – short side",m.midShort);
  if(m.endShort<0)h+='<div class="hint err">Radius smaller than OD/2: short side negative.</div>';q("mtOut").innerHTML=h;
  var b=branchHole(P(q("brOD").value),P(q("brW").value),P(q("brA").value));
- q("brOut").innerHTML=tv("Hole – set-on (branch ID)",b.setOn)+tv("Hole – set-in (branch OD)",b.setIn)+(P(q("brA").value)!=90?tv("Set-on hole long axis",b.setOnLong)+tv("Set-in hole long axis",b.setInLong):"")}
+ q("bhOut").innerHTML=tv("Hole – set-on (branch ID)",b.setOn)+tv("Hole – set-in (branch OD)",b.setIn)+(P(q("brA").value)!=90?tv("Set-on hole long axis",b.setOnLong)+tv("Set-in hole long axis",b.setInLong):"")}
 q("kN").innerHTML=PIPE.map(function(r,i){return '<option value="'+i+'"'+(r[0]=="6"?" selected":"")+">"+r[0]+'"</option>'}).join("");
 ["kA","kB"].forEach(function(id){q(id).innerHTML=FT.map(function(f,i){return '<option value="'+i+'">'+f[2]+"</option>"}).join("")});
 document.querySelectorAll("#oSeg button").forEach(function(b){b.onclick=function(){q("oAng").value=b.dataset.a;pall()}});
@@ -957,11 +957,11 @@ function fr(){var TR=P(q("fsTR").value),T=P(q("fsT").value),mx=P(q("fsMax").valu
  var oc=+sv("fwOC","v"),wl=P(q("fwL").value),st=Math.ceil(wl*12/oc)+1+(P(q("fwX").value)||0);
  q("fwOut").innerHTML=R("Studs",st,"n")+R("Plate stock (3 plates, ft)",3*wl,"'")+H("Count = wall ÷ "+oc+'" OC, round up, +1 end stud. Add 2–3 per corner and per opening.')}
 var CC={slab:["Length (ft)","Width (ft)","Thickness (in)"],foot:["Length (ft)","Width (in)","Depth (in)"],col:["Diameter (in) e.g. 12","Height (ft)",null],wall:["Length (ft)","Height (ft)","Thickness (in)"]};
-function cc(){var m=sv("ccM","m"),L=CC[m];q("ccAL").textContent=L[0];q("ccBL").textContent=L[1];q("ccCL").textContent=L[2]||"";q("ccC").parentNode.style.display=L[2]?"":"none";
+function cc(){var m=sv("ccM","m"),L=CC[m];q("ccAL").textContent=L[0];q("ccBL").textContent=L[1];q("ccCL").textContent=L[2]||"";q("ccC").parentNode.style.display=L[2]?"":"none";["ccA","ccB","ccC"].forEach(function(i){var e=q(i);if(e&&e._duRe)e._duRe()});
  var a=P(q("ccA").value),b=P(q("ccB").value),c=P(q("ccC").value),Q=Math.max(1,Math.round(P(q("ccQ").value))||1),w=Math.max(0,P(q("ccW").value)||0)/100,cf;
  cf=m=="slab"?a*b*c/12:m=="foot"?a*b/12*c/12:m=="col"?Math.PI*Math.pow(a/24,2)*b:a*b*c/12;cf*=Q;var tot=cf*(1+w);
  if(!(a>0&&b>0&&(m=="col"||c>0))||!isFinite(tot)||!(tot>0)||tot>1e8){q("ccOut").innerHTML=R("Volume (cu ft)",NaN)+'<div class="big">ORDER<b>–</b></div><div class="hint err" style="margin-top:4px">Enter positive dimensions.</div>';window.__cc=null;return}
- q("ccOut").innerHTML=R("Volume (cu ft)",cf,"")+'<div class="big">ORDER (with '+decStr(w*100,1)+'% waste)<b class="tv" data-v="'+tot/27+'">'+decStr(tot/27,2)+" cu yd</b></div>"+R("Cu ft incl. waste",tot," ft³")+R("80 lb bags",Math.ceil(tot/.6),"n")+R("60 lb bags",Math.ceil(tot/.45),"n");window.__cc={yd:tot/27,b80:Math.ceil(tot/.6)}}
+ q("ccOut").innerHTML=R("Volume (cu ft)",cf,"")+'<div class="big">ORDER (with '+decStr(w*100,1)+'% waste)<b class="tv" data-v="'+tot/27+'">'+(tot/27).toFixed(2)+" cu yd</b></div>"+R("Cu ft incl. waste",tot," ft³")+R("80 lb bags",Math.ceil(tot/.6),"n")+R("60 lb bags",Math.ceil(tot/.45),"n")+R("40 lb bags",Math.ceil(tot/.3),"n")+'<div class="hint">Add to Job and My Materials round ready-mix up to the next ¼ yd ('+(tot/27).toFixed(2)+' → '+(Math.ceil(tot/27*4)/4).toFixed(2)+' yd³).</div>';window.__cc={yd:tot/27,b80:Math.ceil(tot/.6),b40:Math.ceil(tot/.3)}}
 var RBW={3:.376,4:.668,5:1.043,6:1.502,7:2.044,8:2.670},RBL={slab:["Length (ft)","Width (ft)","Spacing along length (in)","Spacing along width (in)"],foot:["Footing length (ft)","# continuous bars",null,null],wall:["Wall length (ft)","Wall height (ft)","Horizontal bar spacing (in)","Vertical bar spacing (in)"]};
 function rbRun(len,stk,lap){if(len<=stk)return{n:1,laps:0,tot:len};var n=Math.ceil((len-lap)/(stk-lap));return{n:n,laps:n-1,tot:len+(n-1)*lap}}
 function rbCalc(o){var z=o.z,d=z/8,lap=o.lm=="d"?o.lap*d:o.lap,stk=o.stock*12,c=o.c,res={lap:lap,d:d},runs=[];
@@ -1066,7 +1066,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script>
 <script>
-var APP_VERSION="v35";window.APP_VERSION=APP_VERSION;document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION});document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION})});
+var APP_VERSION="v36";window.APP_VERSION=APP_VERSION;document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION});document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION})});
 (function(){var RX=/-?Infinity|NaN|undefined/g;function scrub(root){if(!root||!root.querySelectorAll)return;var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n;while(n=w.nextNode()){if(RX.test(n.nodeValue)){RX.lastIndex=0;n.nodeValue=n.nodeValue.replace(RX,"–")}RX.lastIndex=0}}
  function go(){new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(x){if(x.nodeType==1){if(x.closest&&x.closest("section,.card"))scrub(x)}else if(x.nodeType==3&&x.parentNode&&x.parentNode.closest&&x.parentNode.closest("section,.card")&&RX.test(x.nodeValue)){RX.lastIndex=0;x.nodeValue=x.nodeValue.replace(RX,"–")}RX.lastIndex=0})})}).observe(document.body,{childList:true,subtree:true});document.querySelectorAll("section").forEach(scrub)}
  if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
@@ -1641,7 +1641,7 @@ function stair(){var tot=on("hrIn")=="tot",n=Math.round(P(q("hrN").value)),r=P(q
  for(var k=0;k<np;k++){var hx=k*ps*c,hy=r+hx*tn;g+='<line x1="'+X(hx)+'" y1="'+Y(hy)+'" x2="'+X(hx)+'" y2="'+Y(hy+Hh)+'" stroke="#ffb020" stroke-width="2"/>'}
  g+='<text x="'+X(n*t*.15)+'" y="'+(Hs-12)+'" fill="#9aa4b2" font-size="11">'+decStr(th,2)+'° · dashed = nosing line</text></svg>';q("hrSvg").innerHTML=g;list()}
 function brail(){var use=on("brU")=="on",st=on("brM")=="stair",C=P(q("brC").value),B=P(q("brS").value);
- q("brCL").textContent=st?"Clearance, plumb above nosing line (in)":"Clearance above floor (in)";BR={use:use,st:st};
+ q("brOut").innerHTML="";q("brCL").textContent=st?"Clearance, plumb above nosing line (in)":"Clearance above floor (in)";BR={use:use,st:st};
  if(!use){q("brOut").innerHTML=H("No bottom rail: pickets run to the floor/treads or are base-mounted. Openings still must stay under the 4\" sphere.");q("brSvg").innerHTML="";CL.br=[];return list()}
  if(!(C>=0&&B>0)){q("brOut").innerHTML=H("Enter clearance and rail size.");CL.br=[];return list()}
  var wn=C>4?'<div class="hint" style="color:#ff5c5c;margin-top:4px"><b>⚠ '+decStr(C,3)+'" clearance is over 4": a 4" sphere would pass under the rail (IBC 1015.4 / IRC R312.1.3). Keep it under 4".</b></div>':"",o=wn,svg="";
@@ -1889,21 +1889,21 @@ walk:{n:"Sidewalk / driveway",f:[["L","Length (ft)",40],["W","Width (ft)",4],["T
 foot:{n:"Continuous footing",f:[["L","Length (ft)",120],["W","Width (in)",16],["D","Depth (in)",8]],ex:"120' × 16\" × 8\" = 106.7 ft³ = 3.95 yd³.",c:function(v){return{cf:v.L*v.W*v.D/144,fl:2*v.L}}},
 pier:{n:"Round pier / Sonotube",f:[["d","Diameter (in)",12],["H","Depth (ft)",4],["N","Count",8]],ex:"8 × 12\" Ø × 4' deep: π×0.5²×4 = 3.14 ft³ ea → 25.1 ft³ = 0.93 yd³.",c:function(v){var r=v.d/24;return{cf:Math.PI*r*r*v.H*v.N,tube:v.N,rows:[["Per pier",(Math.PI*r*r*v.H).toFixed(2)+" ft³"]]}}},
 col:{n:"Column (round / square)",f:[["s","Diameter or side (in)",16],["H","Height (ft)",10],["N","Count",4],["sq","Square? 1 = yes, 0 = round",0]],ex:"4 round 16\" Ø × 10' = 4 × 13.96 = 55.9 ft³ = 2.07 yd³.",c:function(v){var a=v.sq?Math.pow(v.s/12,2):Math.PI*Math.pow(v.s/24,2);return{cf:a*v.H*v.N,fl:v.sq?4*v.s/12*v.N:0,rows:[["Per column",(a*v.H).toFixed(2)+" ft³"]]}}},
-step:{n:"Stairs / steps",f:[["R","Rise per step (in)",7],["U","Run / tread (in)",11],["W","Width (ft)",4],["N","Number of steps",3],["Ld","Top landing depth (in, 0 = none)",36]],ex:"3 steps 7\"/11\", 4' wide, 36\" landing: steps = 4×(7×11×(1+2+3))/144 = 12.8 ft³; landing = 4×36×21/144 = 21 ft³ → 33.8 ft³ = 1.25 yd³ (solid fill).",
+step:{n:"Stairs / steps",f:[["R","Rise per step (in)",7],["U","Run / tread (in)",11],["W","Width (ft)",4],["N","Number of treads (not counting landing)",3],["Ld","Top landing depth (in, 0 = none)",36]],ex:"3 steps 7\"/11\", 4' wide, 36\" landing: steps = 4×(7×11×(1+2+3))/144 = 12.8 ft³; landing = 4×36×21/144 = 21 ft³ → 33.8 ft³ = 1.25 yd³ (solid fill).",
  c:function(v){var st=v.W*v.R*v.U*v.N*(v.N+1)/2/144,ld=v.W*v.Ld*v.R*v.N/144;return{cf:st+ld,fl:v.N*v.W+2*(v.N*v.U+v.Ld)/12,rows:[["Steps",st.toFixed(1)+" ft³"],["Landing",ld.toFixed(1)+" ft³"],["Total rise",(v.R*v.N)+"\""]]}}},
 wall:{n:"Wall",f:[["L","Length (ft)",30],["H","Height (ft)",4],["T","Thickness (in)",8]],ex:"30' × 4' × 8\" = 80 ft³ = 2.96 yd³. Forms: 2 faces × 30 × 4 = 240 sq ft.",c:function(v){return{cf:v.L*v.H*v.T/12,fa:2*v.L*v.H}}},
 thick:{n:"Slab w/ thickened edge",f:[["L","Length (ft)",24],["W","Width (ft)",24],["T","Slab thickness (in)",4],["eD","Edge total depth (in)",12],["eW","Edge width at bottom (in)",12]],ex:"24×24 slab 4\" = 192 ft³; edge adds 96' perimeter × (12−4)\" × 12\" = 64 ft³ → 256 ft³ = 9.48 yd³ (corners slightly overcounted — fine for ordering).",
  c:function(v){var sl=v.L*v.W*v.T/12,ed=2*(v.L+v.W)*Math.max(0,v.eD-v.T)/12*v.eW/12;return{cf:sl+ed,fl:2*(v.L+v.W),rows:[["Slab",sl.toFixed(1)+" ft³"],["Thickened edge",ed.toFixed(1)+" ft³"]]}}},
 base:{n:"Gravel / base under slab",f:[["L","Length (ft)",24],["W","Width (ft)",24],["D","Base depth (in)",4]],ex:"24×24 × 4\" = 192 ft³ = 7.11 yd³ → ×1.4 ≈ 10 tons (approx; ask the supplier for their density & compaction).",c:function(v){return{cf:v.L*v.W*v.D/12,gravel:1}}}};
 var K=Object.keys(T),cur="curb",vals={};
-S.insertBefore(Object.assign(document.createElement("div"),{className:"card",id:"cmCard",innerHTML:'<h3>MORE CONCRETE CALCULATORS</h3><select id="cmT" style="width:100%">'+K.map(function(k){return'<option value="'+k+'">'+T[k].n+"</option>"}).join("")+'</select><div class="fld" id="cmF"></div><div class="fld"><label>Waste %<input id="cmW" inputmode="decimal" value="10"></label><label>Forms<select id="cmFo"><option value="1">Include form boards</option><option value="0">No forms</option></select></label></div><div id="cmOut"></div><details class="ms"><summary>Worked example</summary><div class="mw" id="cmEx" style="font-size:14px;padding:6px"></div></details><div class="hint">Bags (QUIKRETE data sheet): 80 lb ≈ 0.60 ft³, 60 lb ≈ 0.45 ft³. Ready-mix above ~1 yd. Engineer/plans and local code govern sizes & reinforcing.</div>'}),MC||null);
+S.insertBefore(Object.assign(document.createElement("div"),{className:"card",id:"cmCard",innerHTML:'<h3>MORE CONCRETE CALCULATORS</h3><select id="cmT" style="width:100%">'+K.map(function(k){return'<option value="'+k+'">'+T[k].n+"</option>"}).join("")+'</select><div class="fld" id="cmF"></div><div class="fld"><label>Waste %<input id="cmW" inputmode="decimal" value="10"></label><label>Forms<select id="cmFo"><option value="1">Include form boards</option><option value="0">No forms</option></select></label></div><div id="cmOut"></div><details class="ms"><summary>Worked example</summary><div class="mw" id="cmEx" style="font-size:14px;padding:6px"></div></details><div class="hint">Bags (QUIKRETE/Sakrete data sheets): 80 lb ≈ 0.60 ft³, 60 lb ≈ 0.45 ft³, 40 lb ≈ 0.30 ft³. Ready-mix above ~1 yd. Engineer/plans and local code govern sizes & reinforcing.</div>'}),MC||null);
 function fields(){var t=T[cur];q("cmF").innerHTML=t.f.map(function(f){return'<label>'+f[1]+'<input data-k="'+f[0]+'" inputmode="decimal" value="'+f[2]+'"></label>'}).join("");q("cmEx").textContent=t.ex;calc()}
 function rs(l,v){return'<div class="rs">'+l+"<b>"+v+"</b></div>"}
 var last=null;
 function calc(){var t=T[cur],v={},bad=[];q("cmF").querySelectorAll("input[data-k]").forEach(function(i){var x=parseFloat(i.value),k=i.dataset.k,opt=k=="Ld"||k=="sq";if(!isFinite(x)||x<0||(!opt&&x==0))bad.push(((i.closest("label")||{}).childNodes||[{textContent:k}])[0].textContent.trim());v[k]=isFinite(x)&&x>0?x:0});if(!bad.length&&(cur=="pier"||cur=="col"))v.N=Math.round(v.N);var r=bad.length?{cf:NaN}:t.c(v),w=Math.max(0,parseFloat(q("cmW").value)||0),cf=r.cf*(1+w/100),yd=cf/27,fo=q("cmFo").value=="1",o="";
  if(!isFinite(cf)||!(cf>0)||cf>1e8){last=null;q("cmOut").innerHTML=rs("Volume","–")+'<div class="big">ORDER<b>–</b></div><div class="hint err">'+(bad.length?"Check: "+bad.join(", ")+" (must be a positive number)":"Enter positive dimensions.")+"</div>";return}
  if(r.gravel){var tn=yd*1.4;o+=rs("Base volume (no waste)",r.cf.toFixed(1)+" ft³")+'<div class="big">ORDER (with '+w+'% waste)<b>'+yd.toFixed(2)+" yd³ ≈ "+tn.toFixed(1)+" tons</b></div>"+'<div class="hint">Tons ≈ yd³ × 1.4 (approximate for crushed base/gravel — varies by material & moisture).</div>';last={yd:yd,tn:tn}}
- else{var b8=Math.ceil(cf/.6),b6=Math.ceil(cf/.45);o+=rs("Volume (no waste)",r.cf.toFixed(1)+" ft³")+'<div class="big">ORDER (with '+w+'% waste)<b>'+yd.toFixed(2)+" yd³</b></div>"+rs("80 lb bags",b8)+rs("60 lb bags",b6);last={yd:yd,b8:b8,b6:b6}}
+ else{var b8=Math.ceil(cf/.6),b6=Math.ceil(cf/.45),b4=Math.ceil(cf/.3);o+=rs("Volume (no waste)",r.cf.toFixed(1)+" ft³")+'<div class="big">ORDER (with '+w+'% waste)<b>'+yd.toFixed(2)+" yd³</b></div>"+rs("80 lb bags",b8)+rs("60 lb bags",b6)+rs("40 lb bags",b4)+'<div class="hint">Add to Job rounds ready-mix up to the next ¼ yd ('+yd.toFixed(2)+' → '+(Math.ceil(yd*4)/4).toFixed(2)+' yd³).</div>';last={yd:yd,b8:b8,b6:b6,b4:b4}}
  (r.rows||[]).forEach(function(x){o+=rs(x[0],x[1])});last.fl=fo&&r.fl?r.fl:0;last.fa=fo&&r.fa?r.fa:0;last.tube=r.tube?{n:r.tube,d:v.d,h:v.H}:null;
  if(last.fl)o+=rs("Form boards (approx.)",Math.ceil(last.fl)+" lf");if(last.fa)o+=rs("Wall forms (both faces)",Math.ceil(last.fa)+" sq ft");if(last.tube)o+=rs("Sonotubes",last.tube.n+" × "+last.tube.d+"\" Ø ("+last.tube.h+"' ea)");
  q("cmOut").innerHTML=o}
@@ -1911,7 +1911,7 @@ q("cmT").onchange=function(){cur=this.value;fields()};q("cmCard").addEventListen
 var b=document.createElement("button");b.className="btn am atjBtn";b.textContent="➕ Add to Job";q("cmOut").insertAdjacentElement("afterend",b);
 b.onclick=function(){if(!last||!window.hhATJ)return;var n=T[cur].n,it=[];
  if(last.tn!=null)it.push({item:"Gravel / base ("+n+")",qty:+last.tn.toFixed(1),unit:"tons"},{item:"Gravel / base volume",qty:+last.yd.toFixed(2),unit:"yd³",off:1});
- else it.push({item:"Ready-mix concrete – "+n,qty:Math.ceil(last.yd*4)/4,unit:"yd³"},{item:"Concrete mix 80 lb bags – "+n,qty:last.b8,unit:"bags",off:1},{item:"Concrete mix 60 lb bags – "+n,qty:last.b6,unit:"bags",off:1});
+ else it.push({item:"Ready-mix concrete – "+n,qty:Math.ceil(last.yd*4)/4,unit:"yd³"},{item:"Concrete mix 80 lb bags – "+n,qty:last.b8,unit:"bags",off:1},{item:"Concrete mix 60 lb bags – "+n,qty:last.b6,unit:"bags",off:1},{item:"Concrete mix 40 lb bags – "+n,qty:last.b4,unit:"bags",off:1});
  if(last.fl)it.push({item:"Form boards – "+n,qty:Math.ceil(last.fl),unit:"lf"});if(last.fa)it.push({item:"Wall forms – "+n,qty:Math.ceil(last.fa),unit:"sq ft"});
  if(last.tube)it.push({item:"Sonotube "+last.tube.d+"\" Ø × "+last.tube.h+"'",qty:last.tube.n,unit:"ea"});hhATJ.open(n,it)};
 })();</script>
@@ -2005,7 +2005,7 @@ function rows(id){var e=q(id),o={};if(!e)return o;e.querySelectorAll(".rs,.big")
 function N(v){var x=parseFloat(String(v).replace(/[^0-9.\-]/g,""));return isFinite(x)?x:0}
 function val(id){var e=q(id);return e?e.value:""}
 function btn(afterEl,title,fn){if(!afterEl)return;var b=document.createElement("button");b.className="btn am atjBtn";b.textContent="➕ Add to Job";b.onclick=function(){open(title,fn())};afterEl.insertAdjacentElement("afterend",b)}
-btn(q("ccOut"),"Concrete",function(){var c=window.__cc;if(!c||!(c.yd>0))return[];return[{item:"Ready-mix concrete",qty:Math.ceil(c.yd*4)/4,unit:"yd³"},{item:"Concrete mix 80 lb bags",qty:c.b80,unit:"bags",off:1}]});
+btn(q("ccOut"),"Concrete",function(){var c=window.__cc;if(!c||!(c.yd>0))return[];return[{item:"Ready-mix concrete",qty:Math.ceil(c.yd*4)/4,unit:"yd³"},{item:"Concrete mix 80 lb bags",qty:c.b80,unit:"bags",off:1},{item:"Concrete mix 40 lb bags",qty:c.b40,unit:"bags",off:1}]});
 btn(document.querySelector("#rbCard #rbOut"),"Rebar",function(){var r=window.__rb;return r&&r.sticks>0?[{item:"#"+r.z+" rebar "+r.stock+"' sticks",qty:r.sticks,unit:"sticks"}]:[]});
 btn(q("mlTot"),"My Materials",function(){var R=window.__ml&&__ml.rows?__ml.rows():[];return R.filter(function(r){return r.item||r.qty}).map(function(r){return{item:r.item||"(item)",qty:r.qty,unit:r.unit,price:r.price}})});
 btn(q("lbOut"),"Lumber",function(){var t=val("lbT"),w=val("lbW"),L=val("lbL"),Q=Math.max(1,Math.round(N(val("lbQ")))||1),c=val("lbC").trim(),bf=N(t)*N(w)*N(L)/12;if(!(bf>0))return[];return[{item:t+"×"+w+" × "+L+"' lumber ("+(+bf.toFixed(2))+" BF ea)",qty:Q,unit:"ea",price:c&&N(c)?+(N(c)*bf).toFixed(2):""}]});
@@ -2419,6 +2419,7 @@ window.hhJobCard={get:jc,text:jcText,capture:capture};
 <script id="cujs">(function(){var q=function(i){return document.getElementById(i)},S=q("concrete");if(!S)return;
 // parse: returns inches or NaN. unit = "ft"|"in" used when no marks
 function parseDim(t,unit){t=String(t).trim().replace(/[″”]/g,'"').replace(/[′’]/g,"'");if(!t)return NaN;var m,fr=function(x){x=x.trim();if(!x)return 0;var p=x.match(/^(\d+(?:\.\d+)?)?(?:\s*(\d+)\/(\d+))?$/);if(!p)return NaN;return(+p[1]||0)+(p[2]?p[2]/p[3]:0)};
+ if((m=t.match(/^(\d[\d.\s\/]*?)\s*'$/))&&isFinite(fr(m[1])))return fr(m[1])*12;
  if((m=t.match(/^(-?\d+(?:\.\d+)?)\s*'\s*(?:-\s*)?(.*?)\s*"?$/)))return +m[1]*12+fr(m[2]);
  if((m=t.match(/^(\d+)\s*-\s*(\d+(?:\.\d+)?(?:\s+\d+\/\d+)?)\s*"?$/)))return +m[1]*12+fr(m[2]);
  if((m=t.match(/^(.*?)\s*"$/)))return fr(m[1]);
@@ -2439,14 +2440,16 @@ function wrap(inp,key){if(inp.dataset.du)return;var nu=native(inp);if(!nu)return
  bt.onclick=function(){var inch=parseDim(px.value,u);u=u=="ft"?"in":"ft";bt.textContent=u;CU[key]=u;localStorage.setItem("hhCU",JSON.stringify(CU));if(isFinite(inch)&&!/['"-]/.test(px.value))px.value=fmt(u=="ft"?inch/12:inch);toOrig()};
  inp.addEventListener("input",function(){if(!self)fromOrig()});inp.addEventListener("change",function(){if(!self)fromOrig()});
  if(inp.value&&!/^-?[\d.]+$/.test(inp.value.trim())){var ii=parseDim(inp.value,nu);if(isFinite(ii)){var raw=inp.value;inp.value=String(+(nu=="ft"?ii/12:ii).toFixed(6));setTimeout(function(){px.value=raw},0);setTimeout(function(){inp.dispatchEvent(new Event("input",{bubbles:true}))},0)}}
- fromOrig();inp._duSync=fromOrig}
+ fromOrig();inp._duSync=fromOrig;var lastN=nu;
+ // v36: when a card relabels this field (e.g. Concrete Slab "Length (ft)" -> Column "Diameter (in)"), reset the ft/in toggle to the new native unit
+ inp._duRe=function(){var n=native(inp)||nu;if(n===lastN)return;lastN=n;u=n;bt.textContent=u;fromOrig()};lastN=native(inp)||nu;if(u!==lastN&&!CU[key]){u=lastN;bt.textContent=u;fromOrig()}}
 // quick converter
 var qc=document.createElement("div");qc.className="card";qc.id="cyCard";
 var U='<select class="cyU" style="width:64px"><option value="ft">ft</option><option value="in">in</option><option value="yd">yd</option></select>';
 qc.innerHTML='<h3>QUICK L × W × D → CUBIC YARDS</h3><div class="hint">Mixed entries OK: 10\', 4\' 6", 4-6, 54", 4.5\'</div>'+["Length","Width","Depth"].map(function(n,i){return'<div style="margin-top:6px"><label style="font-size:12.5px;color:#a7b0bd;font-weight:700">'+n+'</label><div class="duRow"><input id="cy'+i+'" inputmode="text" value="'+["10","10","4"][i]+'" aria-label="'+n+'">'+U.replace('<select','<select id="cyu'+i+'" aria-label="'+n+' unit"')+'</div></div>'}).join("")+'<div id="cyOut"></div>';
 S.insertBefore(qc,S.firstChild);q("cyu2").value="in";
-function cy(){var t=1,bad=0;[0,1,2].forEach(function(i){var u=q("cyu"+i).value,inch=parseDim(q("cy"+i).value,u=="yd"?"ft":u);if(u=="yd"&&!/['"-]/.test(q("cy"+i).value))inch=parseFloat(q("cy"+i).value)*36;if(!isFinite(inch)||!(inch>0))bad=1;t*=inch});
- q("cyOut").innerHTML=bad?'<div class="big">VOLUME<b>–</b></div><div class="hint err">Check the entries (positive numbers only).</div>':'<div class="big">VOLUME<b>'+(t/46656).toFixed(2)+' yd³</b></div><div class="rs">Cubic feet<b>'+(t/1728).toFixed(2)+' ft³</b></div><div class="rs">Cubic inches<b>'+Math.round(t).toLocaleString()+' in³</b></div><div class="rs">80 lb bags (0.60 ft³)<b>'+Math.ceil(t/1728/.6)+'</b></div>'}
+function cy(){var t=1,bad=0,ydb=0;[0,1,2].forEach(function(i){var u=q("cyu"+i).value,tx=String(q("cy"+i).value).trim(),inch=parseDim(tx,u=="yd"?"ft":u);if(u=="yd"&&!/['"]/.test(tx)){inch=/^\d/.test(tx)&&!/-/.test(tx)?parseDim(tx,"in")*36:NaN;if(/-/.test(tx))ydb=1};if(!isFinite(inch)||!(inch>0))bad=1;t*=inch});
+ q("cyOut").innerHTML=bad?'<div class="big">VOLUME<b>–</b></div><div class="hint err">Check the entries (positive numbers only).'+(ydb?' In yd mode use decimals or fractions (3.5 or 3 1/2), or mark feet/inches (3\' 6").':'')+'</div>':'<div class="big">VOLUME<b>'+(t/46656).toFixed(2)+' yd³</b></div><div class="rs">Cubic feet<b>'+(t/1728).toFixed(2)+' ft³</b></div><div class="rs">Cubic inches<b>'+Math.round(t).toLocaleString()+' in³</b></div><div class="rs">80 lb bags (0.60 ft³, no waste)<b>'+Math.ceil(t/1728/.6)+'</b></div><div class="rs">60 lb bags (0.45 ft³, no waste)<b>'+Math.ceil(t/1728/.45)+'</b></div><div class="rs">40 lb bags (0.30 ft³, no waste)<b>'+Math.ceil(t/1728/.3)+'</b></div><div class="hint">No waste added here. Use the Concrete card below for waste %.</div>'}
 qc.addEventListener("input",function(e){e.stopPropagation();cy()});qc.addEventListener("change",function(e){e.stopPropagation();cy()});cy();
 // wrap all dimension inputs on the page (and re-wrap dynamic ones)
 function all(){document.querySelectorAll("#concrete,#siding,#deck,#stucco,#cutlist,#tmpl,#wsym,#pipe #roCard,#fwCard").forEach(function(S){S.querySelectorAll("input[inputmode=decimal]").forEach(function(i){if(i.closest("#cyCard"))return;var k=i.id||((i.closest(".card")||{}).id||"c")+":"+(i.dataset.k||"");wrap(i,k)})})}
@@ -2506,7 +2509,7 @@ window.hhPrefs={snap:snap,apply:apply,favs:favs,exportPrefs:exportPrefs,pickImpo
 
 <script id="guardjs">(function(){
 // v35: input guards. [input id, min, exclusive?, max, output ids (same section), message]
-var G=[["tcL",0,1,1e5,"tcOut","Side length must be more than 0."],["kCC",0,1,1e5,"kOut","Center-to-center must be more than 0."],["mtR",0,1,1e5,"mtOut","Radius must be more than 0."],["brOD",0,1,1e4,"brOut","Branch OD must be more than 0."],
+var G=[["tcL",0,1,1e5,"tcOut","Side length must be more than 0."],["kCC",0,1,1e5,"kOut","Center-to-center must be more than 0."],["mtR",0,1,1e5,"mtOut","Radius must be more than 0."],["brOD",0,1,1e4,"bhOut","Branch OD must be more than 0."],
 ["gtW",0,1,1e5,"gtOut","Opening width must be more than 0."],["gtH",0,1,1e5,"gtOut","Gate height must be more than 0."],
 ["hrH",0,1,1e4,"hrOut,pkOut,brOut,hcList","Rail height must be more than 0."],["hrG",0,1,1e4,"hrOut","Guard height must be more than 0."],["rbL1",0,1,1e5,"rbOut","Leg lengths must be more than 0."],["rbL2",0,1,1e5,"rbOut","Leg lengths must be more than 0."],
 ["fsTR",0,1,1e5,"fsOut","Total rise must be more than 0."],["fsT",0,1,1e4,"fsOut","Tread depth must be more than 0."],["rfS",0,1,1e4,"rfROut","Building span must be more than 0."],["rfDp",0,1,1e3,"rfROut","Rafter depth must be more than 0."],
