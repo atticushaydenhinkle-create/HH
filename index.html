@@ -1094,7 +1094,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script>
 <script>
-var APP_VERSION="v27";
+var APP_VERSION="v28";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
@@ -1797,4 +1797,46 @@ function calc(){var i=+q("wcS").value,t=+q("wcT").value,F=parseFloat(q("wcA").va
  var mx=-1;for(var k=0;k<Z.length;k++)if((m=="a"&&k==0)?0:(p=="3"?1.732:2)*K*I*L/CM[k]/V*100<=3){mx=k;break}
  if(m!="a"||s>0)ou+=rs("Smallest for ≤3%",mx<0?"> 500 kcmil":nm(Z[mx])+" (check ampacity too)");q("vdOut").innerHTML=ou}
 seg("vdM");seg("vdP");["wcS","wcT","wcA","wcN","vdS","vdI","vdV","vdL"].forEach(function(id){q(id).addEventListener("input",calc);q(id).addEventListener("change",calc)});calc()})();</script>
+<script id="bkjs">(function(){var q=function(i){return document.getElementById(i)},S=q("elec"),W=q("wireCard");if(!S)return;
+var P=[["Receptacle outlet (per yoke) – 180 VA, 220.14(I) commercial",180,0,0],["Angle grinder 4-1/2\" (~6 A)",720,1,0],["Chop saw 14\" abrasive (~15 A)",1800,1,0],["Miter saw 10–12\" (~15 A)",1800,1,0],["Air compressor 120V portable (~15 A)",1800,1,0],["Space heater 1500 W",1500,0,1],["120V MIG welder – Hobart 140 (~20 A rated input)",2400,0,0],["Microwave (~1500 W input)",1500,0,0],["Refrigerator (~6 A)",720,1,0],["LED shop light 4' (~40 W)",40,0,1],["Shop vac (~10 A)",1200,1,0],["Bench grinder 8\" (~5 A)",600,1,0]];
+var STD=[15,20,25,30,35,40,45,50,60,70,80,90,100,110,125,150,175,200];
+var CW=[["14",15,20],["12",20,25],["10",30,35],["8",40,50],["6",55,65],["4",70,85],["3",85,100],["2",95,115],["1",110,130],["1/0",125,150],["2/0",145,175],["3/0",165,200],["4/0",195,230]];
+var L=[],V=120;
+S.insertAdjacentHTML("beforeend",'<div class="card" id="bkCard"><h3>CIRCUIT &amp; BREAKER CALCULATOR</h3><div class="hint" style="color:#ffb020">⚠ Single-phase branch circuit, NEC 2023. Preset loads are typical nameplate estimates only — check the actual nameplate (welders: use the manufacturer\'s rated input amps). Local amendments apply — check with your AHJ.</div><div class="seg" id="bkV"><button data-v="120" class="on">120V</button><button data-v="240">240V</button></div><div class="fld"><label style="flex-basis:100%">Add preset load<select id="bkP" style="width:100%"><option value="">— pick a load —</option>'+P.map(function(p,i){return'<option value="'+i+'">'+p[0]+"</option>"}).join("")+'</select></label></div><div class="fld"><label>Custom name<input id="bkN" placeholder="e.g. Band saw"></label><label>Watts or amps<input id="bkW" inputmode="decimal" placeholder="e.g. 1200"></label><label>Unit<select id="bkU"><option value="w">Watts (VA)</option><option value="a">Amps</option></select></label><label>Motor?<select id="bkM"><option value="0">No</option><option value="1">Yes (FLA)</option></select></label></div><button class="btn" id="bkAdd">+ Add custom load</button><div id="bkList"></div><div id="bkOut"></div>'+
+'<details class="ms"><summary>Outlets per circuit guide</summary><div class="mw" style="font-size:14px;padding:6px">'+
+'<p><b>Commercial (220.14(I)):</b> 180 VA per yoke. 15A×120V = 1800 VA → <b>~10 outlets</b>. 20A×120V = 2400 VA → <b>~13 outlets</b> (fewer if the load is continuous: 20A @ 80% → 10).</p>'+
+'<p><b>Dwellings:</b> the NEC sets <b>no limit</b> on outlets per circuit — receptacles are included in the general lighting load (220.14(J)). <i>Common practice (not code):</i> 8–10 on 15A, 10–13 on 20A.</p>'+
+'<p><b>Required dwelling circuits:</b> two+ 20A small-appliance kitchen/dining circuits (210.11(C)(1)); one 20A laundry (210.11(C)(2)); one 20A bathroom receptacle circuit (210.11(C)(3)); one 20A garage circuit (210.11(C)(4)).</p>'+
+'<p><b>GFCI (210.8):</b> kitchens, baths, garages, outdoors, basements, laundry, within 6 ft of sinks, and more. <b>AFCI (210.12):</b> most dwelling 120V 15/20A circuits supplying living areas, kitchens, laundry.</p>'+
+'<p><b>Motors (430.22/430.24):</b> size wire at FLA × 125% (largest motor ×125% + others at 100%). Use table FLA (430.6) where the code requires, not nameplate.</p>'+
+'<p><b>Continuous load</b> = max current for 3+ hours (Art. 100). Breaker and wire ≥ 125% continuous + 100% non-continuous (210.19(A), 210.20(A)).</p></div></details></div>');
+if(W)S.insertBefore(q("bkCard"),W);
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function rs(l,v){return'<div class="rs">'+l+"<b>"+v+"</b></div>"}
+function draw(){q("bkList").innerHTML=L.map(function(l,i){return'<div class="rs" style="display:block"><b style="float:none;font-size:15px;color:#e8ecf1">'+esc(l.n)+'</b> <span style="color:#7c8594;font-size:12px">'+Math.round(l.va)+' VA'+(l.m?" · motor":"")+'</span><div style="display:flex;gap:10px;align-items:center;margin-top:4px;font-size:14px">Qty <input data-i="'+i+'" data-k="q" inputmode="numeric" value="'+l.q+'" style="width:56px"><label><input type="checkbox" data-i="'+i+'" data-k="c" style="width:22px;height:22px;min-height:0;padding:0;vertical-align:middle"'+(l.c?" checked":"")+'> Continuous (3+ hr)</label><button class="btn" data-x="'+i+'" style="margin-left:auto;padding:4px 10px">✕</button></div></div>'}).join("");calc()}
+function calc(){var tot=0,cont=0,mx=0,o="";L.forEach(function(l){var va=l.va*(l.q||0);tot+=va;if(l.c)cont+=va;if(l.m&&l.va>mx)mx=l.va});
+ if(!L.length){q("bkOut").innerHTML='<div class="hint">Add loads above to size the circuit.</div>';return}
+ var A=tot/V,req=(tot+0.25*cont+(mx?0.25*mx:0))/V;
+ /* avoid double 25% when largest motor is also continuous */
+ L.forEach(function(l){if(l.m&&l.c&&l.va==mx){req-=0.25*mx/V;mx=-1}});
+ var br=STD.filter(function(s){return s>=req-1e-9})[0];
+ o+=rs("Total load",Math.round(tot)+" VA")+rs("Total current @ "+V+"V",A.toFixed(1)+" A")+rs("Design amps (125% cont. + 125% largest motor)",req.toFixed(1)+" A");
+ if(!br){o+=rs("Breaker","> 200 A — split the load");q("bkOut").innerHTML=o;return}
+ var w=CW.filter(function(c){var cap={"14":15,"12":20,"10":30}[c[0]];return(cap?cap:c[1])>=br})[0],w75=CW.filter(function(c){var cap={"14":15,"12":20,"10":30}[c[0]];return(cap?cap:c[2])>=br})[0];
+ o+=rs("Breaker (next std size, 240.6(A))",'<span style="color:#4cd964">'+br+" A</span>");
+ o+=rs("Min copper wire (60°C / NM-B)",w?w[0]+" AWG":"—")+rs("Min copper wire (75°C THHN, listed terminals)",w75?w75[0]+" AWG":"—");
+ var pct=A/br*100;o+=rs("Load vs breaker",'<span style="color:'+(pct>80?"#ff6b6b":"#4cd964")+'">'+pct.toFixed(0)+"%"+(pct>80?" — over 80%":"")+"</span>");
+ var n=V==120?Math.ceil(req/20):Math.ceil(req/30);
+ if(V==120&&req>20)o+='<div class="hint" style="color:#ffb020">💡 Over 20A at 120V — split into <b>'+n+' × 20A circuits</b> (12 AWG Cu each), or move big loads to 240V.</div>';
+ else if(pct>80)o+='<div class="hint" style="color:#ffb020">💡 Over 80% of the breaker — consider a dedicated circuit for the biggest load.</div>';
+ if(L.some(function(l){return/welder/i.test(l.n)}))o+='<div class="hint">Welders: Art. 630 sizes welder circuits from the nameplate I1eff / rated input — follow the manual\'s breaker & wire.</div>';
+ o+='<div class="hint">Wire per 240.4(D) small-conductor limits & Table 310.16. Not derated — see <a href="#" id="bkWr" style="color:#ffb020">Wire Ratings ↓</a> for ambient/bundling and voltage drop.</div>';
+ q("bkOut").innerHTML=o;var a=q("bkWr");if(a)a.onclick=function(e){e.preventDefault();W&&W.scrollIntoView({behavior:"smooth"})}}
+q("bkV").querySelectorAll("button").forEach(function(b,_,all){b.onclick=function(){all.forEach(function(y){y.classList.remove("on")});b.classList.add("on");V=+b.dataset.v;calc()}});
+q("bkP").onchange=function(){var p=P[this.value];if(p){L.push({n:p[0],va:p[1],m:p[2],c:p[3],q:1});this.value="";draw()}};
+q("bkAdd").onclick=function(){var x=parseFloat(q("bkW").value);if(!(x>0))return;var va=q("bkU").value=="a"?x*V:x;L.push({n:q("bkN").value||"Custom load",va:va,m:+q("bkM").value,c:0,q:1});q("bkW").value="";q("bkN").value="";draw()};
+q("bkList").addEventListener("input",function(e){var i=e.target.dataset.i;if(i==null)return;if(e.target.dataset.k=="q")L[i].q=Math.max(0,parseInt(e.target.value)||0);else L[i].c=e.target.checked;calc()});
+q("bkList").addEventListener("click",function(e){var x=e.target.dataset.x;if(x!=null){L.splice(+x,1);draw()}});
+draw()})();</script>
+
 </body></html>
