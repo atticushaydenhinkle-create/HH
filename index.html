@@ -61,6 +61,7 @@ nav button{font-size:10px}
 .seg{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}.seg button{flex:1;padding:8px 4px;border:0;border-radius:8px;background:#1d222a;color:#9aa4b2;font-weight:800;font-size:12px}.seg button.on{background:#ffb020;color:#000}
 .diag{display:block;margin:6px auto 0;background:#000;border-radius:8px}
 #moreMenu{position:fixed;right:8px;bottom:70px;background:#1d222a;border:2px solid #ffb020;border-radius:12px;display:none;flex-direction:column;overflow:hidden;z-index:9}
+#moreMenu .mmScroll{max-height:calc(100vh - 110px);overflow-y:auto;display:flex;flex-direction:column}.mmG summary{padding:10px 18px;font-size:12px;font-weight:900;color:#ffb020;letter-spacing:1px;text-transform:uppercase;background:#151a20;border-bottom:1px solid #2a2f37;cursor:pointer}.mmG button{width:100%}
 #moreMenu button{padding:14px 26px;font-size:17px;font-weight:800;background:none;color:#fff;border:0;border-bottom:1px solid #2a2f37;text-align:left}
 #copeT td,#copeT th{padding:4px 6px;font-size:13px;text-align:right;border-bottom:1px solid #222831}#copeT th{color:#ffb020}
 #copeT{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
@@ -175,30 +176,39 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <label class="sz szOD">OD<input id="aOD" inputmode="decimal" value="1.66"></label>
 <label class="sz szWall">Wall<input id="aWall" inputmode="decimal" value="1/8"></label>
 </div><div class="hint">Miter depth used below = <span id="aD"></span> (in the plane of the cut)</div></div>
+<div class="card" id="tcCard"><h3>TUBE &amp; PIPE CUTS</h3>
+<div class="hint" style="margin-bottom:4px">1) What are you cutting?</div>
+<div class="seg" id="tcMode"><button data-m="frame" class="on">Frame corner</button><button data-m="miter">Miter cut<br><small>angle cut on end</small></button><button data-m="cope">Cope / saddle<br><small>tube meets tube</small></button></div>
+<div class="hint" style="margin-bottom:4px">2) Material</div>
+<div class="seg" id="tcProf"><button data-p="sq" class="on">Square / Rect tube</button><button data-p="rd">Round pipe</button></div>
+<div class="fld">
+<label class="w tcRd">Pipe size (sets OD)<select id="tcNps"><option value="">Custom – type OD below</option></select></label>
+<label class="w"><span id="tcWL">Tube width (in) – the face you cut through, e.g. 2</span><input id="tcW" inputmode="decimal" value="2"></label>
+<label class="tcM"><span id="tcAL">Saw angle per piece (°) e.g. 22.5</span><input id="tcA" inputmode="decimal" value="45"></label>
+<label class="tcM">I know the…<select id="tcAK"><option value="cut">Saw angle per piece</option><option value="joint">Total turn of the joint</option></select></label>
+<label class="tcF">Number of sides (e.g. 4)<input id="tcN" inputmode="decimal" value="4"></label>
+<label class="tcF">…or corner angle (°) e.g. 90<input id="tcC" inputmode="decimal" placeholder="optional"></label>
+<label class="tcF">Side length (in) e.g. 24<input id="tcL" inputmode="decimal" value="24"></label>
+<label class="tcF">That length is the…<select id="tcLM"><option value="out">Outside edge</option><option value="in">Inside edge</option></select></label>
+<label class="tcF w">2nd side length for a rectangle (in) – optional, 4 sides only<input id="tcL2" inputmode="decimal" placeholder="e.g. 36"></label>
+<label class="tcM">Long-point length (in) e.g. 24<input id="tcML" inputmode="decimal" value="24"></label>
+<label class="tcM">Other end saw angle (°) – 0 = square<input id="tcA2" inputmode="decimal" value="0"></label>
+<label class="tcCo">Main (run) tube OD (in) e.g. 2.375<input id="pM" inputmode="decimal" value="2.375"></label>
+<label class="tcCo">Angle between tubes (°) – 90 = tee<input id="pA" inputmode="decimal" value="90"></label>
+<input id="pB" type="hidden">
+</div>
+<div id="tcTip" class="hint" style="color:#ffb020;margin:6px 0"></div>
+<svg id="tcSvg" class="diag" width="340" height="170" viewBox="0 0 340 170"></svg>
+<div id="tcOut"></div>
+<button class="btn am tcTpl" id="tcPrint" style="width:100%;margin-top:8px">Print full-size wrap template</button>
+<table id="copeT" class="tcTpl" style="margin-top:8px;width:100%"></table>
+<div class="hint">Tap any blue number to send it to Calc.</div></div>
 <div class="card"><h3>RIGHT TRIANGLE / BRACE</h3><div class="hint">Enter any two (leave the others blank). Angle is measured from the run (horizontal).</div><div class="fld">
 <label>Rise<input id="tRi" inputmode="decimal" value="12"></label><label>Run<input id="tRu" inputmode="decimal" value="16"></label>
 <label>Diagonal<input id="tDi" inputmode="decimal"></label><label>Angle (°)<input id="tAn" inputmode="decimal"></label></div>
 <svg id="tSvg" class="diag" width="300" height="130"></svg><div id="tOut"></div></div>
-<div class="card"><h3>FRAME MITER</h3><div class="fld">
-<label>Sides<input id="mN" inputmode="decimal" value="4"></label><label>…or corner angle (°)<input id="mC" inputmode="decimal" placeholder="optional"></label>
-<label>Outside width<input id="mW" inputmode="decimal" value="24"></label><label>Outside height<input id="mH" inputmode="decimal" value="36"><span class="hint">height used for 4 sides only</span></label></div><div id="mOut"></div></div>
 <div class="card"><h3>COMPOUND MITER (sloped sides / legs)</h3><div class="fld">
 <label>Tilt from vertical (°)<input id="cT" inputmode="decimal" value="45"></label><label>Sides<input id="cN" inputmode="decimal" value="4"></label></div><div id="cOut"></div></div>
-<div class="card" id="pcCard"><h3>PIPE CUTS (MITER)</h3><div class="fld">
-<label>NPS<select id="pcN"></select></label><label>…or OD<input id="pcOD" inputmode="decimal" placeholder="custom"></label>
-<label>Angle type<select id="pcMode"><option value="cut">Cut angle (per piece)</option><option value="joint">Joint deflection</option></select></label><label>Angle (°)<input id="pcA" inputmode="decimal" value="22.5"></label>
-<label>Template points<select id="pcPts"><option>8</option><option selected>16</option></select></label><label>Center-to-center<input id="pcCC" inputmode="decimal" value="24"></label>
-<label>Far-end angle (°)<input id="pcA2" inputmode="decimal" value="22.5"><span class="hint">same type as above; 0 = square</span></label></div>
-<div id="pcOut"></div><svg id="pcSvg" class="diag" width="320" height="110"></svg>
-<button class="btn am" id="pcPrint" style="width:100%;margin-top:8px">Printable full-size wrap template</button>
-<table id="pcT" style="margin-top:8px;width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums"></table>
-<div style="display:flex;gap:6px;margin-top:8px"><button class="btn" id="pcToPipe" style="flex:1">Pipe page →</button><button class="btn" id="pcToCope" style="flex:1">Cope helper ↓</button></div></div>
-<div class="card" id="copeCard"><h3>PIPE / TUBE COPE</h3><div class="fld">
-<label>Branch OD<input id="pB" inputmode="decimal" value="1.66"></label><label>Main OD<input id="pM" inputmode="decimal" value="2.375"></label>
-<label class="w">Intersection angle (°)<input id="pA" inputmode="decimal" value="90"></label></div>
-<div id="pOut"></div><svg id="pSvg" class="diag" width="320" height="120"></svg>
-<button class="btn am" id="pPrint" style="width:100%;margin-top:8px">Printable full-size template</button>
-<table id="copeT" style="margin-top:8px"></table></div>
 <div class="card"><h3>ROLLED / ARC</h3><div class="fld">
 <label>Chord<input id="rC" inputmode="decimal" value="48"></label><label>Rise<input id="rS" inputmode="decimal" value="6"></label></div><div id="rOut"></div></div>
 </section>
@@ -227,8 +237,56 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <section class="screen" id="tabs"><div class="card"><h3>CUSTOMIZE TABS</h3><div class="hint">Calc is always first. Pick tabs 2–4; everything else lives in More.</div>
 <div class="fld" style="margin-top:6px"><label class="w">Tab 2<select id="tb1" class="tbs"></select></label><label class="w">Tab 3<select id="tb2" class="tbs"></select></label><label class="w">Tab 4<select id="tb3" class="tbs"></select></label></div>
 <div class="hint err" id="tbErr" style="min-height:14px"></div>
-<h3 style="margin-top:8px">PRESETS</h3><div class="seg" id="tbPre"><button data-p="bends,angles,tap">Sheet Metal</button><button data-p="pipe,angles,weld">Pipe Fitter</button><button data-p="angles,weld,bends">Structural / Fab</button><button data-p="materials,angles,weld">Materials</button></div>
+<h3 style="margin-top:8px">PRESETS</h3><div class="seg" id="tbPre"><button data-p="bends,angles,tap">Sheet Metal</button><button data-p="pipe,angles,weld">Pipe Fitter</button><button data-p="angles,weld,bends">Structural / Fab</button><button data-p="materials,angles,weld">Materials</button><button data-p="framing,lumber,notes">Framing</button><button data-p="concrete,framing,notes">Concrete</button><button data-p="elec,notes,materials">Electrical</button><button data-p="plumb,pipe,notes">Plumbing</button><button data-p="framing,concrete,lumber">GC</button></div>
 <button class="btn am" id="tbDone" style="width:100%;margin-bottom:6px;display:none">Done ✓</button><button class="btn am" id="tbSave" style="width:100%">Save tabs</button><button class="btn" id="tbReset" style="width:100%;margin-top:6px">Reset to default (Bends, Angles, Pipe)</button></div></section>
+<section class="screen" id="framing">
+<div class="card"><h3>STAIRS</h3><div class="fld">
+<label>Total rise (in) – floor to floor, e.g. 105<input id="fsTR" inputmode="decimal" value="105"></label>
+<label>Tread depth / unit run (in) e.g. 10<input id="fsT" inputmode="decimal" value="10"></label>
+<label>Max riser (in) – IRC 7.75<input id="fsMax" inputmode="decimal" value="7.75"></label>
+<label>…or number of risers<input id="fsN" inputmode="decimal" placeholder="auto"></label></div><div id="fsOut"></div></div>
+<div class="card"><h3>RAFTERS &amp; ROOF PITCH</h3><div class="fld">
+<label>Pitch (rise per 12) e.g. 6<input id="frP" inputmode="decimal" value="6"></label>
+<label>Run (ft) – half the span, e.g. 12<input id="frR" inputmode="decimal" value="12"></label>
+<label>Overhang (in, level) e.g. 12<input id="frO" inputmode="decimal" value="12"></label>
+<label>Ridge board thickness (in) e.g. 1.5<input id="frRB" inputmode="decimal" value="1.5"></label></div><div id="frOut"></div></div>
+<div class="card"><h3>WALL STUDS</h3><div class="seg" id="fwOC"><button data-v="16" class="on">16" OC</button><button data-v="24">24" OC</button></div><div class="fld">
+<label>Wall length (ft) e.g. 20<input id="fwL" inputmode="decimal" value="20"></label>
+<label>Extra studs (corners, openings)<input id="fwX" inputmode="decimal" value="0"></label></div><div id="fwOut"></div></div></section>
+<section class="screen" id="concrete"><div class="card"><h3>CONCRETE</h3>
+<div class="seg" id="ccM"><button data-m="slab" class="on">Slab</button><button data-m="foot">Footing</button><button data-m="col">Column / tube</button><button data-m="wall">Wall</button></div><div class="fld">
+<label class="ccA"><span id="ccAL">Length (ft)</span><input id="ccA" inputmode="decimal" value="10"></label>
+<label class="ccB"><span id="ccBL">Width (ft)</span><input id="ccB" inputmode="decimal" value="10"></label>
+<label class="ccC"><span id="ccCL">Thickness (in)</span><input id="ccC" inputmode="decimal" value="4"></label>
+<label>Quantity<input id="ccQ" inputmode="decimal" value="1"></label>
+<label>Waste %<input id="ccW" inputmode="decimal" value="10"></label></div><div id="ccOut"></div>
+<div class="hint">Bags: 80 lb ≈ .60 cu ft, 60 lb ≈ .45 cu ft yield. Order ready-mix by the yard above ~1 yd.</div></div></section>
+<section class="screen" id="lumber"><div class="card"><h3>LUMBER – BOARD FEET</h3><div class="fld">
+<label>Thickness (in, nominal) e.g. 2<input id="lbT" inputmode="decimal" value="2"></label>
+<label>Width (in, nominal) e.g. 6<input id="lbW" inputmode="decimal" value="6"></label>
+<label>Length (ft) e.g. 8<input id="lbL" inputmode="decimal" value="8"></label>
+<label>Quantity<input id="lbQ" inputmode="decimal" value="10"></label>
+<label class="w">Cost per board foot ($) – optional<input id="lbC" inputmode="decimal" placeholder="e.g. 1.25"></label></div><div id="lbOut"></div>
+<div class="hint">BF = thick × wide (in) × long (ft) ÷ 12, using nominal size (a 2×6 counts as 2×6).</div></div></section>
+<section class="screen" id="elec">
+<div class="card"><h3>CONDUIT OFFSET</h3><div class="seg" id="eoA"><button data-a="10">10°</button><button data-a="22.5">22.5°</button><button data-a="30" class="on">30°</button><button data-a="45">45°</button><button data-a="60">60°</button></div><div class="fld">
+<label class="w">Offset depth (in) – how far you need to move over, e.g. 6<input id="eoD" inputmode="decimal" value="6"></label></div><div id="eoOut"></div></div>
+<div class="card"><h3>90° STUB (EMT)</h3><div class="seg" id="esS"><button data-t="5" class="on">1/2" (5)</button><button data-t="6">3/4" (6)</button><button data-t="8">1" (8)</button></div><div class="fld">
+<label>Stub height (in) e.g. 12<input id="esH" inputmode="decimal" value="12"></label>
+<label>Back-to-back length (in) – optional<input id="esB" inputmode="decimal" placeholder="e.g. 48"></label></div><div id="esOut"></div></div>
+<div class="card"><h3>3-POINT SADDLE (45° center)</h3><div class="fld">
+<label class="w">Obstacle height (in) e.g. 2<input id="eaH" inputmode="decimal" value="2"></label>
+<label class="w">Distance to center of obstacle (in) e.g. 30<input id="eaC" inputmode="decimal" value="30"></label></div><div id="eaOut"></div></div>
+<div class="card"><h3>SEGMENTED BEND / KICK</h3><div class="fld">
+<label>Total angle (°) e.g. 90<input id="egA" inputmode="decimal" value="90"></label>
+<label>Radius (in) to centerline, e.g. 24<input id="egR" inputmode="decimal" value="24"></label>
+<label class="w">Number of shots e.g. 9<input id="egN" inputmode="decimal" value="9"></label></div><div id="egOut"></div></div></section>
+<section class="screen" id="plumb">
+<div class="card"><h3>DRAIN SLOPE</h3><div class="seg" id="psS"><button data-s=".125">1/8" / ft</button><button data-s=".25" class="on">1/4" / ft</button><button data-s=".5">1/2" / ft</button></div><div class="fld">
+<label class="w">Pipe run length (ft) e.g. 40<input id="psL" inputmode="decimal" value="40"></label></div><div id="psOut"></div>
+<div class="hint">Typical: 1/4"/ft for 3" and smaller drains, 1/8"/ft for 4" and larger (check local code).</div></div>
+<div class="card"><h3>PIPE OFFSET</h3><div class="seg" id="poA"><button data-a="11.25">11¼°</button><button data-a="22.5">22½°</button><button data-a="45" class="on">45°</button><button data-a="60">60°</button></div><div class="fld">
+<label class="w">Offset (in) – center to center, e.g. 12<input id="poO" inputmode="decimal" value="12"></label></div><div id="poOut"></div></div></section>
 <div id="moreMenu"><button data-s="tap">🔩 Tap &amp; Drill</button><button data-s="materials">🧱 Materials</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT v9</div></div><div class="toast" id="toast"></div>
 <div id="onb"><img src="logo-icon.svg" width="110" height="110" alt="Rocking HH"><h2>HH FAB SHT</h2><div style="font-size:20px;font-weight:900;margin-top:6px">What field are you in?</div><div class="hint">We'll set up your tabs. You can change them anytime.</div>
 <div id="onbF"></div><button class="btn am" id="onbNext" style="width:100%;max-width:420px;margin-top:16px">Continue</button></div>
@@ -483,25 +541,9 @@ function all(){var d=depth();
   var k=Math.min(240/t.run,100/t.rise),x0=30,y0=118,X=x0+t.run*k,Y=y0-t.rise*k;
   g='<polygon points="'+x0+','+y0+' '+X+','+y0+' '+X+','+Y+'" fill="none" stroke="#5cc8ff" stroke-width="3"/><text x="'+(x0+X)/2+'" y="'+(y0-4)+'" fill="#9aa4b2" font-size="12">run</text><text x="'+(X+4)+'" y="'+(y0+Y)/2+'" fill="#9aa4b2" font-size="12">rise</text><text x="'+((x0+X)/2-30)+'" y="'+((y0+Y)/2-6)+'" fill="#ffb020" font-size="12">diag</text><text x="'+(x0+18)+'" y="'+(y0-6)+'" fill="#ffb020" font-size="12">'+t.angle.toFixed(1)+'°</text>'}
  else o='<div class="hint err">Need two valid values.</div>';q("tOut").innerHTML=o;q("tSvg").innerHTML=g;
- var n=P(q("mN").value),m=miter(n,P(q("mC").value)),f=frameLP(Math.round(n),P(q("mW").value),P(q("mH").value),d);
- o=tv("Corner angle",m.corner,"°")+tv("Miter per piece (saw)",m.cut,"°");
- if(!(P(q("mC").value)>0)&&n>=3){f.long.forEach(function(L,i){o+=tv("Long point"+(f.long.length>1?(i?" (height)":" (width)"):" (each side)"),L)+tv("Short point",f.short[i])});if(n!=4)o+='<div class="hint">Width = outside across flats.</div>'}
- q("mOut").innerHTML=o;
- var c=compound(P(q("cT").value),P(q("cN").value));q("cOut").innerHTML=tv("Blade bevel",c.bevel,"°")+tv("Miter",c.miter,"°");
- var cp=cope(P(q("pB").value),P(q("pM").value),P(q("pA").value),16);
- if(cp){q("pOut").innerHTML=tv("Max cope depth",cp.depth)+tv("Wrap length (π×OD)",cp.circ);
-  var k=Math.min(300/cp.circ,90/Math.max(cp.depth,.01)),pl=cope(P(q("pB").value),P(q("pM").value),P(q("pA").value),96).pts.map(function(p){return(10+p.x*k).toFixed(1)+","+(10+p.depth*k).toFixed(1)}).join(" ");
-  q("pSvg").innerHTML='<polyline points="'+pl+'" fill="none" stroke="#ffb020" stroke-width="3"/>';
-  q("copeT").innerHTML="<tr><th>Pt</th><th>°</th><th>Along wrap</th><th>Cut depth</th><th>1/16</th></tr>"+cp.pts.slice(0,16).map(function(p,i){return"<tr><td>"+(i+1)+"</td><td>"+p.deg.toFixed(1)+'</td><td class="tv" data-v="'+p.x+'">'+p.x.toFixed(3)+'</td><td class="tv" data-v="'+p.depth+'">'+p.depth.toFixed(4)+"</td><td>"+toFrac(p.depth,16)+"</td></tr>"}).join("")}
- else{q("pOut").innerHTML='<div class="hint err">Branch OD must be ≤ main OD.</div>';q("pSvg").innerHTML="";q("copeT").innerHTML=""}
  var a=arc(P(q("rC").value),P(q("rS").value));q("rOut").innerHTML=tv("Radius",a.R)+tv("Arc length",a.len)+tv("Included angle",a.angle,"°")}
 q("angles").addEventListener("input",all);q("aSh").onchange=all;
-q("angles").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=(+t.dataset.v).toFixed(4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
-q("pPrint").onclick=function(){var b=P(q("pB").value),cp=cope(b,P(q("pM").value),P(q("pA").value),180);if(!cp)return;var W=cp.circ,H=cp.depth+1,
- pl=cp.pts.map(function(p){return p.x.toFixed(4)+","+(0.5+p.depth).toFixed(4)}).join(" "),
- svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'in" height="'+H+'in" viewBox="0 0 '+W+' '+H+'"><rect width="'+W+'" height="'+H+'" fill="none" stroke="#000" stroke-width="0.01"/><polyline points="'+pl+'" fill="none" stroke="#000" stroke-width="0.02"/>'+
- cp.pts.filter(function(p,i){return i%(180/16)==0}).map(function(p){return '<line x1="'+p.x+'" y1="0" x2="'+p.x+'" y2="'+H+'" stroke="#999" stroke-width="0.005"/>'}).join("")+'</svg>',
- w=window.open("");w.document.write("<title>Cope template</title><p style='font:12px sans-serif'>Branch OD "+b+'" — print at 100% scale; wrap around branch, top edge = pipe end.</p>'+svg)};
+q("angles").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=decStr(+t.dataset.v,4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
 window.go=function(id){q("moreMenu").style.display="none";document.querySelectorAll("nav button,.screen").forEach(function(x){x.classList.remove("on")});q(id).classList.add("on");
  var nb=document.querySelector('nav [data-s='+id+']')||document.querySelector('nav [data-s=more]');nb.classList.add("on")};
 document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){if(b.dataset.s=="more"){var m=q("moreMenu");m.style.display=m.style.display=="flex"?"none":"flex"}else go(b.dataset.s)}});
@@ -531,29 +573,87 @@ document.querySelectorAll("#oSeg button").forEach(function(b){b.onclick=function
 document.querySelectorAll("#mtSeg button").forEach(function(b){b.onclick=function(){document.querySelectorAll("#mtSeg button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");pall()}});
 q("pipe").addEventListener("input",pall);q("pipe").addEventListener("change",pall);
 q("pipe").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=decStr(+t.dataset.v,4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
-q("brCope").onclick=function(){q("pB").value=q("brOD").value;q("pM").value=q("brH").value;q("pA").value=q("brA").value;go("angles");all();q("pSvg").scrollIntoView({block:"center"})};
+q("brCope").onclick=function(){q("tcNps").value="";q("tcW").value=q("brOD").value;q("pM").value=q("brH").value;q("pA").value=q("brA").value;go("angles");tcSet("cope","rd");q("tcCard").scrollIntoView({block:"center"})};
 pt();pall();
 
-// ---- Pipe cuts ----
-q("pcN").innerHTML=PIPE.map(function(r,i){return '<option value="'+i+'"'+(r[0]=="6"?" selected":"")+">"+r[0]+'" ('+r[1].toFixed(3)+")</option>"}).join("");
-function pcOD(){var c=P(q("pcOD").value);return isFinite(c)&&c>0?c:PIPE[+q("pcN").value][1]}
-function pcall(){var OD=pcOD(),mode=q("pcMode").value,a=P(q("pcA").value),c=pipeCut(OD,a,mode),a2=P(q("pcA2").value),c2=mode=="joint"?(isFinite(a2)?a2:0)/2:(isFinite(a2)?a2:0);
- var N=+q("pcPts").value,pts=pipeCutTemplate(OD,c.cut,N),b=pipeBetween(P(q("pcCC").value),OD,c.cut,c2);
- q("pcOut").innerHTML=tv("OD used",OD)+tv("Miter cut angle per piece",c.cut,"°")+tv("Saw / bandsaw angle (from square)",c.saw,"°")+tv("Long − short side (OD×tan)",c.diff)+tv("Wrap length (π×OD)",Math.PI*OD)+
-  '<div class="hint">Pipe between joints (long points on the same side):</div>'+tv("Centerline length",b.center)+tv("Long-point length",b.long)+tv("Short-point length",b.short);
- var k=Math.min(300/(Math.PI*OD),90/Math.max(c.diff,.01)),fine=pipeCutTemplate(OD,c.cut,96).map(function(p){return(10+p.x*k).toFixed(1)+","+(100-p.h*k).toFixed(1)}).join(" ");
- q("pcSvg").innerHTML='<line x1="10" y1="100" x2="'+(10+Math.PI*OD*k)+'" y2="100" stroke="#5d6672" stroke-width="2"/><polyline points="'+fine+'" fill="none" stroke="#ffb020" stroke-width="3"/>';
- q("pcT").innerHTML='<tr><th style="color:#ffb020;text-align:right">Pt</th><th style="color:#ffb020;text-align:right">°</th><th style="color:#ffb020;text-align:right">Along wrap</th><th style="color:#ffb020;text-align:right">Height</th><th style="color:#ffb020;text-align:right">1/16</th></tr>'+
-  pts.slice(0,N).map(function(p,i){return '<tr><td style="text-align:right;padding:4px">'+(i+1)+'</td><td style="text-align:right">'+p.deg.toFixed(1)+'</td><td class="tv" data-v="'+p.x+'" style="text-align:right;color:#5cc8ff">'+p.x.toFixed(3)+'</td><td class="tv" data-v="'+p.h+'" style="text-align:right;color:#5cc8ff">'+p.h.toFixed(4)+'</td><td style="text-align:right">'+toFrac(p.h,16)+"</td></tr>"}).join("")+
-  '<tr><td colspan="5" class="hint">Heights measured up from a square reference line at the short point; pt 1 = long point.</td></tr>'}
-["pcN","pcOD","pcMode","pcA","pcPts","pcCC","pcA2"].forEach(function(id){q(id).addEventListener("input",pcall);q(id).addEventListener("change",pcall)});
-q("pcPrint").onclick=function(){var OD=pcOD(),c=pipeCut(OD,P(q("pcA").value),q("pcMode").value),pts=pipeCutTemplate(OD,c.cut,180),W=Math.PI*OD,H=c.diff+1.5,
- pl=pts.map(function(p){return p.x.toFixed(4)+","+(H-0.5-p.h).toFixed(4)}).join(" "),
- svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'in" height="'+H+'in" viewBox="0 0 '+W+' '+H+'"><rect width="'+W+'" height="'+H+'" fill="none" stroke="#000" stroke-width="0.01"/><line x1="0" y1="'+(H-0.5)+'" x2="'+W+'" y2="'+(H-0.5)+'" stroke="#999" stroke-width="0.01" stroke-dasharray="0.1 0.1"/><polyline points="'+pl+'" fill="none" stroke="#000" stroke-width="0.02"/>'+
- pts.filter(function(p,i){return i%(180/16)==0}).map(function(p){return '<line x1="'+p.x+'" y1="0" x2="'+p.x+'" y2="'+H+'" stroke="#bbb" stroke-width="0.005"/>'}).join("")+"</svg>",w=window.open("");
- w.document.write("<title>Miter template</title><p style='font:12px sans-serif'>OD "+OD+'" · cut '+c.cut.toFixed(2)+"° — print at 100% scale. Wrap around pipe; dashed line = reference (short point).</p>"+svg)};
-q("pcToPipe").onclick=function(){go("pipe")};q("pcToCope").onclick=function(){q("pB").value=pcOD();all();q("copeCard").scrollIntoView({block:"start"})};
-pcall();
+// ---- Tube & pipe cuts (v10) ----
+var TC={m:"frame",p:"sq"};
+q("tcNps").innerHTML+=PIPE.map(function(r,i){return '<option value="'+i+'">'+r[0]+'" NPS ('+decStr(r[1],3)+' OD)</option>'}).join("");
+function tcSet(m,p){if(m)TC.m=m;if(p)TC.p=p;
+ document.querySelectorAll("#tcMode button").forEach(function(b){b.classList.toggle("on",b.dataset.m==TC.m)});
+ document.querySelectorAll("#tcProf button").forEach(function(b){b.classList.toggle("on",b.dataset.p==TC.p)});tcall()}
+document.querySelectorAll("#tcMode button").forEach(function(b){b.onclick=function(){tcSet(b.dataset.m)}});
+document.querySelectorAll("#tcProf button").forEach(function(b){b.onclick=function(){tcSet(null,b.dataset.p)}});
+q("tcNps").onchange=function(){if(this.value!=="")q("tcW").value=decStr(PIPE[+this.value][1],3);tcall()};
+q("tcW").addEventListener("input",function(){q("tcNps").value=""});
+function N3(v){return '<b class="tv" data-v="'+v+'">'+decStr(v,3)+'"</b> <i style="color:#7c8594">≈ '+toFrac(v,16)+'"</i>'}
+function DG(v){return '<b class="tv" data-v="'+v+'">'+decStr(v,2)+'°</b>'}
+function steps(a){return '<ol style="margin:8px 0 0 0;padding-left:22px;line-height:1.7;font-size:15px">'+a.map(function(s){return"<li>"+s+"</li>"}).join("")+"</ol>"}
+var TIPS={frame:"Tip: measure the outside edge (long point to long point) — every piece in a square frame gets the same 45° cut, flipped on each end.",
+ miter:"Tip: the saw angle is half the turn of the joint. Two 22.5° cuts make a 45° turn; two 45° cuts make a 90° corner.",
+ cope:"Tip: wrap the paper template around the branch tube with the top edge on the end of the tube, trace it, then cut and grind to the line."};
+var SV='font-family:sans-serif';
+function stx(x,y,s,c,a){return '<text x="'+x+'" y="'+y+'" fill="'+(c||"#9aa4b2")+'" font-size="11" font-weight="700" text-anchor="'+(a||"middle")+'" style="'+SV+'">'+s+"</text>"}
+function arw(x1,y,x2,c){return '<line x1="'+x1+'" y1="'+y+'" x2="'+x2+'" y2="'+y+'" stroke="'+c+'" stroke-width="1.5"/><path d="M'+x1+' '+y+'l6 -4v8zM'+x2+' '+y+'l-6 -4v8z" fill="'+c+'"/>'}
+var Y="#ffb020",B="#5cc8ff",G="#5d6672";
+function tcall(){var m=TC.m,rd=TC.p=="rd";
+ document.querySelectorAll("#tcCard .tcM,#tcCard .tcF,#tcCard .tcCo").forEach(function(e){e.style.display="none"});
+ document.querySelectorAll("#tcCard .tc"+{frame:"F",miter:"M",cope:"Co"}[m]).forEach(function(e){e.style.display=""});
+ document.querySelectorAll(".tcRd").forEach(function(e){e.style.display=rd?"":"none"});
+ q("tcWL").textContent=rd?(m=="cope"?"Branch pipe OD (in) – the one you cope, e.g. 1.66":"Pipe OD (in), e.g. 2.375"):(m=="cope"?"Branch tube width (in), e.g. 2":"Tube width (in) – the face you cut through, e.g. 2");
+ q("tcAL").textContent=m=="frame"?"":(q("tcAK").value=="joint"?"Total turn of the joint (°) e.g. 45":"Saw angle per piece (°) e.g. 22.5");
+ q("tcTip").textContent=TIPS[m];
+ var d=P(q("tcW").value),out="",svg="",tpl=false,sawNote=function(c){return 'Saw angle is measured <b>from square</b> (0° = straight cut). If your saw reads 90° at square, set it to '+DG(90-c)+"."};
+ q("copeT").innerHTML="";
+ if(!(d>0)){q("tcOut").innerHTML='<div class="hint err">Enter the tube width / OD.</div>';q("tcSvg").innerHTML="";return}
+ if(m=="frame"){var n=P(q("tcN").value),cc=P(q("tcC").value),cut;
+  if(cc>0&&cc<180){cut=(180-cc)/2;n=Math.max(3,Math.min(12,Math.round(360/(180-cc))))}else if(n>=3){cut=180/n;cc=180-2*cut}else{q("tcOut").innerHTML='<div class="hint err">Need 3+ sides or a corner angle.</div>';q("tcSvg").innerHTML="";return}
+  var e=d*Math.tan(cut*D2R),isIn=q("tcLM").value=="in",sides=[P(q("tcL").value)],L2=P(q("tcL2").value);if(Math.round(n)==4&&L2>0)sides.push(L2);
+  var st=["Set saw to "+DG(cut)+" (corner angle "+decStr(cc,2)+"°). Cut both ends of every piece, ends pointing opposite ways (like a picture frame)."];
+  sides.forEach(function(S,i){var lp=isIn?S+2*e:S,sp=isIn?S:S-2*e,nm=sides.length>1?(i?"Height pieces: ":"Width pieces: "):"Each side: ";
+   st.push(nm+"long point to long point = "+N3(lp)+" (outside edge)");st.push(nm+"short point to short point = "+N3(sp)+" (inside edge)"+(sp<=0?' <span class="err">too short!</span>':""))});
+  st.push("Each end: short point is "+N3(e)+" back from the long point.");
+  out=steps(st)+'<div class="hint">'+sawNote(cut)+"</div>";
+  var cx=170,cy=92,Ro=58,Ri=Ro-Math.min(26,Math.max(10,d*8)),rot=-Math.PI/2-Math.PI/n,po=[],pi=[];
+  for(var i=0;i<n;i++){var t=rot+2*Math.PI*i/n;po.push([cx+Ro*Math.cos(t),cy+Ro*Math.sin(t)]);pi.push([cx+Ri*Math.cos(t),cy+Ri*Math.sin(t)])}
+  var pl=function(a){return a.map(function(p){return p[0].toFixed(1)+","+p[1].toFixed(1)}).join(" ")};
+  svg='<polygon points="'+pl(po)+'" fill="#2a313b" stroke="'+B+'" stroke-width="2"/><polygon points="'+pl(pi)+'" fill="#12161c" stroke="'+B+'" stroke-width="2"/>'+po.map(function(p,i){return '<line x1="'+p[0]+'" y1="'+p[1]+'" x2="'+pi[i][0]+'" y2="'+pi[i][1]+'" stroke="'+Y+'" stroke-width="2"/>'}).join("");
+  var a0=po[0],a1=po[1],b0=pi[0],b1=pi[1];
+  svg+=arw(a0[0],a0[1]-8,a1[0],Y)+stx((a0[0]+a1[0])/2,a0[1]-13,"LONG POINT (outside)",Y)+arw(b0[0],b0[1]+12,b1[0],B)+stx((b0[0]+b1[0])/2,b0[1]+25,"SHORT POINT (inside)",B)+stx(cx,164,decStr(cut,1)+"° saw each end (yellow lines)","#e6e9ee")}
+ else if(m=="miter"){var A=P(q("tcA").value),c=q("tcAK").value=="joint"?A/2:A,c2=P(q("tcA2").value);c2=isFinite(c2)?c2:0;
+  if(!(c>=0&&c<89&&c2>=0&&c2<89)){q("tcOut").innerHTML='<div class="hint err">Angle must be 0–89°.</div>';q("tcSvg").innerHTML="";return}
+  var r=pipeCut(d,c,"cut"),L=P(q("tcML").value),e2=d*Math.tan(c2*D2R),sp=L-r.diff-e2;
+  var st=["Set saw to "+DG(c)+" for this end"+(c2>0?" and "+DG(c2)+" for the other end":" (other end square)")+". Joint turns "+decStr(2*c,2)+"° when two of these meet.",
+   "Mark long point at "+N3(L)+" from the other end's long point.",
+   "Short point is "+N3(r.diff)+" shorter at this end (width × tan angle)."+(c2>0?" Other end: "+N3(e2)+".":""),
+   "Short point to short point = "+N3(sp)+", centerline = "+N3(L-(r.diff+e2)/2)+" (long points on the same side)."];
+  if(rd){tpl=true;st.push("Round pipe: wrap the template below (around = "+N3(Math.PI*d)+"), point 1 = long point.")}
+  out=steps(st)+'<div class="hint">'+sawNote(c)+"</div>";
+  var h=44,y0=60,s=Math.min(110,h*Math.tan(c*D2R)),s2=Math.min(110,h*Math.tan(c2*D2R)),x0=30,x1=310;
+  svg='<polygon points="'+x0+','+y0+' '+x1+','+y0+' '+(x1-s)+','+(y0+h)+' '+(x0+s2)+','+(y0+h)+'" fill="#2a313b" stroke="'+B+'" stroke-width="2"/><line x1="'+x1+'" y1="'+y0+'" x2="'+(x1-s)+'" y2="'+(y0+h)+'" stroke="'+Y+'" stroke-width="3"/>'+
+   arw(x0,y0-12,x1,Y)+stx(150,y0-18,"MEASURE: long point → long point",Y)+stx(x1+2,y0+h+30,"",Y)+stx(x1,y0-2,"",Y)+stx(x1+4,y0-18,"LONG PT",Y,"end")+stx(x1-s,y0+h+16,"SHORT PT",B)+
+   stx(x1-s/2-4,y0+h/2+4,decStr(c,1)+"°","#e6e9ee","end")+stx(170,y0+h/2+4,rd?"PIPE (side view)":"TUBE (side view)",G)+stx(170,y0+h+36,"short side is "+decStr(r.diff,3)+'" shorter',B);
+  if(rd){var N=16,pts=pipeCutTemplate(d,c,N);q("copeT").innerHTML="<tr><th>Pt</th><th>Around</th><th>Height up</th><th>1/16</th></tr>"+pts.slice(0,N).map(function(p,i){return"<tr><td>"+(i+1)+'</td><td class="tv" data-v="'+p.x+'">'+decStr(p.x,3)+'</td><td class="tv" data-v="'+p.h+'">'+decStr(p.h,3)+"</td><td>"+toFrac(p.h,16)+"</td></tr>"}).join("")+'<tr><td colspan="4" class="hint">Heights up from a square line at the short point.</td></tr>'}}
+ else{var Mo=P(q("pM").value),an=P(q("pA").value);
+  if(!(an>0&&an<=90)){q("tcOut").innerHTML='<div class="hint err">Angle 1–90°.</div>';q("tcSvg").innerHTML="";return}
+  if(rd){q("pB").value=d;var cp=cope(d,Mo,an,16);
+   if(!cp){q("tcOut").innerHTML='<div class="hint err">Branch OD must be ≤ main OD.</div>';q("tcSvg").innerHTML="";return}
+   tpl=true;out=steps(["Print the template (or mark the 16 points below) — around the branch = "+N3(cp.circ)+".","Wrap it on the branch with the top edge flush with the pipe end; mark the curve.","Deepest cut from the end = "+N3(cp.depth)+".","Cut to the line, grind to fit, check angle "+DG(an)+" between pipes."]);
+   q("copeT").innerHTML="<tr><th>Pt</th><th>°</th><th>Around</th><th>Cut depth</th><th>1/16</th></tr>"+cp.pts.slice(0,16).map(function(p,i){return"<tr><td>"+(i+1)+"</td><td>"+p.deg.toFixed(1)+'</td><td class="tv" data-v="'+p.x+'">'+decStr(p.x,3)+'</td><td class="tv" data-v="'+p.depth+'">'+decStr(p.depth,3)+"</td><td>"+toFrac(p.depth,16)+"</td></tr>"}).join("")}
+  else{var ct=90-an,e=d*Math.tan(ct*D2R);out=steps(an==90?["Square tube into a flat face at 90°: just a square cut — no cope needed.","Cut length = gap between faces."]:["Set saw to "+DG(ct)+" (from square).","Long point to short point difference = "+N3(e)+".","Tube lands on the flat face at "+DG(an)+"."])+'<div class="hint">Square tube onto a flat tube face is a straight (miter) cut. Use Round pipe for a saddle.</div>'}
+  var ar=an*D2R,ux=Math.cos(ar),uy=-Math.sin(ar),wx=-uy*16,wy=ux*16,bx=170,by=112;
+  svg='<rect x="20" y="112" width="300" height="44" fill="#2a313b" stroke="'+B+'" stroke-width="2"/>'+stx(60,140,"MAIN",G)+
+   '<polygon points="'+(bx-wx)+','+(by-wy)+' '+(bx+wx)+','+(by+wy)+' '+(bx+wx+ux*110)+','+(by+wy+uy*110)+' '+(bx-wx+ux*110)+','+(by-wy+uy*110)+'" fill="#2a313b" stroke="'+B+'" stroke-width="2"/>'+
+   '<path d="M'+(bx-wx)+' '+(by-wy)+' Q'+bx+' '+(by-(rd?14:0))+' '+(bx+wx)+' '+(by+wy)+'" fill="none" stroke="'+Y+'" stroke-width="3"/>'+stx(bx+ux*60+30,by+uy*60,"BRANCH",G,"start")+stx(bx+26,by-6,rd?"COPE (saddle)":"CUT",Y,"start")+stx(bx-30,by-4,decStr(an,0)+"°","#e6e9ee","end")}
+ q("tcOut").innerHTML=out;q("tcSvg").innerHTML=svg;document.querySelectorAll(".tcTpl").forEach(function(e){e.style.display=tpl?"":"none"})}
+["tcW","tcA","tcAK","tcN","tcC","tcL","tcLM","tcL2","tcML","tcA2","pM","pA"].forEach(function(id){q(id).addEventListener("input",tcall);q(id).addEventListener("change",tcall)});
+q("tcPrint").onclick=function(){var d=P(q("tcW").value),svg,W,H,pl,msg;
+ if(TC.m=="cope"){var cp=cope(d,P(q("pM").value),P(q("pA").value),180);if(!cp)return;W=cp.circ;H=cp.depth+1;pl=cp.pts.map(function(p){return p.x.toFixed(4)+","+(0.5+p.depth).toFixed(4)}).join(" ");msg="Cope template — branch OD "+d+'" — top edge = pipe end.'}
+ else{var A=P(q("tcA").value),c=q("tcAK").value=="joint"?A/2:A,pts=pipeCutTemplate(d,c,180);W=Math.PI*d;H=d*Math.tan(c*D2R)+1.5;pl=pts.map(function(p){return p.x.toFixed(4)+","+(H-0.5-p.h).toFixed(4)}).join(" ");msg="Miter template — OD "+d+'" at '+c.toFixed(2)+"° — dashed line = short point."}
+ svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'in" height="'+H+'in" viewBox="0 0 '+W+" "+H+'"><rect width="'+W+'" height="'+H+'" fill="none" stroke="#000" stroke-width="0.01"/>'+(TC.m=="cope"?"":'<line x1="0" y1="'+(H-0.5)+'" x2="'+W+'" y2="'+(H-0.5)+'" stroke="#999" stroke-width="0.01" stroke-dasharray="0.1 0.1"/>')+'<polyline points="'+pl+'" fill="none" stroke="#000" stroke-width="0.02"/>'+
+ [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].map(function(i){var x=W*i/16;return '<line x1="'+x+'" y1="0" x2="'+x+'" y2="'+H+'" stroke="#bbb" stroke-width="0.005"/>'}).join("")+"</svg>";
+ var w=window.open("");w.document.write("<title>Template</title><p style='font:12px sans-serif'>"+msg+" Print at 100% scale and wrap around the pipe.</p>"+svg)};
+tcall();
 // ---- Weld ----
 var BRANDS=[];MACH.forEach(function(m){if(BRANDS.indexOf(m[2])<0)BRANDS.push(m[2])});
 var PRN={mig:"MIG – solid wire + gas",fc:"Flux-core (gasless)",stick:"Stick (SMAW)",tig:"TIG (GTAW)"},MTN={ms:"Mild steel",ss:"Stainless",al:"Aluminum"};
@@ -582,16 +682,19 @@ opts("wBr",BRANDS.map(function(b){return[b,b]}),"Hobart");q("wBr").onchange=wBra
 wBrand();q("wTh").value="16ga";wThk();
 q("weld").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=decStr(+t.dataset.v,4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
 // ---- Customizable tabs ----
-var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld"],materials:["🧱","Materials"],notes:["📝","Notes"]},DEF_TABS=["bends","angles","pipe"];
+var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld"],materials:["🧱","Materials"],framing:["🪚","Framing"],lumber:["🪵","Lumber"],concrete:["🏗","Concrete"],elec:["⚡","Electrical"],plumb:["🚰","Plumbing"],notes:["📝","Notes"]},DEF_TABS=["bends","angles","pipe"];
+var GROUPS=[["weld","Welding / Fab",["bends","angles","pipe","weld","tap","materials"]],["carp","Carpentry / Framing",["framing","lumber"]],["conc","Concrete",["concrete"]],["elec","Electrical",["elec"]],["plumb","Plumbing",["plumb"]],["gen","General",["notes"]]],
+ FIELD_GRP={sheet:"weld",pipe:"weld",struct:"weld",welder:"weld",fab:"weld",carp:"carp",conc:"conc",elec:"elec",plumb:"plumb",gc:"carp"};
 function getTabs(){try{var t=JSON.parse(localStorage.getItem("hhTabs"));if(t&&t.map){t=t.map(function(x){return x=="takeoffs"?"materials":x});var u=[];t.forEach(function(x){if(PAGES[x]&&u.indexOf(x)<0)u.push(x)});DEF_TABS.concat(Object.keys(PAGES)).forEach(function(x){if(u.length<3&&u.indexOf(x)<0)u.push(x)});if(u.join()!=t.join()&&t.length)localStorage.setItem("hhTabs",JSON.stringify(u));t=u}if(t&&t.length==3&&t.every(function(x){return PAGES[x]})&&new Set(t).size==3)return t}catch(e){}return DEF_TABS.slice()}
 function renderNav(){var t=getTabs(),cur=document.querySelector(".screen.on");cur=cur?cur.id:"calc";
  document.querySelector("nav").innerHTML='<button data-s="calc"><i>🧮</i>Calc</button>'+t.map(function(k){return '<button data-s="'+k+'"><i>'+PAGES[k][0]+"</i>"+PAGES[k][1]+"</button>"}).join("")+'<button data-s="more"><i>☰</i>More</button>';
  var more=Object.keys(PAGES).filter(function(k){return t.indexOf(k)<0});
- q("moreMenu").innerHTML=more.map(function(k){return '<button data-s="'+k+'">'+PAGES[k][0]+" "+(k=="weld"?"Weld Settings":k=="tap"?"Tap &amp; Drill":PAGES[k][1])+"</button>"}).join("")+'<button data-s="tabs">⚙️ Customize Tabs</button><button id="fieldBtn">🧑‍🏭 Change my field</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT '+(window.APP_VERSION||"v9")+"</div>";
+ var fg=FIELD_GRP[localStorage.getItem("hhField")]||"weld",gs=GROUPS.slice().sort(function(x,y){return(y[0]==fg)-(x[0]==fg)});
+ q("moreMenu").innerHTML='<div class="mmScroll">'+gs.map(function(g){var it=g[2];if(!it.length)return"";return '<details class="mmG"'+(g[0]==fg?" open":"")+"><summary>"+g[1]+(g[0]==fg?" ★":"")+"</summary>"+it.map(function(k){return '<button data-s="'+k+'">'+PAGES[k][0]+" "+(k=="weld"?"Weld Settings":k=="tap"?"Tap &amp; Drill":PAGES[k][1])+"</button>"}).join("")+"</details>"}).join("")+'<button data-s="tabs">⚙️ Customize Tabs</button><button id="fieldBtn">🧑‍🏭 Change my field</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT '+(window.APP_VERSION||"v11")+"</div></div>";
  document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){if(b.dataset.s=="more"){var m=q("moreMenu");m.style.display=m.style.display=="flex"?"none":"flex"}else go(b.dataset.s)}});
  document.querySelectorAll("#moreMenu button[data-s]").forEach(function(b){b.onclick=function(){go(b.dataset.s)}});
  q("updBtn").onclick=function(){window.checkForUpdates&&checkForUpdates()};q("fieldBtn").onclick=function(){q("moreMenu").style.display="none";onboard()};go(cur)}
-function tabForm(t){["tb1","tb2","tb3"].forEach(function(id,i){q(id).innerHTML=Object.keys(PAGES).map(function(k){return '<option value="'+k+'"'+(t[i]==k?" selected":"")+">"+PAGES[k][1]+"</option>"}).join("")});q("tbErr").textContent=""}
+function tabForm(t){["tb1","tb2","tb3"].forEach(function(id,i){var fg=FIELD_GRP[localStorage.getItem("hhField")]||"weld";q(id).innerHTML=GROUPS.slice().sort(function(x,y){return(y[0]==fg)-(x[0]==fg)}).map(function(g){return '<optgroup label="'+g[1]+'">'+g[2].map(function(k){return '<option value="'+k+'"'+(t[i]==k?" selected":"")+">"+PAGES[k][1]+"</option>"}).join("")+"</optgroup>"}).join("")});q("tbErr").textContent=""}
 function formTabs(){return["tb1","tb2","tb3"].map(function(id){return q(id).value})}
 document.querySelectorAll(".tbs").forEach(function(sl){sl.onchange=function(){var t=formTabs();q("tbErr").textContent=new Set(t).size<3?"Each tab can only be used once.":""}});
 q("tbSave").onclick=function(){var t=formTabs();if(new Set(t).size<3){q("tbErr").textContent="Each tab can only be used once.";return}localStorage.setItem("hhTabs",JSON.stringify(t));renderNav();go("tabs");toast("Tabs saved",1200)};
@@ -600,10 +703,10 @@ document.querySelectorAll("#tbPre button").forEach(function(b){b.onclick=functio
 tabForm(getTabs());window.renderNav=renderNav;
 // ---- Share app + onboarding (v8) ----
 var APP_URL="https://atticushaydenhinkle-create.github.io/HH/";
-q("shareApp").onclick=function(){var d={title:"HH FAB SHT",text:"Fab calculator for welders & fabricators",url:APP_URL};
+q("shareApp").onclick=function(){var d={title:"HH FAB SHT",text:"Shop calculator for welders, fabricators & the trades",url:APP_URL};
  function cp(){return(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(APP_URL):Promise.reject()).catch(function(){var a=document.createElement("textarea");a.value=APP_URL;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}a.remove()}).then(function(){toast("App link copied to clipboard",1600)})}
  if(navigator.share)navigator.share(d).catch(function(e){if(!e||e.name!="AbortError")cp()});else cp()};
-var FIELDS=[["sheet","Sheet Metal","bends,angles,tap"],["pipe","Pipe Fitter","pipe,angles,weld"],["struct","Structural","materials,angles,weld"],["welder","Welder","weld,angles,notes"],["fab","Fabricator","bends,angles,materials"],["custom","Other / Custom",null]],onbSel=null;
+var FIELDS=[["sheet","Sheet Metal","bends,angles,tap"],["pipe","Pipe Fitter","pipe,angles,weld"],["struct","Structural","materials,angles,weld"],["welder","Welder","weld,angles,notes"],["fab","Fabricator","bends,angles,materials"],["carp","Carpenter / Framer","framing,lumber,notes"],["conc","Concrete","concrete,framing,notes"],["elec","Electrician","elec,notes,materials"],["plumb","Plumber","plumb,pipe,notes"],["gc","General Contractor","framing,concrete,lumber"],["custom","Other / Custom",null]],onbSel=null;
 function onboard(){var t=getTabs().join(","),saved=localStorage.getItem("hhField"),hasTabs=!!localStorage.getItem("hhTabs");onbSel=null;
  FIELDS.forEach(function(f){if(saved?saved==f[0]:(hasTabs&&f[2]==t))onbSel=f[0]});
  if(!onbSel&&hasTabs&&!saved)onbSel="keep";
@@ -616,6 +719,45 @@ q("onbNext").onclick=function(){var f=FIELDS.filter(function(x){return x[0]==onb
  localStorage.setItem("hhOnboarded","1");q("onb").style.display="none";renderNav();tabForm(getTabs());q("tbDone").style.display="";go("tabs")};
 q("tbDone").onclick=function(){var t=formTabs();if(new Set(t).size<3){q("tbErr").textContent="Each tab can only be used once.";return}localStorage.setItem("hhTabs",JSON.stringify(t));localStorage.setItem("hhOnboarded","1");q("tbDone").style.display="none";renderNav();go(t[0]);toast("You're all set",1200)};
 
+// ---- Construction trades (v11) ----
+(function(){var q=function(i){return document.getElementById(i)},P=parseIn,D2=Math.PI/180;
+function R(l,v,u){if(!isFinite(v))return '<div class="rs">'+l+"<b>–</b></div>";u=u==null?'"':u;var dec=u=="°"?2:u=="n"?0:3;if(u=="n")u="";
+ return '<div class="rs">'+l+'<b class="tv" data-v="'+v+'">'+decStr(v,dec)+u+(u=='"'?"<i>"+toFrac(v,16)+'"</i>':"")+"</b></div>"}
+function H(t,c){return '<div class="hint'+(c?" err":"")+'" style="margin-top:4px">'+t+"</div>"}
+function seg(id,cb){document.querySelectorAll("#"+id+" button").forEach(function(b){b.onclick=function(){document.querySelectorAll("#"+id+" button").forEach(function(x){x.classList.toggle("on",x==b)});cb()}})}
+function sv(id,k){return document.querySelector("#"+id+" .on").dataset[k]}
+function fr(){var TR=P(q("fsTR").value),T=P(q("fsT").value),mx=P(q("fsMax").value)||7.75,n=Math.round(P(q("fsN").value));
+ if(!(n>0))n=Math.ceil(TR/mx-1e-9);var r=TR/n,run=(n-1)*T,ang=Math.atan(r/T)/D2,o=R("Risers",n,"n")+R("Riser height",r)+R("Treads",n-1,"n")+R("Total run",run)+R("Stringer length (approx)",Math.hypot(TR,run))+R("Stair angle",ang,"°"),h=[];
+ if(r>7.75)h.push("Riser over 7¾\" (IRC max)");if(r<4)h.push("Riser under 4\" (IRC min)");if(T<10)h.push("Tread under 10\" (IRC min)");var s=2*r+T;h.push("2R+T = "+decStr(s,2)+(s>=24&&s<=25.5?" ✓ comfortable (24–25)":" — aim for 24–25"));
+ q("fsOut").innerHTML=o+H(h.join(" · "),r>7.75||T<10);
+ var p=P(q("frP").value),run2=P(q("frR").value)*12,oh=P(q("frO").value)||0,rb=P(q("frRB").value)||0,f=Math.sqrt(1+p*p/144),a=Math.atan(p/12)/D2,L=(run2-rb/2)*f,Lo=oh*f;
+ q("frOut").innerHTML=R("Roof angle",a,"°")+R("Length per ft of run",f*12)+R("Rafter (ridge to wall, less ½ ridge)",L)+R("Overhang (along rafter)",Lo)+R("Total rafter length",L+Lo)+R("…in feet",(L+Lo)/12,"'")+R("Plumb cut (speed square / from square)",a,"°")+R("Level / seat cut",90-a,"°")+R("Rise at wall line",run2*p/12)+H("Lengths measured along the top edge of the rafter. Set a speed square to the pitch number ("+decStr(p,2)+") for the plumb line.");
+ var oc=+sv("fwOC","v"),wl=P(q("fwL").value),st=Math.ceil(wl*12/oc)+1+(P(q("fwX").value)||0);
+ q("fwOut").innerHTML=R("Studs",st,"n")+R("Plate stock (3 plates, ft)",3*wl,"'")+H("Count = wall ÷ "+oc+'" OC, round up, +1 end stud. Add 2–3 per corner and per opening.')}
+var CC={slab:["Length (ft)","Width (ft)","Thickness (in)"],foot:["Length (ft)","Width (in)","Depth (in)"],col:["Diameter (in) e.g. 12","Height (ft)",null],wall:["Length (ft)","Height (ft)","Thickness (in)"]};
+function cc(){var m=sv("ccM","m"),L=CC[m];q("ccAL").textContent=L[0];q("ccBL").textContent=L[1];q("ccCL").textContent=L[2]||"";q("ccC").parentNode.style.display=L[2]?"":"none";
+ var a=P(q("ccA").value),b=P(q("ccB").value),c=P(q("ccC").value),Q=P(q("ccQ").value)||1,w=(P(q("ccW").value)||0)/100,cf;
+ cf=m=="slab"?a*b*c/12:m=="foot"?a*b/12*c/12:m=="col"?Math.PI*Math.pow(a/24,2)*b:a*b*c/12;cf*=Q;var tot=cf*(1+w);
+ q("ccOut").innerHTML=R("Volume (cu ft)",cf,"")+'<div class="big">ORDER (with '+decStr(w*100,1)+'% waste)<b class="tv" data-v="'+tot/27+'">'+decStr(tot/27,2)+" cu yd</b></div>"+R("Cu ft incl. waste",tot," ft³")+R("80 lb bags",Math.ceil(tot/.6),"n")+R("60 lb bags",Math.ceil(tot/.45),"n")}
+function lb(){var bf=P(q("lbT").value)*P(q("lbW").value)*P(q("lbL").value)/12,Q=P(q("lbQ").value)||1,c=P(q("lbC").value);
+ q("lbOut").innerHTML=R("BF per piece",bf," BF")+'<div class="big">TOTAL BOARD FEET<b class="tv" data-v="'+bf*Q+'">'+decStr(bf*Q,2)+" BF</b></div>"+(c>0?R("Total cost",bf*Q*c,"")+H("$"+(bf*Q*c).toFixed(2)+" at $"+c.toFixed(2)+"/BF · $"+(bf*c).toFixed(2)+" per piece"):"")}
+var SHR={"10":1/16,"22.5":3/16,"30":1/4,"45":3/8,"60":1/2},MUL={"10":6,"22.5":2.6,"30":2,"45":1.4,"60":1.2};
+function el(){var a=sv("eoA","a"),d=P(q("eoD").value),csc=1/Math.sin(a*D2);
+ q("eoOut").innerHTML=R("Multiplier (field / exact)",MUL[a],"")+H("Field multiplier "+MUL[a]+" · exact csc "+decStr(csc,3))+R("Distance between bends",d*csc)+R("Shrink (add to first mark)",d*SHR[a])+H("1. Mark the first bend at your measurement + shrink. 2. Mark the second bend "+decStr(d*csc,3)+'" back. 3. Bend both '+a+"°, rolled 180° apart.");
+ var tu=+sv("esS","t"),h=P(q("esH").value),bb=P(q("esB").value);
+ q("esOut").innerHTML=R("Take-up (deduct)",tu)+R("Mark from end (arrow at mark)",h-tu)+(bb>0?R("Back-to-back mark (from 1st stub back)",bb)+H("Back-to-back: mark at the full back-to-back length and line it up with the bender's star / back-to-back mark, bender facing the opposite way."):"");
+ var sh=P(q("eaH").value),c=P(q("eaC").value);
+ q("eaOut").innerHTML=R("Center mark (45°)",c+sh*3/16)+R("Outer marks each side (22.5°)",sh*2.5)+R("First mark",c+sh*3/16-sh*2.5)+R("Last mark",c+sh*3/16+sh*2.5)+H('Shrink 3/16" per inch of height moves the center mark ahead. Outer bends 2½" per inch of height from center.');
+ var A=P(q("egA").value),r=P(q("egR").value),n=Math.round(P(q("egN").value)),arc=2*Math.PI*r*A/360;
+ q("egOut").innerHTML=R("Degrees per shot",A/n,"°")+R("Space between shots",arc/n)+R("Developed length (arc)",arc)+H("Bend "+decStr(A/n,2)+"° at each mark, "+n+" shots, keep the conduit in the same plane.")}
+var PM={"11.25":5.126,"22.5":2.613,"45":1.414,"60":1.155};
+function pl(){var s=+sv("psS","s"),L=P(q("psL").value);q("psOut").innerHTML='<div class="big">TOTAL DROP<b class="tv" data-v="'+s*L+'">'+decStr(s*L,3)+'"</b>≈ '+toFrac(s*L,16)+'"</div>'+R("Slope",s)+R("Percent grade",s/12*100,"%");
+ var a=sv("poA","a"),o=P(q("poO").value);q("poOut").innerHTML=R("Multiplier",PM[a],"")+R("Travel (center to center)",o*PM[a])+R("Run (advance)",o/Math.tan(a*D2))+H("Travel = offset × "+PM[a]+". Subtract fitting takeoffs for the cut length.")}
+var all=function(){fr();cc();lb();el();pl()};
+["framing","concrete","lumber","elec","plumb"].forEach(function(id){var s=q(id);s.addEventListener("input",all);s.addEventListener("change",all);
+ s.addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));toast(decStr(+t.dataset.v,4)+" → Calc",1200)})});
+["fwOC","ccM","eoA","esS","psS","poA"].forEach(function(id){seg(id,all)});all();
+if(typeof window!="undefined")window.__v11={fr:fr}})();
 // ---- Materials (v9) ----
 (function(){var q=function(i){return document.getElementById(i)},D=function(v,p){return decStr(v,p==null?4:p)},ST=.2836*12;
 function fr(v){var n=Math.round(v*16),w=Math.floor(n/16),r=n%16,g=16;while(r&&r%2==0){r/=2;g/=2}return(w?w+(r?"-":""):"")+(r?r+"/"+g:"")||"0"}
@@ -680,7 +822,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script><script>if("serviceWorker" in navigator&&location.protocol!="file:")navigator.serviceWorker.register("sw.js").then(function(){console.log("SW registered")}).catch(function(e){console.warn("SW",e)});</script>
 <script>
-var APP_VERSION="v9";
+var APP_VERSION="v11";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
