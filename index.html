@@ -220,7 +220,7 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <div class="hint err" id="tbErr" style="min-height:14px"></div>
 <h3 style="margin-top:8px">PRESETS</h3><div class="seg" id="tbPre"><button data-p="bends,angles,tap">Sheet Metal</button><button data-p="pipe,angles,weld">Pipe Fitter</button><button data-p="angles,weld,bends">Structural / Fab</button></div>
 <button class="btn am" id="tbSave" style="width:100%">Save tabs</button><button class="btn" id="tbReset" style="width:100%;margin-top:6px">Reset to default (Bends, Angles, Pipe)</button></div></section>
-<div id="moreMenu"><button data-s="tap">🔩 Tap &amp; Drill</button><button data-s="takeoffs">📋 Takeoffs</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT v6</div></div><div class="toast" id="toast"></div>
+<div id="moreMenu"><button data-s="tap">🔩 Tap &amp; Drill</button><button data-s="takeoffs">📋 Takeoffs</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT v7</div></div><div class="toast" id="toast"></div>
 <section class="screen" id="takeoffs"><div class="stub"><h2>Takeoffs</h2>Material lists, cut lists, weights — coming soon.</div></section>
 <section class="screen" id="weld">
 <div class="card"><h3>WELD SETTINGS</h3><div class="hint" style="color:#ff6b6b;font-size:13px">⚠ Starting points only — run a test bead on scrap.</div><div class="fld" style="margin-top:6px">
@@ -231,7 +231,22 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 </div></div>
 <div class="card"><h3 id="wHead">SETTINGS</h3><div id="wOut"></div><div class="hint" id="wSrc" style="margin-top:8px"></div></div>
 </section>
-<section class="screen" id="notes"><div class="stub"><h2>Notes</h2>Job notes — coming soon.</div></section>
+<section class="screen" id="notes">
+<div class="card" id="nList"><h3>NOTES</h3>
+<input id="nQ" placeholder="Search notes…"><div class="fld" style="margin-top:6px"><label>Job / folder<select id="nJobF"><option value="">All jobs</option></select></label><label>&nbsp;<button class="btn am" id="nNew" style="margin-top:3px">+ New note</button></label></div>
+<div id="nItems" style="margin-top:8px"></div>
+<div style="display:flex;gap:6px;margin-top:8px"><button class="btn" id="nExp" style="flex:1">Export JSON</button><button class="btn" id="nImpB" style="flex:1">Import JSON</button><input type="file" id="nImp" accept="application/json,.json" style="display:none"></div>
+<div class="hint" id="nStat"></div></div>
+<div class="card" id="nEdit" style="display:none"><h3 id="nEH">EDIT NOTE</h3><div class="fld">
+<label class="w">Title<input id="nT" placeholder="e.g. Trailer flatbed – door boxes"></label>
+<label class="w">Job / folder<input id="nJ" list="nJobs" placeholder="e.g. Flatbed"><datalist id="nJobs"></datalist></label>
+<label class="w">Notes<textarea id="nB" rows="8" style="margin-top:3px;font-size:17px;background:#000;color:#fff;border:2px solid #2a2f37;border-radius:8px;padding:8px;width:100%"></textarea></label></div>
+<div style="display:flex;gap:6px;margin-top:6px"><button class="btn" id="nCalc" style="flex:1">Insert calc result</button><button class="btn" id="nPhB" style="flex:1">📷 Add photos</button><input type="file" id="nPh" accept="image/*" multiple style="display:none"></div>
+<div id="nThumbs" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px"></div><div class="hint" id="nMeta"></div>
+<div style="display:flex;gap:6px;margin-top:8px"><button class="btn am" id="nSave" style="flex:2">Save</button><button class="btn" id="nCancel" style="flex:1">Close</button></div>
+<div style="display:flex;gap:6px;margin-top:6px"><button class="btn" id="nShare" style="flex:1">Share</button><button class="btn" id="nLink" style="flex:1">Copy import link</button><button class="btn rd" id="nDel" style="width:auto;padding:0 14px">Delete</button></div></div>
+<div class="card" style="opacity:.6"><h3>COMPANY GROUPS (COMING SOON)</h3><div class="hint">Share job notes with your crew or shop. Not available yet.</div></div>
+</section>
 </main>
 <nav><button class="on" data-s="calc"><i>🧮</i>Calc</button><button data-s="bends"><i>📐</i>Bends</button><button data-s="angles"><i>📏</i>Angles</button><button data-s="pipe"><i>🛢</i>Pipe</button><button data-s="more"><i>☰</i>More</button></nav>
 <script id="math">
@@ -552,7 +567,7 @@ function getTabs(){try{var t=JSON.parse(localStorage.getItem("hhTabs"));if(t&&t.
 function renderNav(){var t=getTabs(),cur=document.querySelector(".screen.on");cur=cur?cur.id:"calc";
  document.querySelector("nav").innerHTML='<button data-s="calc"><i>🧮</i>Calc</button>'+t.map(function(k){return '<button data-s="'+k+'"><i>'+PAGES[k][0]+"</i>"+PAGES[k][1]+"</button>"}).join("")+'<button data-s="more"><i>☰</i>More</button>';
  var more=Object.keys(PAGES).filter(function(k){return t.indexOf(k)<0});
- q("moreMenu").innerHTML=more.map(function(k){return '<button data-s="'+k+'">'+PAGES[k][0]+" "+(k=="weld"?"Weld Settings":k=="tap"?"Tap &amp; Drill":PAGES[k][1])+"</button>"}).join("")+'<button data-s="tabs">⚙️ Customize Tabs</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT '+(window.APP_VERSION||"v6")+"</div>";
+ q("moreMenu").innerHTML=more.map(function(k){return '<button data-s="'+k+'">'+PAGES[k][0]+" "+(k=="weld"?"Weld Settings":k=="tap"?"Tap &amp; Drill":PAGES[k][1])+"</button>"}).join("")+'<button data-s="tabs">⚙️ Customize Tabs</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT '+(window.APP_VERSION||"v7")+"</div>";
  document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){if(b.dataset.s=="more"){var m=q("moreMenu");m.style.display=m.style.display=="flex"?"none":"flex"}else go(b.dataset.s)}});
  document.querySelectorAll("#moreMenu button[data-s]").forEach(function(b){b.onclick=function(){go(b.dataset.s)}});
  q("updBtn").onclick=function(){window.checkForUpdates&&checkForUpdates()};go(cur)}
@@ -567,7 +582,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);})();
 live();
 </script><script>if("serviceWorker" in navigator&&location.protocol!="file:")navigator.serviceWorker.register("sw.js").then(function(){console.log("SW registered")}).catch(function(e){console.warn("SW",e)});</script>
 <script>
-var APP_VERSION="v6";
+var APP_VERSION="v7";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
@@ -582,5 +597,68 @@ function checkForUpdates(){document.getElementById("moreMenu").style.display="no
    else{toast("You're on the latest version ("+APP_VERSION+")");clearCaches().then(function(){setTimeout(freshReload,1200)})}})
  }).catch(function(e){console.warn("update",e);toast("Updating…");clearCaches().then(function(){setTimeout(freshReload,600)})})}
 document.getElementById("updBtn").onclick=checkForUpdates;
+</script>
+<script id="notesjs">
+(function(){var $=function(i){return document.getElementById(i)},DB=null,cur=null,SHARE_BASE="https://atticushaydenhinkle-create.github.io/HH/",MAXPH=8e6;
+function db(){return DB||(DB=new Promise(function(res,rej){var r=indexedDB.open("hhfab",1);r.onupgradeneeded=function(){r.result.createObjectStore("notes",{keyPath:"id"})};r.onsuccess=function(){res(r.result)};r.onerror=function(){rej(r.error)}}))}
+function tx(mode,fn){return db().then(function(d){return new Promise(function(res,rej){var t=d.transaction("notes",mode),st=t.objectStore("notes"),out=fn(st);t.oncomplete=function(){res(out&&out.result!==undefined?out.result:out)};t.onerror=function(){rej(t.error)}})})}
+var all=function(){return tx("readonly",function(s){return s.getAll()})},put=function(n){return tx("readwrite",function(s){s.put(n)})},del=function(id){return tx("readwrite",function(s){s.delete(id)})};
+window.hhNotes={all:all,put:put,del:del};
+function esc(t){return String(t||"").replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function fmt(t){return new Date(t).toLocaleString([], {month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"})}
+function psize(n){return(n.photos||[]).reduce(function(a,p){return a+p.length*.75},0)}
+function list(){return all().then(function(ns){var q=$("nQ").value.toLowerCase(),jf=$("nJobF").value,jobs=[];
+ ns.forEach(function(n){if(n.job&&jobs.indexOf(n.job)<0)jobs.push(n.job)});jobs.sort();
+ $("nJobF").innerHTML='<option value="">All jobs</option>'+jobs.map(function(j){return '<option'+(j==jf?" selected":"")+">"+esc(j)+"</option>"}).join("");$("nJobs").innerHTML=jobs.map(function(j){return "<option>"+esc(j)+"</option>"}).join("");
+ var f=ns.filter(function(n){return(!jf||n.job==jf)&&(!q||(n.title+" "+n.body+" "+n.job).toLowerCase().indexOf(q)>=0)}).sort(function(a,b){return b.updated-a.updated}),g={};
+ f.forEach(function(n){var k=n.job||"No job";(g[k]=g[k]||[]).push(n)});
+ $("nItems").innerHTML=f.length?Object.keys(g).sort().map(function(k){return '<div style="color:#ffb020;font-weight:800;font-size:13px;margin:8px 0 4px">📁 '+esc(k)+" ("+g[k].length+")</div>"+g[k].map(function(n){
+  return '<div class="nItem" data-id="'+n.id+'" style="background:#000;border-radius:8px;padding:10px;margin-bottom:6px;cursor:pointer"><b style="font-size:16px">'+esc(n.title||"(untitled)")+'</b>'+((n.photos||[]).length?' <span style="color:#7c8594">📷'+n.photos.length+"</span>":"")+
+  '<div style="color:#9aa4b2;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc((n.body||"").slice(0,90))+'</div><div class="hint">Updated '+fmt(n.updated)+"</div></div>"}).join("")}).join(""):'<div class="hint">No notes yet. Tap “+ New note”.</div>';
+ document.querySelectorAll(".nItem").forEach(function(e){e.onclick=function(){open(f.find(function(n){return n.id==e.dataset.id}))}});
+ $("nStat").textContent=ns.length+" note"+(ns.length==1?"":"s")+" · photos "+(ns.reduce(function(a,n){return a+psize(n)},0)/1e6).toFixed(1)+" MB on this device"})}
+function open(n){cur=n?JSON.parse(JSON.stringify(n)):{id:"n"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),title:"",body:"",job:$("nJobF").value||"",photos:[],created:Date.now(),updated:Date.now(),isNew:true};
+ $("nEH").textContent=cur.isNew?"NEW NOTE":"EDIT NOTE";$("nT").value=cur.title;$("nJ").value=cur.job;$("nB").value=cur.body;$("nDel").style.display=cur.isNew?"none":"";thumbs();$("nList").style.display="none";$("nEdit").style.display=""}
+function thumbs(){$("nThumbs").innerHTML=cur.photos.map(function(p,i){return '<div style="position:relative"><img src="'+p+'" style="width:96px;height:96px;object-fit:cover;border-radius:8px;border:2px solid #2a2f37"><button data-i="'+i+'" class="btn rd" style="position:absolute;top:2px;right:2px;height:28px;width:28px;padding:0">✕</button></div>'}).join("");
+ $("nThumbs").querySelectorAll("button").forEach(function(b){b.onclick=function(){cur.photos.splice(+b.dataset.i,1);thumbs()}});
+ $("nMeta").textContent=(cur.isNew?"":"Created "+fmt(cur.created)+" · Updated "+fmt(cur.updated)+" · ")+cur.photos.length+" photo(s), "+(psize(cur)/1e6).toFixed(2)+" MB"}
+function collect(){cur.title=$("nT").value.trim();cur.job=$("nJ").value.trim();cur.body=$("nB").value}
+function save(){collect();var n=Object.assign({},cur);delete n.isNew;n.updated=Date.now();return put(n).then(function(){cur=n;toast("Note saved",1000);return list()})}
+function compress(file){return new Promise(function(res,rej){var u=URL.createObjectURL(file),im=new Image();im.onload=function(){var k=Math.min(1,1280/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+ c.getContext("2d").drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);res(c.toDataURL("image/jpeg",.72))};im.onerror=function(){URL.revokeObjectURL(u);rej("bad image")};im.src=u})}
+// --- share link encode/decode ---
+function b64u(bytes){var s="";for(var i=0;i<bytes.length;i+=8192)s+=String.fromCharCode.apply(null,bytes.subarray(i,i+8192));return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function unb64u(t){t=t.replace(/-/g,"+").replace(/_/g,"/");while(t.length%4)t+="=";var s=atob(t),b=new Uint8Array(s.length);for(var i=0;i<s.length;i++)b[i]=s.charCodeAt(i);return b}
+function encodeNote(n){var raw=new TextEncoder().encode(JSON.stringify({t:n.title,j:n.job,b:n.body}));
+ if(!window.CompressionStream)return Promise.resolve("u"+b64u(raw));return new Response(new Blob([raw]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer().then(function(a){return "z"+b64u(new Uint8Array(a))})}
+function decodeNote(t){var b=unb64u(t.slice(1));var p=t[0]=="z"?new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer().then(function(a){return new Uint8Array(a)}):Promise.resolve(b);
+ return p.then(function(u){var o=JSON.parse(new TextDecoder().decode(u));return{title:o.t||"",job:o.j||"",body:o.b||""}})}
+window.hhNoteCodec={encode:encodeNote,decode:decodeNote};
+function linkFor(n){return encodeNote(n).then(function(c){return SHARE_BASE+"#note="+c})}
+function copy(t){return(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(t):Promise.reject()).catch(function(){var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}a.remove()})}
+function dataToFile(d,i){var b=atob(d.split(",")[1]),u=new Uint8Array(b.length);for(var k=0;k<b.length;k++)u[k]=b.charCodeAt(k);return new File([u],"photo-"+(i+1)+".jpg",{type:"image/jpeg"})}
+// --- wire up ---
+$("nNew").onclick=function(){open(null)};$("nCancel").onclick=function(){$("nEdit").style.display="none";$("nList").style.display="";list()};
+$("nSave").onclick=function(){save().then(function(){$("nEdit").style.display="none";$("nList").style.display=""})};
+$("nDel").onclick=function(){if(!confirm('Delete "'+(cur.title||"untitled")+'"? This cannot be undone.'))return;del(cur.id).then(function(){toast("Deleted",1000);$("nEdit").style.display="none";$("nList").style.display="";list()})};
+$("nCalc").onclick=function(){var v=document.getElementById("res").textContent,e=(window.expr||"").trim?expr:"",ta=$("nB"),ins=(e&&!/=\s*$/.test(e)&&e!=v?e+" = ":"")+v,p=ta.selectionStart==null?ta.value.length:ta.selectionStart;
+ ta.value=ta.value.slice(0,p)+ins+ta.value.slice(ta.selectionEnd||p);ta.focus();ta.selectionStart=ta.selectionEnd=p+ins.length};
+$("nPhB").onclick=function(){$("nPh").click()};
+$("nPh").onchange=function(){var fs=[].slice.call(this.files);this.value="";Promise.all(fs.map(compress)).then(function(ds){ds.forEach(function(d){if(psize(cur)+d.length*.75>MAXPH){toast("Photo limit reached for this note (~8 MB)",1800);return}cur.photos.push(d)});thumbs()}).catch(function(){toast("Couldn't read that image",1500)})};
+$("nShare").onclick=function(){collect();linkFor(cur).then(function(link){var text=(cur.title?cur.title+"\n":"")+(cur.job?"Job: "+cur.job+"\n":"")+"\n"+cur.body+"\n\nOpen in HH FAB SHT: "+link,files=cur.photos.map(dataToFile),d={title:cur.title||"Note",text:text};
+ if(navigator.share){if(files.length&&navigator.canShare&&navigator.canShare({files:files}))d.files=files;return navigator.share(d).catch(function(e){if(e&&e.name=="AbortError")return;return copy(text).then(function(){toast("Copied to clipboard",1400)})})}
+ return copy(text).then(function(){toast("Sharing not supported — copied to clipboard",1800)})})};
+$("nLink").onclick=function(){collect();linkFor(cur).then(function(l){return copy(l).then(function(){toast("Import link copied ("+l.length+" chars)",1600)})})};
+$("nQ").oninput=list;$("nJobF").onchange=list;
+$("nExp").onclick=function(){all().then(function(ns){var b=new Blob([JSON.stringify({app:"HH FAB SHT",version:1,exported:new Date().toISOString(),notes:ns},null,1)],{type:"application/json"}),a=document.createElement("a");
+ a.href=URL.createObjectURL(b);a.download="hh-fab-notes-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},2000);toast("Exported "+ns.length+" notes",1400)})};
+$("nImpB").onclick=function(){$("nImp").click()};
+$("nImp").onchange=function(){var f=this.files[0];this.value="";if(!f)return;f.text().then(function(t){var d=JSON.parse(t),ns=Array.isArray(d)?d:d.notes;if(!Array.isArray(ns))throw 0;
+ return all().then(function(ex){var m={};ex.forEach(function(n){m[n.id]=n});var c=0;return Promise.all(ns.filter(function(n){return n&&n.id&&(!m[n.id]||(n.updated||0)>(m[n.id].updated||0))}).map(function(n){c++;n.photos=n.photos||[];return put(n)})).then(function(){toast("Imported "+c+" note(s)",1500);list()})})}).catch(function(){toast("Not a valid notes backup file",1800)})};
+function checkHash(){var m=location.hash.match(/^#note=(.+)$/);if(!m)return Promise.resolve();return decodeNote(m[1]).then(function(n){history.replaceState(null,"",location.pathname+location.search);
+ if(confirm("Save this shared note?\n\n"+(n.title||"(untitled)")+(n.job?"\nJob: "+n.job:""))){var now=Date.now();return put({id:"n"+now.toString(36)+Math.random().toString(36).slice(2,6),title:n.title,job:n.job,body:n.body,photos:[],created:now,updated:now}).then(function(){if(window.go)go("notes");toast("Shared note saved",1500);return list()})}})
+ .catch(function(){toast("That note link is damaged",1800)})}
+window.addEventListener("hashchange",checkHash);list();checkHash();
+})();
 </script>
 </body></html>
