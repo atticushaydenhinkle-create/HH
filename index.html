@@ -175,7 +175,16 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <label>Outside width<input id="mW" inputmode="decimal" value="24"></label><label>Outside height<input id="mH" inputmode="decimal" value="36"><span class="hint">height used for 4 sides only</span></label></div><div id="mOut"></div></div>
 <div class="card"><h3>COMPOUND MITER (sloped sides / legs)</h3><div class="fld">
 <label>Tilt from vertical (°)<input id="cT" inputmode="decimal" value="45"></label><label>Sides<input id="cN" inputmode="decimal" value="4"></label></div><div id="cOut"></div></div>
-<div class="card"><h3>PIPE / TUBE COPE</h3><div class="fld">
+<div class="card" id="pcCard"><h3>PIPE CUTS (MITER)</h3><div class="fld">
+<label>NPS<select id="pcN"></select></label><label>…or OD<input id="pcOD" inputmode="decimal" placeholder="custom"></label>
+<label>Angle type<select id="pcMode"><option value="cut">Cut angle (per piece)</option><option value="joint">Joint deflection</option></select></label><label>Angle (°)<input id="pcA" inputmode="decimal" value="22.5"></label>
+<label>Template points<select id="pcPts"><option>8</option><option selected>16</option></select></label><label>Center-to-center<input id="pcCC" inputmode="decimal" value="24"></label>
+<label>Far-end angle (°)<input id="pcA2" inputmode="decimal" value="22.5"><span class="hint">same type as above; 0 = square</span></label></div>
+<div id="pcOut"></div><svg id="pcSvg" class="diag" width="320" height="110"></svg>
+<button class="btn am" id="pcPrint" style="width:100%;margin-top:8px">Printable full-size wrap template</button>
+<table id="pcT" style="margin-top:8px;width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums"></table>
+<div style="display:flex;gap:6px;margin-top:8px"><button class="btn" id="pcToPipe" style="flex:1">Pipe page →</button><button class="btn" id="pcToCope" style="flex:1">Cope helper ↓</button></div></div>
+<div class="card" id="copeCard"><h3>PIPE / TUBE COPE</h3><div class="fld">
 <label>Branch OD<input id="pB" inputmode="decimal" value="1.66"></label><label>Main OD<input id="pM" inputmode="decimal" value="2.375"></label>
 <label class="w">Intersection angle (°)<input id="pA" inputmode="decimal" value="90"></label></div>
 <div id="pOut"></div><svg id="pSvg" class="diag" width="320" height="120"></svg>
@@ -206,9 +215,22 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <label>Header OD<input id="brH" inputmode="decimal" value="6.625"></label><label>Angle (°)<input id="brA" inputmode="decimal" value="90"></label></div><div id="brOut"></div>
 <button class="btn am" id="brCope" style="width:100%;margin-top:8px">Open cope template on Angles →</button></div>
 </section>
-<div id="moreMenu"><button data-s="tap">🔩 Tap &amp; Drill</button><button data-s="takeoffs">📋 Takeoffs</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT v5</div></div><div class="toast" id="toast"></div>
+<section class="screen" id="tabs"><div class="card"><h3>CUSTOMIZE TABS</h3><div class="hint">Calc is always first. Pick tabs 2–4; everything else lives in More.</div>
+<div class="fld" style="margin-top:6px"><label class="w">Tab 2<select id="tb1" class="tbs"></select></label><label class="w">Tab 3<select id="tb2" class="tbs"></select></label><label class="w">Tab 4<select id="tb3" class="tbs"></select></label></div>
+<div class="hint err" id="tbErr" style="min-height:14px"></div>
+<h3 style="margin-top:8px">PRESETS</h3><div class="seg" id="tbPre"><button data-p="bends,angles,tap">Sheet Metal</button><button data-p="pipe,angles,weld">Pipe Fitter</button><button data-p="angles,weld,bends">Structural / Fab</button></div>
+<button class="btn am" id="tbSave" style="width:100%">Save tabs</button><button class="btn" id="tbReset" style="width:100%;margin-top:6px">Reset to default (Bends, Angles, Pipe)</button></div></section>
+<div id="moreMenu"><button data-s="tap">🔩 Tap &amp; Drill</button><button data-s="takeoffs">📋 Takeoffs</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT v6</div></div><div class="toast" id="toast"></div>
 <section class="screen" id="takeoffs"><div class="stub"><h2>Takeoffs</h2>Material lists, cut lists, weights — coming soon.</div></section>
-<section class="screen" id="weld"><div class="stub"><h2>Weld Settings</h2>MIG / TIG / Stick / Flux-core by thickness — coming soon.</div></section>
+<section class="screen" id="weld">
+<div class="card"><h3>WELD SETTINGS</h3><div class="hint" style="color:#ff6b6b;font-size:13px">⚠ Starting points only — run a test bead on scrap.</div><div class="fld" style="margin-top:6px">
+<label>Brand<select id="wBr"></select></label><label>Machine<select id="wMa"></select></label>
+<label>Process<select id="wPr"></select></label><label>Material<select id="wMt"></select></label>
+<label>Thickness<select id="wTh"></select></label><label>Wire / rod / tungsten<select id="wWi"></select></label>
+<label class="w" id="wInL">Input power<select id="wIn"><option value="230">230 V</option><option value="115">115 V</option></select></label>
+</div></div>
+<div class="card"><h3 id="wHead">SETTINGS</h3><div id="wOut"></div><div class="hint" id="wSrc" style="margin-top:8px"></div></div>
+</section>
 <section class="screen" id="notes"><div class="stub"><h2>Notes</h2>Job notes — coming soon.</div></section>
 </main>
 <nav><button class="on" data-s="calc"><i>🧮</i>Calc</button><button data-s="bends"><i>📐</i>Bends</button><button data-s="angles"><i>📏</i>Angles</button><button data-s="pipe"><i>🛢</i>Pipe</button><button data-s="more"><i>☰</i>More</button></nav>
@@ -291,6 +313,75 @@ function cutback(deg,R){return Math.tan(deg*D2R/2)*R}
 function miterTurn(n,total,R,OD){var cut=total/(2*(n-1)),t=Math.tan(cut*D2R),h=OD/2;
  return{cut:cut,joints:n-1,endCL:R*t,endLong:(R+h)*t,endShort:(R-h)*t,midCL:2*R*t,midLong:2*(R+h)*t,midShort:2*(R-h)*t}}
 function branchHole(OD,wall,deg){var id=OD-2*wall,s=Math.sin(deg*D2R);return{setOn:id,setIn:OD,setOnLong:id/s,setInLong:OD/s}}
+
+// ======== PIPE CUT (miter) ========
+function pipeCut(OD,angle,mode){var c=mode=="joint"?angle/2:angle;var t=Math.tan(c*D2R);return{cut:c,saw:c,diff:OD*t,t:t}}
+function pipeCutTemplate(OD,cut,N){var t=Math.tan(cut*D2R),r=OD/2,p=[];for(var i=0;i<=N;i++){var th=2*Math.PI*i/N;p.push({deg:360*i/N,x:Math.PI*OD*i/N,h:r*(1+Math.cos(th))*t})}return p}
+function pipeBetween(cc,OD,c1,c2){var k=OD/2*(Math.tan(c1*D2R)+Math.tan(c2*D2R));return{center:cc,long:cc+k,short:cc-k}}
+// ======== WELD ========
+var THK=[["24ga",.024],["22ga",.030],["20ga",.036],["18ga",.048],["16ga",.060],["14ga",.075],["12ga",.105],["1/8",.125],["10ga",.135],["3/16",.1875],["1/4",.25],["5/16",.3125],["3/8",.375],["1/2",.5]];
+function thkVal(k){for(var i=0;i<THK.length;i++)if(THK[i][0]==k)return THK[i][1];return NaN}
+function chartRow(keys,vals){var o={};vals.split(" ").forEach(function(v,i){if(v!="-")o[keys[i]]=v});return o}
+var H140K=["24ga","20ga","18ga","16ga","12ga","10ga","3/16","1/4"],H190K=["24ga","20ga","18ga","16ga","1/8","3/16","1/4","5/16"],H210K=["24ga","22ga","18ga","16ga","1/8","3/16","1/4","3/8"],L140K=["22ga","18ga","16ga","14ga","1/8","3/16"],M141K=["24ga","18ga","16ga","14ga","1/8"],M142K=["24ga","18ga","16ga","14ga","1/8","3/16"];
+var SRC={h140:"Hobart Handler 140 spec sheet 217919 (Mar 2020), door-chart Welding Guide — hobartwelders.com",h190:"Hobart Handler 190 spec sheet 251091, Welding Guide — hobartwelders.com",
+ h210:"Hobart Handler 210MVP spec sheet 250822 (Sep 2022), Welding Guide (115/230 V) — hobartwelders.com",l140:"Lincoln POWER MIG 140 MP manual IMT10392 door chart (as transcribed by ratedarc.com, checked 2026-09-27)",
+ m141:"Millermatic 141 manual OM-264423B chart (via ratedarc.com, 2026-09-27)",m142:"Millermatic 142 manual OM-291596A chart (via ratedarc.com, 2026-09-27)",
+ m211:"Millermatic 211 spec sheet DC1258 & manual OM-265809 (Auto-Set) — millerwelds.com",gen:"General guideline: Miller/Hobart manuals 'Typical MIG process control settings' (1 A per .001 in; .023=3.5, .030=2, .035=1.6 IPM/A); stick/TIG ≈1 A per .001 in"};
+// door charts: CH[id][proc|mat|wire|input] = {thk:"V/WFS"}
+var CH={h140:{"mig|ms|.024":chartRow(H140K,"1/30 2/40 2/50 3/50 4/55 - - -"),"mig|ms|.030":chartRow(H140K,"1/25 2/30 2/35 3/35 4/40 4/50 5/45 5/50*"),"mig|ms|.035":chartRow(H140K,"- - 2/30 3/30 4/35 4/40 5/40 5/45*"),
+  "fc|ms|.030":chartRow(H140K,"- - 1/30 2/30 3/40 3/45 4/50 5/50*"),"fc|ms|.035":chartRow(H140K,"- - - 2/25 3/35 4/35 5/35 5/40*"),
+  "mig|ss|.024":chartRow(H140K,"- - 3/30 4/50 - 5/50 - -"),"mig|ss|.030":chartRow(H140K,"- - 3/20 4/40 - 5/40 - -"),"mig|al|.030":chartRow(H140K,"- - - 3/90 5/90 - - -")},
+ h190:{"mig|ms|.024":chartRow(H190K,"1/30 2/40 3/50 4/60 5/80 6/90 - -"),"mig|ms|.030":chartRow(H190K,"- 1/40 2/50 3/50 5/60 6/60 6/70* 7/80*"),"mig|ms|.035":chartRow(H190K,"- 3/40 4/40 5/40 5/50 6/50 7/50* 7/60*"),
+  "mig|ss|.024":chartRow(H190K,"- 3/40 3/40 4/50 6/60 7/70 - -"),"mig|ss|.030":chartRow(H190K,"- 3/30 3/35 4/30 5/35 6/50 7/50* -"),"mig|ss|.035":chartRow(H190K,"- 3/15 3/35 4/30 5/40 7/40 7/50* -")},
+ h210:{"mig|ms|.024|230":chartRow(H210K,"1/20 2/25 3/40 3/50 5/70 6/80 - -"),"mig|ms|.030|230":chartRow(H210K,"2/20 2/25 3/25 3/30 4/40 5/50 6/60 6/70*"),"mig|ms|.035|230":chartRow(H210K,"- - 2/20 3/20 5/40 6/40 6/45 7/50*"),
+  "mig|ms|.024|115":chartRow(H210K,"4/25 5/30 6/40 6/45 7/65 - - -"),"mig|ms|.030|115":chartRow(H210K,"5/15 5/20 6/25 6/30 7/50 - - -"),"mig|ms|.035|115":chartRow(H210K,"- - 6/20 6/25 7/30 - - -"),
+  "mig|ss|.024|230":chartRow(H210K,"- - 3/35 4/40 6/70 - - -"),"mig|ss|.030|230":chartRow(H210K,"- - 3/25 4/30 6/50 7/70 - -"),"mig|ss|.035|230":chartRow(H210K,"- - 3/20 4/25 6/50 7/50 7/55 -"),
+  "fc|ms|.030|230":chartRow(H210K,"- - 1/20 2/25 4/45 5/45 5/50 -")},
+ l140:{"mig|ms|.030":chartRow(L140K,"B/3 D/4 E/5 F/6 H/8 J/9"),"fc|ms|.030":chartRow(L140K,"- B/2.5 B/3 D/4 G/6 H/6")},
+ m141:{"mig|ms|.030":chartRow(M141K,"2/35 4/45 5.5/55 6.5/60 10/75"),"fc|ms|.030":chartRow(M141K,"- 2/35 3/45 5/55 8.5/65")},
+ m142:{"mig|ms|.030":chartRow(M142K,"14.0/95 15.2/195 16.0/200 16.8/240 18.3/320 19.0/360"),"fc|ms|.030":chartRow(M142K,"- 13.6/92 15.2/110 15.7/167 18.0/238 19.0/280")}};
+// machines: id,name,brand,procs,type(tap|dial|digital|autoset|synergic|amps),max amps,chart id,units
+var MACH=[["any","Any machine (general)","Any machine","mig fc stick tig","digital",300,""],
+["m141","Millermatic 141","Miller","mig fc","dial",140,"m141"],["m142","Millermatic 142","Miller","mig fc","digital",140,"m142"],["m211","Millermatic 211","Miller","mig fc","autoset",230,""],
+["m252","Millermatic 252","Miller","mig fc","autoset",300,""],["mm215","Multimatic 215","Miller","mig fc stick tig","autoset",230,""],["mm220","Multimatic 220 AC/DC","Miller","mig fc stick tig","autoset",220,""],
+["dyn210","Dynasty 210","Miller","tig stick","amps",210,""],["sync210","Syncrowave 210","Miller","tig stick mig","amps",210,""],["tb225","Thunderbolt 225 (AC stick)","Miller","stick","amps",225,""],
+["l140","Power MIG 140 MP","Lincoln","mig fc stick tig","tap",140,"l140"],["l210","Power MIG 210 MP","Lincoln","mig fc stick tig","digital",220,""],["l256","Power MIG 256","Lincoln","mig fc","digital",300,""],
+["lsw200","Square Wave TIG 200","Lincoln","tig stick","amps",200,""],["l225","AC/DC 225/125 (tombstone)","Lincoln","stick","amps",225,""],
+["h140","Handler 140","Hobart","mig fc","tap",140,"h140"],["h190","Handler 190","Hobart","mig fc","tap",190,"h190"],["h210","Handler 210 MVP","Hobart","mig fc","tap",210,"h210"],
+["hs160","Stickmate 160i","Hobart","stick","amps",160,""],["hez165","EZ-TIG 165i","Hobart","tig stick","amps",165,""],
+["e215","Rebel EMP 215ic","ESAB","mig fc stick tig","digital",230,""],["e205","Rebel EMP 205ic AC/DC","ESAB","mig fc stick tig","digital",205,""],["er300","Renegade ES 300i","ESAB","stick tig","amps",300,""],
+["ev211","PowerMTS 211Si","Everlast","mig fc stick tig","digital",200,""],["ev200","PowerTIG 200DV","Everlast","tig stick","amps",200,""],
+["yw205","MIG-205DS PRO","YesWelder","mig fc stick tig","synergic",200,""],["yt205","TIG-205P AC/DC","YesWelder","tig stick","amps",200,""],
+["pw225","TIG225X","PrimeWeld","tig stick","amps",225,""],["ahp203","AlphaTIG 203XI","AHP","tig stick","amps",200,""],["ac200","MIG200","ARCCAPTAIN","mig fc stick","synergic",200,""]];
+function machine(id){for(var i=0;i<MACH.length;i++)if(MACH[i][0]==id)return{id:MACH[i][0],name:MACH[i][1],brand:MACH[i][2],procs:MACH[i][3].split(" "),type:MACH[i][4],max:MACH[i][5],chart:MACH[i][6]};return null}
+var IPMA={".023":3.5,".024":3.5,".030":2,".035":1.6,".045":1.0};
+function wireOpts(proc,mat){if(proc=="mig")return mat=="al"?[".030",".035"]:[".024",".030",".035"];if(proc=="fc")return[".030",".035",".045"];
+ if(proc=="stick")return mat=="ss"?["3/32 308L/316L","1/8 308L/316L"]:["3/32 7018","1/8 7018","5/32 7018","1/8 6011","1/8 6013"];return["1/16","3/32","1/8"]}
+function defWire(proc,mat,t){if(proc=="mig")return mat=="al"?(t>.125?".035":".030"):(t<=.030?".024":t<=.1875?".030":".035");if(proc=="fc")return t<=.135?".030":t<=.25?".035":".045";
+ if(proc=="stick")return(mat=="ss"?(t<=.125?"3/32":"1/8")+" 308L/316L":(t<=.125?"3/32":t<=.25?"1/8":"5/32")+" 7018");return t<=.0625?"1/16":t<=.1875?"3/32":"1/8"}
+var ROD={"3/32":[70,110],"1/8":[90,150],"5/32":[120,190]},ROD6011={"1/8":[75,125]},ROD6013={"1/8":[80,120]},TUNG={"1/16":[15,90],"3/32":[50,160],"1/8":[100,250]};
+function general(proc,mat,t,wire){var A=Math.round(t*1000),r={amps:A,general:true,notes:[]};
+ if(proc=="mig"||proc=="fc"){if(mat=="al")A=Math.round(t*1000*1.25);if(mat=="ss")A=Math.round(t*1000*.9);A=Math.max(A,30);r.amps=A;r.ipm=Math.round(A*(IPMA[wire]||2)*(mat=="al"?1.8:1));
+  r.volts=+(14+0.05*A+(proc=="fc"?0.5:0)+(mat=="al"?2.5:0)).toFixed(1);
+  r.polarity=proc=="fc"?"DCEN (electrode negative)":"DCEP (electrode positive)";
+  r.gas=proc=="fc"?"None (self-shielded E71T-11 / E71T-GS)":mat=="ms"?"C25 (75% Ar / 25% CO₂) or 100% CO₂":mat=="ss"?"Tri-mix (90 He/7.5 Ar/2.5 CO₂) or 98% Ar/2% CO₂":"100% Argon";
+  r.flow=proc=="fc"?null:mat=="al"?"25–35 CFH":"20–30 CFH";r.filler=proc=="fc"?"E71T-11 flux-core":mat=="ms"?"ER70S-6":mat=="ss"?"ER308L":"ER4043 / ER5356 (spool gun)";
+  if(mat=="al")r.notes.push("Aluminum: spool gun recommended; push angle.");r.stickout=proc=="fc"?"1/2 in":"3/8–1/2 in"}
+ else if(proc=="stick"){var sz=wire.split(" ")[0],typ=wire.split(" ")[1],rg=(typ=="6011"?ROD6011[sz]:typ=="6013"?ROD6013[sz]:ROD[sz])||ROD["1/8"];if(mat=="ss")rg=[rg[0]*.85|0,rg[1]*.85|0];
+  r.amps=Math.min(Math.max(A,rg[0]),rg[1]);r.range=rg;r.polarity=typ=="6013"?"AC or DCEN/DCEP":typ=="6011"?"AC or DCEP":"DCEP (or AC)";r.filler=wire;
+  if(mat=="al")r.notes.push("Stick on aluminum is not recommended — use TIG or MIG.");if(A>rg[1])r.notes.push("Thicker than one pass at this rod — bevel and multi-pass.")}
+ else{var k=mat=="al"?1.25:mat=="ss"?0.9:1;A=Math.round(t*1000*k);var tr=TUNG[wire]||TUNG["3/32"];r.amps=Math.max(A,5);r.range=tr;
+  r.polarity=mat=="al"?"AC (balance ~65–75% EN, ~100–120 Hz)":"DCEN";r.tungsten=wire+" 2% lanthanated (or ceriated)"+(mat=="al"?" — ball/blunt tip":" — sharp point");
+  r.gas="100% Argon";r.flow="15–20 CFH";r.filler=mat=="ms"?"ER70S-2 / ER70S-6":mat=="ss"?"ER308L":"ER4043 / ER5356";r.cup="#6–#8";
+  if(A>tr[1])r.notes.push("Above typical range for "+wire+" tungsten — go up a size.")}
+ return r}
+function weldSettings(mid,proc,mat,tk,wire,inp){var m=machine(mid),t=thkVal(tk),r=general(proc,mat,t,wire);r.machine=m;r.src=SRC.gen;
+ if(m.chart&&CH[m.chart]){var key=proc+"|"+mat+"|"+wire+(m.chart=="h210"?"|"+(inp||"230"):""),row=CH[m.chart][key];
+  if(row&&row[tk]){var p=row[tk].split("/");r.chart={volt:p[0],wfs:p[1].replace("*",""),multi:/\*/.test(p[1])};r.general=false;r.src=SRC[m.chart]}}
+ if(m.id=="m211"||m.id=="mm215"||m.id=="mm220"||m.id=="m252")r.autoset=true;if(m.id=="m211")r.src2=SRC.m211;
+ if(r.amps>m.max)r.notes.push("Exceeds "+m.name+" output ("+m.max+" A) — bevel and multi-pass or use a bigger machine.");
+ if((m.id=="h140"||m.id=="m141"||m.id=="m142"||m.id=="l140")&&t>.25)r.notes.push("Beyond this machine's single-pass rating.");return r}
+if(typeof module!="undefined"){module.exports.pipeCut=pipeCut;module.exports.pipeCutTemplate=pipeCutTemplate;module.exports.pipeBetween=pipeBetween;module.exports.weldSettings=weldSettings;module.exports.machine=machine;module.exports.CH=CH;module.exports.MACH=MACH;module.exports.thkVal=thkVal;module.exports.defWire=defWire}
 if(typeof module!="undefined"){module.exports.PIPE=PIPE;module.exports.offset=offset;module.exports.rolling=rolling;module.exports.cutLen=cutLen;module.exports.cutback=cutback;module.exports.miterTurn=miterTurn;module.exports.branchHole=branchHole}
 if(typeof module!="undefined"){module.exports.tri=tri;module.exports.brace=brace;module.exports.miter=miter;module.exports.frameLP=frameLP;module.exports.compound=compound;module.exports.cope=cope;module.exports.arc=arc}
 </script>
@@ -344,7 +435,7 @@ q("tdq").oninput=td;td();
 })();
 
 (function(){var q=$,P=parseIn;
-function tv(label,v,unit){if(!isFinite(v))return '<div class="rs">'+label+'<b>–</b></div>';unit=unit||"in";
+function tv(label,v,unit){if(!isFinite(v))return '<div class="rs">'+label+'<b>–</b></div>';unit=unit||"in";if(unit=="n")return '<div class="rs">'+label+'<b class="tv" data-v="'+v+'">'+(+(+v).toFixed(1))+'</b></div>';
  return '<div class="rs">'+label+'<b class="tv" data-v="'+v+'">'+v.toFixed(unit=="°"?2:4)+(unit=="°"?"°":'"')+(unit=="in"?"<i>"+toFrac(v,16)+'"</i>':"")+'</b></div>'}
 function depth(){var sh=q("aSh").value;document.querySelectorAll(".sz").forEach(function(e){e.style.display="none"});
  var show={flat:["W","H"],tube:["W","H","Wall"],round:["OD","Wall"],angle:["W","H","Wall"],chan:["W","H","Wall"]}[sh];show.forEach(function(k){document.querySelector(".sz"+k).style.display=""});
@@ -407,11 +498,76 @@ q("pipe").addEventListener("input",pall);q("pipe").addEventListener("change",pal
 q("pipe").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=decStr(+t.dataset.v,4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
 q("brCope").onclick=function(){q("pB").value=q("brOD").value;q("pM").value=q("brH").value;q("pA").value=q("brA").value;go("angles");all();q("pSvg").scrollIntoView({block:"center"})};
 pt();pall();
-all();var h=location.hash.slice(1);if(h&&q(h))go(h);})();
+
+// ---- Pipe cuts ----
+q("pcN").innerHTML=PIPE.map(function(r,i){return '<option value="'+i+'"'+(r[0]=="6"?" selected":"")+">"+r[0]+'" ('+r[1].toFixed(3)+")</option>"}).join("");
+function pcOD(){var c=P(q("pcOD").value);return isFinite(c)&&c>0?c:PIPE[+q("pcN").value][1]}
+function pcall(){var OD=pcOD(),mode=q("pcMode").value,a=P(q("pcA").value),c=pipeCut(OD,a,mode),a2=P(q("pcA2").value),c2=mode=="joint"?(isFinite(a2)?a2:0)/2:(isFinite(a2)?a2:0);
+ var N=+q("pcPts").value,pts=pipeCutTemplate(OD,c.cut,N),b=pipeBetween(P(q("pcCC").value),OD,c.cut,c2);
+ q("pcOut").innerHTML=tv("OD used",OD)+tv("Miter cut angle per piece",c.cut,"°")+tv("Saw / bandsaw angle (from square)",c.saw,"°")+tv("Long − short side (OD×tan)",c.diff)+tv("Wrap length (π×OD)",Math.PI*OD)+
+  '<div class="hint">Pipe between joints (long points on the same side):</div>'+tv("Centerline length",b.center)+tv("Long-point length",b.long)+tv("Short-point length",b.short);
+ var k=Math.min(300/(Math.PI*OD),90/Math.max(c.diff,.01)),fine=pipeCutTemplate(OD,c.cut,96).map(function(p){return(10+p.x*k).toFixed(1)+","+(100-p.h*k).toFixed(1)}).join(" ");
+ q("pcSvg").innerHTML='<line x1="10" y1="100" x2="'+(10+Math.PI*OD*k)+'" y2="100" stroke="#5d6672" stroke-width="2"/><polyline points="'+fine+'" fill="none" stroke="#ffb020" stroke-width="3"/>';
+ q("pcT").innerHTML='<tr><th style="color:#ffb020;text-align:right">Pt</th><th style="color:#ffb020;text-align:right">°</th><th style="color:#ffb020;text-align:right">Along wrap</th><th style="color:#ffb020;text-align:right">Height</th><th style="color:#ffb020;text-align:right">1/16</th></tr>'+
+  pts.slice(0,N).map(function(p,i){return '<tr><td style="text-align:right;padding:4px">'+(i+1)+'</td><td style="text-align:right">'+p.deg.toFixed(1)+'</td><td class="tv" data-v="'+p.x+'" style="text-align:right;color:#5cc8ff">'+p.x.toFixed(3)+'</td><td class="tv" data-v="'+p.h+'" style="text-align:right;color:#5cc8ff">'+p.h.toFixed(4)+'</td><td style="text-align:right">'+toFrac(p.h,16)+"</td></tr>"}).join("")+
+  '<tr><td colspan="5" class="hint">Heights measured up from a square reference line at the short point; pt 1 = long point.</td></tr>'}
+["pcN","pcOD","pcMode","pcA","pcPts","pcCC","pcA2"].forEach(function(id){q(id).addEventListener("input",pcall);q(id).addEventListener("change",pcall)});
+q("pcPrint").onclick=function(){var OD=pcOD(),c=pipeCut(OD,P(q("pcA").value),q("pcMode").value),pts=pipeCutTemplate(OD,c.cut,180),W=Math.PI*OD,H=c.diff+1.5,
+ pl=pts.map(function(p){return p.x.toFixed(4)+","+(H-0.5-p.h).toFixed(4)}).join(" "),
+ svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'in" height="'+H+'in" viewBox="0 0 '+W+' '+H+'"><rect width="'+W+'" height="'+H+'" fill="none" stroke="#000" stroke-width="0.01"/><line x1="0" y1="'+(H-0.5)+'" x2="'+W+'" y2="'+(H-0.5)+'" stroke="#999" stroke-width="0.01" stroke-dasharray="0.1 0.1"/><polyline points="'+pl+'" fill="none" stroke="#000" stroke-width="0.02"/>'+
+ pts.filter(function(p,i){return i%(180/16)==0}).map(function(p){return '<line x1="'+p.x+'" y1="0" x2="'+p.x+'" y2="'+H+'" stroke="#bbb" stroke-width="0.005"/>'}).join("")+"</svg>",w=window.open("");
+ w.document.write("<title>Miter template</title><p style='font:12px sans-serif'>OD "+OD+'" · cut '+c.cut.toFixed(2)+"° — print at 100% scale. Wrap around pipe; dashed line = reference (short point).</p>"+svg)};
+q("pcToPipe").onclick=function(){go("pipe")};q("pcToCope").onclick=function(){q("pB").value=pcOD();all();q("copeCard").scrollIntoView({block:"start"})};
+pcall();
+// ---- Weld ----
+var BRANDS=[];MACH.forEach(function(m){if(BRANDS.indexOf(m[2])<0)BRANDS.push(m[2])});
+var PRN={mig:"MIG – solid wire + gas",fc:"Flux-core (gasless)",stick:"Stick (SMAW)",tig:"TIG (GTAW)"},MTN={ms:"Mild steel",ss:"Stainless",al:"Aluminum"};
+function opts(el,arr,sel){q(el).innerHTML=arr.map(function(a){return '<option value="'+a[0]+'"'+(a[0]==sel?" selected":"")+">"+a[1]+"</option>"}).join("")}
+function txt(l,v){return '<div class="rs">'+l+'<b style="font-size:15px;color:#f2f4f7;text-align:right;max-width:62%">'+v+"</b></div>"}
+function wBrand(){opts("wMa",MACH.filter(function(m){return m[2]==q("wBr").value}).map(function(m){return[m[0],m[1]]}));wMach()}
+function wMach(){var m=machine(q("wMa").value),cur=q("wPr").value;opts("wPr",m.procs.map(function(p){return[p,PRN[p]]}),m.procs.indexOf(cur)>=0?cur:m.procs[0]);q("wInL").style.display=m.id=="h210"?"":"none";wProc()}
+function wProc(){var p=q("wPr").value,cur=q("wMt").value,ms=p=="fc"?["ms"]:p=="stick"?["ms","ss"]:["ms","ss","al"];opts("wMt",ms.map(function(x){return[x,MTN[x]]}),ms.indexOf(cur)>=0?cur:"ms");wMat()}
+function wMat(){var cur=q("wTh").value||"1/8";opts("wTh",THK.map(function(t){return[t[0],t[0].indexOf("ga")>0?t[0].replace("ga"," ga")+" ("+t[1]+")":t[0]+'"']}),cur);wThk()}
+function wThk(){var p=q("wPr").value,mt=q("wMt").value,t=thkVal(q("wTh").value);opts("wWi",wireOpts(p,mt).map(function(w){return[w,w+(p=="mig"||p=="fc"?'"':p=="tig"?'" tungsten':"")]}),defWire(p,mt,t));wCalc()}
+function wCalc(){var m=machine(q("wMa").value),p=q("wPr").value,r=weldSettings(m.id,p,q("wMt").value,q("wTh").value,q("wWi").value,q("wIn").value),h="";
+ q("wHead").textContent=(m.brand=="Any machine"?"":m.brand+" ")+m.name+" · "+PRN[p];
+ if(p=="mig"||p=="fc"){
+  if(r.chart){var L=m.type=="tap"?(m.id=="l140"?"Voltage tap (letter)":"Voltage switch / tap"):m.type=="digital"?"Volts":"Voltage dial";
+   h+='<div class="hint" style="color:#5cc8ff">✔ From '+m.name+' door chart</div>'+txt(L,r.chart.volt+(m.type=="digital"?" V":""))+(m.type=="digital"?tv("Wire speed (IPM)",+r.chart.wfs,"n"):txt("Wire speed dial",r.chart.wfs))+(r.chart.multi?'<div class="hint">* multiple passes required</div>':"")}
+  else{h+='<div class="hint" style="color:#ffb020">General starting point — '+(m.chart?"this combo isn't on the "+m.name+" chart; ":"")+(m.type=="tap"||m.type=="dial"?"dial numbers aren't volts: use the door chart, these are actual-arc targets":"set on machine display")+"</div>";
+   if(r.autoset)h+=txt("Auto-Set","Wire dia "+q("wWi").value+'", thickness '+q("wTh").value+" (or manual below)");
+   if(m.type=="synergic")h+=txt("Synergic","Set wire speed/thickness; machine sets volts — trim ±");
+   h+=tv("Volts (approx.)",r.volts,"n")+tv("Wire speed (IPM)",r.ipm,"n")}
+  h+=tv("≈ Amps",r.amps,"n")+txt("Wire",q("wWi").value+'" '+r.filler)+txt("Polarity",r.polarity)+txt("Gas",r.gas)+(r.flow?txt("Flow",r.flow):"")+txt("Stickout",r.stickout)}
+ else if(p=="stick"){h+='<div class="hint" style="color:#ffb020">General starting point (≈1 A per .001", within rod range)</div>'+tv("Amps",r.amps,"n")+txt("Rod range",r.range[0]+"–"+r.range[1]+" A")+txt("Electrode",r.filler)+txt("Polarity",r.polarity)}
+ else{h+='<div class="hint" style="color:#ffb020">General starting point (≈1 A per .001"'+(q("wMt").value=="al"?", +25% for aluminum":"")+")</div>"+tv("Amps",r.amps,"n")+txt("Tungsten",r.tungsten)+txt("Polarity / mode",r.polarity)+txt("Filler",r.filler)+txt("Gas / flow",r.gas+", "+r.flow)+txt("Cup",r.cup)}
+ r.notes.forEach(function(n){h+='<div class="hint err">'+n+"</div>"});q("wOut").innerHTML=h;
+ q("wSrc").innerHTML="Source: "+r.src+(r.src2?"<br>"+r.src2:"")+'<br><b style="color:#ff6b6b">Starting points only — run a test bead on scrap.</b>'}
+opts("wBr",BRANDS.map(function(b){return[b,b]}),"Hobart");q("wBr").onchange=wBrand;q("wMa").onchange=wMach;q("wPr").onchange=wProc;q("wMt").onchange=wMat;q("wTh").onchange=wThk;q("wWi").onchange=wCalc;q("wIn").onchange=wCalc;
+wBrand();q("wTh").value="16ga";wThk();
+q("weld").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=decStr(+t.dataset.v,4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
+// ---- Customizable tabs ----
+var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld"],takeoffs:["📋","Takeoffs"],notes:["📝","Notes"]},DEF_TABS=["bends","angles","pipe"];
+function getTabs(){try{var t=JSON.parse(localStorage.getItem("hhTabs"));if(t&&t.length==3&&t.every(function(x){return PAGES[x]})&&new Set(t).size==3)return t}catch(e){}return DEF_TABS.slice()}
+function renderNav(){var t=getTabs(),cur=document.querySelector(".screen.on");cur=cur?cur.id:"calc";
+ document.querySelector("nav").innerHTML='<button data-s="calc"><i>🧮</i>Calc</button>'+t.map(function(k){return '<button data-s="'+k+'"><i>'+PAGES[k][0]+"</i>"+PAGES[k][1]+"</button>"}).join("")+'<button data-s="more"><i>☰</i>More</button>';
+ var more=Object.keys(PAGES).filter(function(k){return t.indexOf(k)<0});
+ q("moreMenu").innerHTML=more.map(function(k){return '<button data-s="'+k+'">'+PAGES[k][0]+" "+(k=="weld"?"Weld Settings":k=="tap"?"Tap &amp; Drill":PAGES[k][1])+"</button>"}).join("")+'<button data-s="tabs">⚙️ Customize Tabs</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">HH FAB SHT '+(window.APP_VERSION||"v6")+"</div>";
+ document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){if(b.dataset.s=="more"){var m=q("moreMenu");m.style.display=m.style.display=="flex"?"none":"flex"}else go(b.dataset.s)}});
+ document.querySelectorAll("#moreMenu button[data-s]").forEach(function(b){b.onclick=function(){go(b.dataset.s)}});
+ q("updBtn").onclick=function(){window.checkForUpdates&&checkForUpdates()};go(cur)}
+function tabForm(t){["tb1","tb2","tb3"].forEach(function(id,i){q(id).innerHTML=Object.keys(PAGES).map(function(k){return '<option value="'+k+'"'+(t[i]==k?" selected":"")+">"+PAGES[k][1]+"</option>"}).join("")});q("tbErr").textContent=""}
+function formTabs(){return["tb1","tb2","tb3"].map(function(id){return q(id).value})}
+document.querySelectorAll(".tbs").forEach(function(sl){sl.onchange=function(){var t=formTabs();q("tbErr").textContent=new Set(t).size<3?"Each tab can only be used once.":""}});
+q("tbSave").onclick=function(){var t=formTabs();if(new Set(t).size<3){q("tbErr").textContent="Each tab can only be used once.";return}localStorage.setItem("hhTabs",JSON.stringify(t));renderNav();go("tabs");toast("Tabs saved",1200)};
+q("tbReset").onclick=function(){localStorage.removeItem("hhTabs");tabForm(DEF_TABS);renderNav();go("tabs");toast("Tabs reset",1200)};
+document.querySelectorAll("#tbPre button").forEach(function(b){b.onclick=function(){tabForm(b.dataset.p.split(","))}});
+tabForm(getTabs());window.renderNav=renderNav;
+all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);})();
 live();
 </script><script>if("serviceWorker" in navigator&&location.protocol!="file:")navigator.serviceWorker.register("sw.js").then(function(){console.log("SW registered")}).catch(function(e){console.warn("SW",e)});</script>
 <script>
-var APP_VERSION="v5";
+var APP_VERSION="v6";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
