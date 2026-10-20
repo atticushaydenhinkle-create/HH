@@ -244,10 +244,48 @@ header{padding-top:calc(10px + env(safe-area-inset-top))!important;padding-left:
 <label>Header OD<input id="brH" inputmode="decimal" value="6.625"></label><label>Angle (°)<input id="brA" inputmode="decimal" value="90"></label></div><div id="brOut"></div>
 <button class="btn am" id="brCope" style="width:100%;margin-top:8px">Open cope template on Angles →</button></div>
 </section>
+<section class="screen" id="handrail">
+<div class="card"><h3>HANDRAIL</h3><div class="seg" id="hrSaw"><button data-s="band">Bandsaw<br><small>angle only</small></button><button data-s="chop">Miter / chop saw<br><small>angle + tilt</small></button></div><div class="hint" id="hrSawH"></div></div>
+<div class="card"><h3>1) STAIR RAIL</h3><div class="seg" id="hrIn"><button data-m="step" class="on">Per step</button><button data-m="tot">Total rise/run</button></div><div class="fld">
+<label><span id="hrRL">Rise per step (in)</span><input id="hrR" inputmode="decimal" value="7"></label>
+<label><span id="hrTL">Run per step (in)</span><input id="hrT" inputmode="decimal" value="11"></label>
+<label>Risers (steps)<input id="hrN" inputmode="decimal" value="8"></label>
+<label>Max post spacing (ft)<input id="hrSp" inputmode="decimal" value="4"></label>
+<label>Rail height (in)<input id="hrH" inputmode="decimal" value="36"></label>
+<label>Guard height (in)<input id="hrG" inputmode="decimal" value="42"></label>
+<label>Top rail size (in)<input id="hrRS" inputmode="decimal" value="1.5"></label>
+<label>Post width (in)<input id="hrPW" inputmode="decimal" value="1.5"></label>
+</div><div id="hrSvg"></div><div id="hrOut"></div></div>
+<div class="card"><h3>2) PICKETS / BALUSTERS</h3><div class="seg" id="pkM"><button data-m="lvl" class="on">Level</button><button data-m="stair">Stair (rake)</button></div><div class="fld">
+<label>Opening, clear between posts (in)<input id="pkO" inputmode="decimal" value="46.5"></label>
+<label>Picket width (in)<input id="pkW" inputmode="decimal" value="1/2"></label>
+<label>Max gap (in)<input id="pkG" inputmode="decimal" value="3.875"></label>
+<label class="pkS">Plumb clear between rails (in)<input id="pkL" inputmode="decimal" value="30"></label>
+</div><div class="hint pkS">Stair: enter the opening measured level (horizontal). Pickets between parallel rails are all the same length.</div><div id="pkOut"></div></div>
+<div class="card"><h3>3) LEVEL GUARDRAIL</h3><div class="seg" id="lgM"><button data-m="pk" class="on">Pickets</button><button data-m="mid">Mid-rails</button></div><div class="fld">
+<label>Run length (ft)<input id="lgL" inputmode="decimal" value="12"></label>
+<label>Height (in)<input id="lgH" inputmode="decimal" value="42"></label>
+<label>Max post spacing (ft)<input id="lgSp" inputmode="decimal" value="4"></label>
+<label>Post size (in)<input id="lgP" inputmode="decimal" value="1.5"></label>
+<label>Top rail size (in)<input id="lgT" inputmode="decimal" value="1.5"></label>
+<label>Bottom rail size (in)<input id="lgB" inputmode="decimal" value="1"></label>
+<label>Bottom rail above floor (in)<input id="lgC" inputmode="decimal" value="3.5"></label>
+<label>Picket / mid-rail size (in)<input id="lgK" inputmode="decimal" value="1/2"></label>
+</div><div id="lgSvg"></div><div id="lgOut"></div></div>
+<div class="card"><h3>4) RAIL RETURNS / BENDS</h3><div class="fld">
+<label>Bender centerline radius (in)<input id="rbR" inputmode="decimal" value="5"></label>
+<label>Bend angle (°)<input id="rbA" inputmode="decimal" value="32.47"></label>
+<label>Leg 1 to intersection (in)<input id="rbL1" inputmode="decimal" value="12"></label>
+<label>Leg 2 to intersection (in)<input id="rbL2" inputmode="decimal" value="60"></label>
+</div><button class="btn" id="rbUse" style="margin-top:6px">Use stair angle</button><div id="rbOut"></div></div>
+<div class="card"><h3>CUT LIST</h3><div id="hcList" class="hint"></div><div style="display:flex;gap:6px;margin-top:6px"><button class="btn" id="hcShare">Share</button><button class="btn" id="hcNote">Save to Notes</button><button class="btn" id="hcMat">Add to My Materials</button></div></div>
+<div class="card"><h3>5) CODE QUICK REFERENCE</h3><div class="hint" style="color:#ffb020"><b>Typical IBC/IRC, verify local code</b></div>
+<div class="rs">Handrail height (above nosing)<b>34–38"</b></div><div class="rs">Guard height (IBC)<b>42"</b></div><div class="rs">Guard height (IRC residential)<b>36"</b></div><div class="rs">Graspable round rail OD<b>1.25–2"</b></div><div class="rs">Clearance to wall<b>1.5" min</b></div><div class="rs">Openings (sphere rule)<b>&lt; 4"</b></div><div class="rs">Top extension (IBC)<b>12" level</b></div><div class="rs">Bottom extension (IBC)<b>1 tread depth, sloped</b></div><div class="rs">Load, rail &amp; guard top<b>200 lb</b></div></div>
+</section>
 <section class="screen" id="tabs"><div class="card"><h3>CUSTOMIZE TABS</h3><div class="hint">Calc is always first. Pick tabs 2–4; everything else lives in More.</div>
 <div class="fld" style="margin-top:6px"><label class="w">Tab 2<select id="tb1" class="tbs"></select></label><label class="w">Tab 3<select id="tb2" class="tbs"></select></label><label class="w">Tab 4<select id="tb3" class="tbs"></select></label></div>
 <div class="hint err" id="tbErr" style="min-height:14px"></div>
-<h3 style="margin-top:8px">PRESETS</h3><div class="seg" id="tbPre"><button data-p="bends,angles,tap">Sheet Metal</button><button data-p="pipe,angles,weld">Pipe Fitter</button><button data-p="angles,weld,bends">Structural / Fab</button><button data-p="materials,angles,weld">Materials</button><button data-p="framing,lumber,notes">Framing</button><button data-p="concrete,framing,notes">Concrete</button><button data-p="elec,notes,materials">Electrical</button><button data-p="plumb,pipe,notes">Plumbing</button><button data-p="framing,concrete,lumber">GC</button></div>
+<h3 style="margin-top:8px">PRESETS</h3><div class="seg" id="tbPre"><button data-p="bends,angles,tap">Sheet Metal</button><button data-p="pipe,angles,weld">Pipe Fitter</button><button data-p="angles,weld,handrail">Structural / Fab</button><button data-p="materials,angles,weld">Materials</button><button data-p="framing,lumber,notes">Framing</button><button data-p="concrete,framing,notes">Concrete</button><button data-p="elec,notes,materials">Electrical</button><button data-p="plumb,pipe,notes">Plumbing</button><button data-p="framing,concrete,lumber">GC</button></div>
 <button class="btn am" id="tbDone" style="width:100%;margin-bottom:6px;display:none">Done ✓</button><button class="btn am" id="tbSave" style="width:100%">Save tabs</button><button class="btn" id="tbReset" style="width:100%;margin-top:6px">Reset to default (Bends, Angles, Pipe)</button></div></section>
 <section class="screen" id="framing">
 <div class="card"><h3>STAIRS</h3><div class="fld">
@@ -752,8 +790,8 @@ opts("wBr",BRANDS.map(function(b){return[b,b]}),"Hobart");q("wBr").onchange=wBra
 wBrand();q("wTh").value="16ga";wThk();
 q("weld").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=decStr(+t.dataset.v,4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
 // ---- Customizable tabs ----
-var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld"],materials:["🧱","Materials"],framing:["🪚","Framing"],lumber:["🪵","Lumber"],concrete:["🏗","Concrete"],elec:["⚡","Electrical"],plumb:["🚰","Plumbing"],notes:["📝","Notes"],feedback:["⭐","Feedback"]},DEF_TABS=["bends","angles","pipe"];
-var GROUPS=[["weld","Welding / Fab",["bends","angles","pipe","weld","tap","materials"]],["carp","Carpentry / Framing",["framing","lumber"]],["conc","Concrete",["concrete"]],["elec","Electrical",["elec"]],["plumb","Plumbing",["plumb"]],["gen","General",["notes","feedback"]]],
+var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld"],handrail:["🪜","Handrail"],materials:["🧱","Materials"],framing:["🪚","Framing"],lumber:["🪵","Lumber"],concrete:["🏗","Concrete"],elec:["⚡","Electrical"],plumb:["🚰","Plumbing"],notes:["📝","Notes"],feedback:["⭐","Feedback"]},DEF_TABS=["bends","angles","pipe"];
+var GROUPS=[["weld","Welding / Fab",["bends","angles","pipe","weld","tap","materials","handrail"]],["carp","Carpentry / Framing",["framing","lumber"]],["conc","Concrete",["concrete"]],["elec","Electrical",["elec"]],["plumb","Plumbing",["plumb"]],["gen","General",["notes","feedback"]]],
  FIELD_GRP={sheet:"weld",pipe:"weld",struct:"weld",welder:"weld",fab:"weld",carp:"carp",conc:"conc",elec:"elec",plumb:"plumb",gc:"carp"};
 function getTabs(){try{var t=JSON.parse(localStorage.getItem("hhTabs"));if(t&&t.map){t=t.map(function(x){return x=="takeoffs"?"materials":x});var u=[];t.forEach(function(x){if(PAGES[x]&&u.indexOf(x)<0)u.push(x)});DEF_TABS.concat(Object.keys(PAGES)).forEach(function(x){if(u.length<3&&u.indexOf(x)<0)u.push(x)});if(u.join()!=t.join()&&t.length)localStorage.setItem("hhTabs",JSON.stringify(u));t=u}if(t&&t.length==3&&t.every(function(x){return PAGES[x]})&&new Set(t).size==3)return t}catch(e){}return DEF_TABS.slice()}
 function renderNav(){var t=getTabs(),cur=document.querySelector(".screen.on");cur=cur?cur.id:"calc";
@@ -777,7 +815,7 @@ var SHARE_TEXT="Papa's Shop - shop math for every trade.\n\nOpen the link, then 
 q("shareApp").onclick=function(){var d={title:"Papa's Shop",text:SHARE_TEXT,url:APP_URL},full=SHARE_TEXT+"\n\n"+APP_URL;
  function cp(){return(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(full):Promise.reject()).catch(function(){var a=document.createElement("textarea");a.value=full;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}a.remove()}).then(function(){toast("App link + install steps copied",1600)})}
  if(navigator.share)navigator.share(d).catch(function(e){if(!e||e.name!="AbortError")cp()});else cp()};
-var FIELDS=[["sheet","Sheet Metal","bends,angles,tap"],["pipe","Pipe Fitter","pipe,angles,weld"],["struct","Structural","materials,angles,weld"],["welder","Welder","weld,angles,notes"],["fab","Fabricator","bends,angles,materials"],["carp","Carpenter / Framer","framing,lumber,notes"],["conc","Concrete","concrete,framing,notes"],["elec","Electrician","elec,notes,materials"],["plumb","Plumber","plumb,pipe,notes"],["gc","General Contractor","framing,concrete,lumber"],["custom","Other / Custom",null]],onbSel=null;
+var FIELDS=[["sheet","Sheet Metal","bends,angles,tap"],["pipe","Pipe Fitter","pipe,angles,weld"],["struct","Structural","materials,angles,handrail"],["welder","Welder","weld,angles,notes"],["fab","Fabricator","bends,angles,handrail"],["carp","Carpenter / Framer","framing,lumber,notes"],["conc","Concrete","concrete,framing,notes"],["elec","Electrician","elec,notes,materials"],["plumb","Plumber","plumb,pipe,notes"],["gc","General Contractor","framing,concrete,lumber"],["custom","Other / Custom",null]],onbSel=null;
 function onboard(){var t=getTabs().join(","),saved=localStorage.getItem("hhField"),hasTabs=!!localStorage.getItem("hhTabs");onbSel=null;
  FIELDS.forEach(function(f){if(saved?saved==f[0]:(hasTabs&&f[2]==t))onbSel=f[0]});
  if(!onbSel&&hasTabs&&!saved)onbSel="keep";
@@ -914,7 +952,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script>
 <script>
-var APP_VERSION="v19";
+var APP_VERSION="v20";
 function toast(m,ms){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toast._t);if(ms)toast._t=setTimeout(function(){t.style.display="none"},ms)}
 function clearCaches(keep){return window.caches?caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==keep}).map(function(x){return caches.delete(x)}))}):Promise.resolve()}
 function freshReload(){location.reload()}
@@ -1254,4 +1292,68 @@ q("mlNote").onclick=function(){if(!rows.length)return toast("List is empty",1200
  hhNotes.put({id:"n"+now.toString(36)+Math.random().toString(36).slice(2,6),title:"Materials – "+new Date().toLocaleDateString(),job:"",body:text(),photos:[],created:now,updated:now}).then(function(){toast("Saved to Notes",1300)})};
 q("mlClr").onclick=function(){if(!rows.length||!confirm("Clear all materials?"))return;rows=[];save();render()};
 render();window.__ml={text:text,tot:tot}})();</script>
+<script id="hrjs">(function(){var q=function(i){return document.getElementById(i)},P=function(s){var v=parseIn(String(s));return isFinite(v)?v:NaN},D=Math.PI/180;
+function R(l,v,u){if(!isFinite(v))return '<div class="rs">'+l+"<b>–</b></div>";u=u==null?'"':u;var d=u=="°"?2:u=="n"?0:3;if(u=="n")u="";return '<div class="rs">'+l+'<b class="tv" data-v="'+v+'">'+decStr(v,d)+u+(u=='"'?"<i>"+toFrac(v,16)+'"</i>':"")+"</b></div>"}
+function H(t){return '<div class="hint" style="margin-top:4px">'+t+"</div>"}
+function sg(id,cb){q(id).addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;q(id).querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x==b)});cb()})}
+function on(id){return q(id).querySelector(".on").dataset.m}
+function saw(){return localStorage.getItem("hhSaw")=="chop"?"chop":"band"}
+function sawUI(){q("hrSaw").querySelectorAll("button").forEach(function(b){b.classList.toggle("on",b.dataset.s==saw())});q("hrSawH").innerHTML=saw()=="band"?"Bandsaw: all cut angles are vise angles from square (0° = square). Lay the tube on its side so the rake is in the vise plane.":"Miter/chop saw: same numbers as miter (swing) angles, bevel 0°."}
+q("hrSaw").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;localStorage.setItem("hhSaw",b.dataset.s);sawUI();all()});
+var CL={st:[],pk:[],lg:[]},ST={a:NaN};
+function A(l,v){return R(l+(saw()=="band"?" (vise)":" (miter)"),v,"°")}
+function stair(){var tot=on("hrIn")=="tot",n=Math.round(P(q("hrN").value)),r=P(q("hrR").value),t=P(q("hrT").value);
+ q("hrRL").textContent=tot?"Total rise (in)":"Rise per step (in)";q("hrTL").textContent=tot?"Total run (in)":"Run per step (in)";
+ if(tot&&n>0){r=r/n;t=n>1?t/(n-1):NaN}
+ var th=Math.atan2(r,t)/D,hyp=Math.hypot(r,t),Ln=(n-1)*hyp,Lb=Ln+hyp,sp=P(q("hrSp").value)*12,Hh=P(q("hrH").value),G=P(q("hrG").value),rs=P(q("hrRS").value),pw=P(q("hrPW").value);ST.a=th;
+ if(!(n>1&&r>0&&t>0)){q("hrOut").innerHTML=H("Enter rise, run and at least 2 risers.");q("hrSvg").innerHTML="";CL.st=[];return list()}
+ var np=Math.max(2,Math.ceil(Ln/sp-1e-9)+1),ps=Ln/(np-1),c=Math.cos(th*D),tn=Math.tan(th*D),
+ und=function(h){return h-rs/c},lp=function(h){return und(h)+pw/2*tn},spt=function(h){return und(h)-pw/2*tn};
+ q("hrOut").innerHTML='<div class="big">STAIR ANGLE<b class="tv" data-v="'+th+'">'+decStr(th,2)+"°</b>"+decStr(r,3)+'" rise / '+decStr(t,3)+'" run</div>'+
+ R("Rail along pitch, nosing to nosing",Ln)+R("+ 1 tread bottom extension (sloped)",Lb)+R("+ 12\" level top extension",12)+R("Total rail developed length",Lb+12)+
+ "<h3 style='margin-top:8px'>CUT ANGLES</h3>"+A("Rail end into plumb post",th)+A("Post top to follow rake",th)+A("Sloped-to-level return, each piece (kneel)",th/2)+A("Sloped-to-plumb drop, each piece",(90-th)/2)+A("Level-to-plumb return, each piece",45)+
+ "<h3 style='margin-top:8px'>POST LAYOUT</h3>"+R("Posts",np,"n")+R("Spacing along rail (c-c)",ps)+R("Spacing level (c-c)",ps*c)+
+ R("Handrail post, long point ("+decStr(Hh,2)+'" to top of rail)',lp(Hh))+R("Handrail post, short point",spt(Hh))+R("Guard post, long point ("+decStr(G,2)+'")',lp(G))+R("Guard post, short point",spt(G))+
+ H('Heights measured plumb from the nosing line at the post centerline, top of rail to nosing. If a post sits back from the nosing by x, add x·tan(angle) = x × '+decStr(tn,4)+'. Add base plate/embed as needed. Post top cut '+decStr(th,2)+'°.');
+ CL.st=[["Stair rail "+decStr(rs,3)+'" (incl. ext.)',1,Lb+12],["Stair posts "+decStr(pw,3)+'" (long pt, cut '+decStr(th,2)+'°)',np,lp(Hh)]];
+ var W=340,Hs=170,sx=(W-40)/(n*t+12),sy=(Hs-30)/(n*r+Hh),s=Math.min(sx,sy),X=function(x){return 20+x*s},Y=function(y){return Hs-10-y*s},p="M"+X(0)+","+Y(0);
+ for(var i=1;i<=n;i++){p+=" L"+X((i-1)*t)+","+Y(i*r)+" L"+X(i<n?i*t:(n-1)*t+12+t)+","+Y(i*r)}
+ var x0=-t,y0=Hh,x1=(n-1)*t,y1=(n-1)*r+r+Hh-r;var g='<svg viewBox="0 0 '+W+" "+Hs+'" style="width:100%;background:#12161c;border-radius:8px;margin:6px 0"><path d="'+p+'" fill="none" stroke="#7c8594" stroke-width="2"/>'+
+ '<line x1="'+X(0)+'" y1="'+Y(r)+'" x2="'+X((n-1)*t)+'" y2="'+Y(n*r)+'" stroke="#555" stroke-dasharray="4 3"/>'+
+ '<polyline points="'+X(-t)+","+Y(Hh)+" "+X((n-1)*t)+","+Y(n*r+Hh)+" "+X((n-1)*t+12)+","+Y(n*r+Hh)+'" fill="none" stroke="#5cc8ff" stroke-width="3"/>';
+ for(var k=0;k<np;k++){var hx=k*ps*c,hy=r+hx*tn;g+='<line x1="'+X(hx)+'" y1="'+Y(hy)+'" x2="'+X(hx)+'" y2="'+Y(hy+Hh)+'" stroke="#ffb020" stroke-width="2"/>'}
+ g+='<text x="'+X(n*t*.15)+'" y="'+(Hs-12)+'" fill="#9aa4b2" font-size="11">'+decStr(th,2)+'° · dashed = nosing line</text></svg>';q("hrSvg").innerHTML=g;list()}
+function pick(){var st=on("pkM")=="stair",O=P(q("pkO").value),w=P(q("pkW").value),g=P(q("pkG").value),L=P(q("pkL").value),th=ST.a,c=Math.cos(th*D);
+ document.querySelectorAll("#handrail .pkS").forEach(function(e){e.style.display=st?"":"none"});
+ if(!(O>0&&w>0&&g>0)){q("pkOut").innerHTML=H("Enter opening, picket width and max gap.");CL.pk=[];return list()}
+ var n=Math.max(0,Math.ceil((O-g)/(w+g)-1e-9)),gap=(O-n*w)/(n+1),m=[];for(var i=0;i<n;i++)m.push(gap+i*(w+gap));
+ var o='<div class="big">PICKETS<b class="tv" data-v="'+n+'">'+n+"</b>equal gap "+decStr(gap,3)+'" ≈ '+toFrac(gap,16)+'"</div>'+R("Exact gap",gap)+R("On-center",w+gap)+
+ "<h3 style='margin-top:8px'>LAYOUT MARKS FROM FIRST POST"+(st?" (level / along rail)":"")+"</h3><div style='max-height:220px;overflow:auto'><table style='width:100%;font-size:13px'><tr><th>#</th><th>Left edge</th><th>Center</th>"+(st?"<th>Along rail</th>":"")+"</tr>"+m.map(function(x,i){return "<tr><td>"+(i+1)+'</td><td class="tv" data-v="'+x+'">'+decStr(x,3)+'"</td><td class="tv" data-v="'+(x+w/2)+'">'+decStr(x+w/2,3)+'"</td>'+(st?'<td class="tv" data-v="'+x/c+'">'+decStr(x/c,3)+'"</td>':"")+"</tr>"}).join("")+"</table></div>"+H("Tap any number to send it to Calc.");
+ var pl=st?L:NaN;if(st&&isFinite(th)){o+="<h3 style='margin-top:8px'>STAIR PICKETS</h3>"+R("Picket length (plumb, each edge)",L)+A("End cuts, both ends (parallel)",th)+H("Both ends cut the same direction (parallelogram). Gap measured level; 4\" sphere also applies to the triangle under the bottom rail.")}
+ CL.pk=n?[["Pickets "+decStr(w,3)+'"'+(st?" (cut "+decStr(th,2)+"° both ends)":""),n,st?L:NaN]]:[];q("pkOut").innerHTML=o;list()}
+function lvl(){var L=P(q("lgL").value)*12,Hh=P(q("lgH").value),sp=P(q("lgSp").value)*12,ps=P(q("lgP").value),T=P(q("lgT").value),B=P(q("lgB").value),C=P(q("lgC").value),k=P(q("lgK").value),pk=on("lgM")=="pk";
+ if(!(L>0&&Hh>0&&sp>0)){q("lgOut").innerHTML=H("Enter run, height and spacing.");CL.lg=[];return list()}
+ var np=Math.max(2,Math.ceil(L/sp-1e-9)+1),bays=np-1,cc=L/bays,open=cc-ps,postL=Hh-T,o=R("Posts",np,"n")+R("Post spacing c-c",cc)+R("Clear opening per bay",open)+R("Post length (top rail sits on posts)",postL)+R("Top rail (one piece)",L)+R("Bottom rail pieces between posts",bays,"n")+R("Bottom rail piece length",open),cl=[["Posts "+decStr(ps,3)+'"',np,postL],["Top rail "+decStr(T,3)+'"',1,L],["Bottom rail "+decStr(B,3)+'"',bays,open]];
+ var vert=postL-C-B;var svgI="";
+ if(pk){var n=Math.max(0,Math.ceil((open-3.875)/(k+3.875)-1e-9)),g=(open-n*k)/(n+1);o+=R("Pickets per bay",n,"n")+R("Total pickets",n*bays,"n")+R("Picket length (bottom rail to top rail)",vert)+R("Equal gap",g);cl.push(["Pickets "+decStr(k,3)+'"',n*bays,vert]);for(var i=0;i<n;i++)svgI+='<rect x="'+(60+(ps/2+g+i*(k+g))/cc*220)+'" y="30" width="2" height="90" fill="#9aa4b2"/>'}
+ else{var sp2=postL-C,nm=Math.max(0,Math.ceil((sp2-3.875)/(k+3.875)-1e-9)),g2=(sp2-nm*k)/(nm+1);o+=R("Mid-rails per bay (gap < 4\")",nm,"n")+R("Equal vertical gap",g2)+R("Mid-rail length",open)+H("Bottom rail counted as one of the rails; mid-rails replace pickets. Horizontal rails are climbable, check local code.");cl[2]=["Bottom/mid rails "+decStr(k,3)+'"',bays*nm,open]}
+ o+=H("Cut list assumes square-cut ends, rails welded between posts, top rail capped over posts. Bottom rail "+decStr(C,3)+'" off the floor keeps the 4" rule.');
+ q("lgSvg").innerHTML='<svg viewBox="0 0 340 140" style="width:100%;background:#12161c;border-radius:8px;margin:6px 0"><rect x="40" y="22" width="260" height="8" fill="#5cc8ff"/><rect x="40" y="20" width="10" height="110" fill="#ffb020"/><rect x="170" y="30" width="10" height="100" fill="#ffb020"/><rect x="290" y="30" width="10" height="100" fill="#ffb020"/><rect x="50" y="116" width="120" height="4" fill="#5cc8ff"/>'+svgI+'<text x="190" y="80" fill="#9aa4b2" font-size="11">'+np+" posts @ "+decStr(cc,2)+'"</text></svg>';
+ q("lgOut").innerHTML=o;CL.lg=cl;list()}
+function bend(){var Rr=P(q("rbR").value),a=P(q("rbA").value),l1=P(q("rbL1").value),l2=P(q("rbL2").value);if(!(Rr>0&&a>0&&a<180)){q("rbOut").innerHTML=H("Enter a radius and an angle between 0 and 180.");return}
+ var T=Rr*Math.tan(a/2*D),arc=Rr*a*D,dev=l1+l2-2*T+arc;
+ q("rbOut").innerHTML=R("Tangent (setback)",T)+R("Arc length",arc)+R("Gain",2*T-arc)+R("Bend start mark from end 1",l1-T)+R("Bend end mark",l1-T+arc)+'<div class="big">CUT PIPE TO<b class="tv" data-v="'+dev+'">'+decStr(dev,3)+'"</b>≈ '+toFrac(dev,16)+'"</div>'+
+ "<h3 style='margin-top:8px'>WELDED (MITERED) TRANSITIONS</h3>"+A("Kneel: sloped to level, each piece",a/2)+A("Gooseneck: sloped to plumb, each piece",(90-a)/2)+A("Gooseneck: plumb to level, each piece",45)+H("Marks on the pipe centerline. Bender CLR is the die's centerline radius. Check springback on a scrap; most benders need 1–3° over.")}
+function list(){var all=CL.st.concat(CL.pk,CL.lg);q("hcList").innerHTML=all.length?all.map(function(c){return "• "+c[0]+": <b>"+c[1]+"</b>"+(isFinite(c[2])?' @ <b class="tv" data-v="'+c[2]+'">'+decStr(c[2],3)+'"</b> ('+toFrac(c[2],16)+'")':"")}).join("<br>"):"Nothing yet."}
+function text(){return "Papa's Shop – Handrail cut list\n"+CL.st.concat(CL.pk,CL.lg).map(function(c){return "• "+c[0]+": "+c[1]+(isFinite(c[2])?" @ "+decStr(c[2],3)+'" ('+toFrac(c[2],16)+'")':"")}).join("\n")+(isFinite(ST.a)?"\nStair angle: "+decStr(ST.a,2)+"° ("+(saw()=="band"?"bandsaw vise":"miter")+" angles from square)":"")}
+q("hcShare").onclick=function(){var t=text();if(navigator.share)navigator.share({title:"Handrail cut list",text:t}).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast("Copied list",1200)})};
+q("hcNote").onclick=function(){if(!window.hhNotes)return toast("Notes unavailable",1500);var now=Date.now();hhNotes.put({id:"n"+now.toString(36)+Math.random().toString(36).slice(2,6),title:"Handrail – "+new Date().toLocaleDateString(),job:"",body:text(),photos:[],created:now,updated:now}).then(function(){toast("Saved to Notes",1300)})};
+q("hcMat").onclick=function(){var K="hhMyMats",rows;try{rows=JSON.parse(localStorage.getItem(K))||[]}catch(e){rows=[]}var all=CL.st.concat(CL.pk,CL.lg);all.forEach(function(c){rows.push({item:c[0]+(isFinite(c[2])?" @ "+decStr(c[2],3)+'"':""),qty:String(c[1]),unit:"pcs",price:""})});localStorage.setItem(K,JSON.stringify(rows));toast("Added "+all.length+" lines to My Materials (reopen app to refresh list)",1800)};
+q("rbUse").onclick=function(){if(isFinite(ST.a)){q("rbA").value=decStr(ST.a,2);bend()}};
+function all(){stair();pick();lvl();bend()}
+sg("hrIn",all);sg("pkM",pick);sg("lgM",lvl);
+q("handrail").addEventListener("input",function(e){var id=e.target.id||"";if(/^hr/.test(id))all();else if(/^pk/.test(id))pick();else if(/^lg/.test(id))lvl();else if(/^rb/.test(id))bend()});
+q("handrail").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));toast(decStr(+t.dataset.v,4)+" → Calc",1200)});
+document.addEventListener("click",function(e){var b=e.target.closest("[data-s=handrail]");if(b){sawUI();all()}},true);
+sawUI();all()})();</script>
 </body></html>
