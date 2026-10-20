@@ -53,7 +53,7 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){retur
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
 function num(v){var n=parseFloat(String(v).replace(/[$,]/g,''));return isFinite(n)?n:0}
 function dec(n,d){if(d==null)d=2;var s=(+n).toFixed(d).replace(/\.?0+$/,'');return s.replace(/^(-?)0\./,'$1.')||'0'}
-function money(n){var neg=n<0;n=Math.abs(n);var s=n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');if(s.indexOf('0.')===0)s=s.slice(1);return (neg?'-$':'$')+s}
+function money(n){var neg=n<0;n=Math.abs(n);var s=n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');return (neg?'-$':'$')+s}
 function bytes(b){if(b<1024)return b+' B';if(b<1048576)return dec(b/1024,1)+' KB';if(b<1073741824)return dec(b/1048576,1)+' MB';return dec(b/1073741824,2)+' GB'}
 function dt(t){var d=new Date(t);return d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})+' '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'})}
 function dOnly(s){if(!s)return '';var d=new Date(s+'T12:00:00');return isNaN(d)?s:d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})}
@@ -120,7 +120,7 @@ function city(addr){var p=String(addr||'').split(',').map(function(s){return s.t
 function mapLinks(j){var q=j.lat!=null?j.lat+','+j.lng:j.address;if(!q)return '';q=encodeURIComponent(q);return '<a class="btn sm" style="text-decoration:none;display:inline-flex;align-items:center" target="_blank" rel="noopener" href="https://maps.apple.com/?q='+q+'">Apple Maps</a> <a class="btn sm" style="text-decoration:none;display:inline-flex;align-items:center" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+q+'">Google Maps</a>'}
 
 // ----- list -----
-function vList(){return Promise.all([db.all('jobs'),db.all('entries'),db.all('costs')]).then(function(r){var jobs=r[0],ents=r[1],costs=r[2];
+function vList(){return Promise.all([db.all('jobs'),db.all('entries'),db.all('costs'),db.all('labor'),db.all('mats')]).then(function(r){var jobs=r[0],ents=r[1],costs=r[2],labs=r[3]||[],mats=r[4]||[];var byJ=function(a,id){return a.filter(function(x){return x.jobId===id})};
   var q=filt.q.toLowerCase();
   var list=jobs.filter(function(j){if(filt.status&&j.status!==filt.status)return false;var d=j.start||'';if(filt.from&&d<filt.from)return false;if(filt.to&&d>filt.to)return false;
     if(!q)return true;var hay=[j.name,j.client,j.address,j.notes].join(' ').toLowerCase();ents.forEach(function(e){if(e.jobId===j.id)hay+=' '+[e.area,e.notes,(e.tags||[]).join(' ')].join(' ').toLowerCase()});return hay.indexOf(q)>=0});
@@ -135,7 +135,7 @@ function vList(){return Promise.all([db.all('jobs'),db.all('entries'),db.all('co
   if(!jobs.length)h+='<div class="card mu">No jobs yet. Tap <b>+ New Job</b> to start your first job walk.</div>';
   else if(!list.length)h+='<div class="card mu">No jobs match your filters.</div>';
   Object.keys(groups).sort().forEach(function(k){if(k)h+='<h3>'+esc(k)+' <span class="mu">('+groups[k].length+')</span></h3>';
-    groups[k].forEach(function(j){var ne=ents.filter(function(e){return e.jobId===j.id}).length,tc=costs.filter(function(c){return c.jobId===j.id}).reduce(function(s,c){return s+num(c.qty)*num(c.unitCost)},0);
+    groups[k].forEach(function(j){var ne=ents.filter(function(e){return e.jobId===j.id}).length,tc=sums({labor:byJ(labs,j.id),mats:byJ(mats,j.id),costs:byJ(costs,j.id)}).T;
       h+='<div class="card job" data-act="openJob" data-id="'+j.id+'"><div class="row"><b class="grow">'+esc(j.name||'Untitled job')+'</b><span class="st st-'+esc(j.status)+'">'+esc(j.status||'')+'</span></div>'+
       '<div class="mu">'+esc(j.client||'')+(j.client&&j.address?' · ':'')+esc(j.address||'')+'</div>'+
       '<div class="mu">'+ne+' walk'+(ne===1?'':'s')+' · '+money(tc)+(j.start?' · Start '+dOnly(j.start):'')+'</div></div>'})});
@@ -161,13 +161,17 @@ function vJobEdit(){var p=view.id?db.get('jobs',view.id):Promise.resolve({id:uid
 function readJob(){var j=view.draft;root.querySelectorAll('[data-j]').forEach(function(i){var k=i.getAttribute('data-j');if(k==='gps'){var m=i.value.split(',').map(function(s){return parseFloat(s)});if(m.length===2&&isFinite(m[0])&&isFinite(m[1])){j.lat=+m[0].toFixed(6);j.lng=+m[1].toFixed(6)}else{delete j.lat;delete j.lng}}else j[k]=i.value.trim()});return j}
 
 // ----- labor / materials / bid math -----
-function lCost(l){return num(l.hours)*num(l.rate)*(num(l.burden)||1)*(l.ot?(num(l.otMult)||1.5):1)}
-function mCost(m){return num(m.qty)*num(m.price)}
-function oCost(c){return num(c.qty)*num(c.unitCost)}
+function bad(v){return '<span style="color:#ff4d4d;font-weight:700" title="Negative entry — counted as 0">– (invalid)</span>'}
+function badV(v){if(v===''||v==null)return false;var n=parseFloat(String(v).replace(/[$,]/g,''));return !isFinite(n)||n<0||n>=1e9}
+function qv(v){return badV(v)?bad():dec(num(v))}function mv(v){return badV(v)?bad():money(num(v))}
+function pos(v){var n=num(v);return n>0&&n<1e9?n:0}// v35: negative/blank/huge entries count as 0
+function lCost(l){var b=pos(l.burden),m=pos(l.otMult);return pos(l.hours)*pos(l.rate)*(b>=1?b:1)*(l.ot?(m>=1?m:1.5):1)}
+function mCost(m){return pos(m.qty)*pos(m.price)}
+function oCost(c){return pos(c.qty)*pos(c.unitCost)}
 function sums(d){var L=0,M=0,O=0;(d.labor||[]).forEach(function(l){L+=lCost(l)});(d.mats||[]).forEach(function(m){M+=mCost(m)});(d.costs||[]).forEach(function(c){O+=oCost(c)});return {L:L,M:M,O:O,T:L+M+O}}
-function bidCalc(t,b){b=b||{};var pc=function(k){return num(b[k])/100};var tax=t.M*pc('tax'),base=t.L+t.M+tax+t.O,oh=base*pc('overhead'),ct=base*pc('contingency'),sub=base+oh+ct,pr=sub*pc('profit');
+function bidCalc(t,b){b=b||{};var pc=function(k){return Math.min(pos(b[k]),1000)/100};var tax=t.M*pc('tax'),base=t.L+t.M+tax+t.O,oh=base*pc('overhead'),ct=base*pc('contingency'),sub=base+oh+ct,pr=sub*pc('profit');
  return {L:t.L,M:t.M,O:t.O,tax:tax,base:base,oh:oh,ct:ct,sub:sub,pr:pr,total:sub+pr}}
-function pctS(v){return num(v)?dec(num(v))+'%':'0%'}
+function pctS(v){return pos(v)?dec(Math.min(pos(v),1000))+'%':'0%'}
 function bidRows(c,b,cls){var r=function(l,v,bold){return '<tr'+(bold?' style="font-weight:800"':'')+'><td>'+l+'</td><td class="'+(cls||'r')+'">'+money(v)+'</td></tr>'};
  return r('Labor',c.L)+r('Materials',c.M)+r('Sales tax on materials ('+pctS(b.tax)+')',c.tax)+r('Other costs',c.O)+r('Direct cost',c.base,1)+
   r('Overhead ('+pctS(b.overhead)+' of direct)',c.oh)+r('Contingency ('+pctS(b.contingency)+' of direct)',c.ct)+r('Subtotal',c.sub,1)+r('Profit / markup ('+pctS(b.profit)+' of subtotal)',c.pr)}
@@ -182,13 +186,13 @@ function laborHtml(d){var t=sums(d);
  '<div class="g3"><div><label>Hourly rate $</label><input data-cr="rate" inputmode="decimal" placeholder="0"></div><div><label>Burden x (opt.)</label><input data-cr="burden" inputmode="decimal" placeholder="1.0"></div><div><label>OT x (opt.)</label><input data-cr="otMult" inputmode="decimal" placeholder="1.5"></div></div>'+
  '<button style="width:100%;margin-top:6px" data-act="addCrew">+ Add employee</button>'+
  '<div style="margin-top:12px;border-top:1px solid #2a313c;padding-top:8px"><b>Labor entries</b><table><tr><th>Date</th><th>Employee</th><th class="r">Hrs</th><th class="r">Cost</th><th></th></tr>'+
- d.labor.map(function(l){return '<tr><td>'+esc(dOnly(l.date))+'</td><td>'+esc(l.empName||crewName(d,l.empId))+(l.ot?' <span class="tag">OT</span>':'')+'</td><td class="r">'+dec(num(l.hours))+'</td><td class="r">'+((l.rate===''||l.rate==null)?'<button class="sm" data-act="editLabor" data-id="'+l.id+'">set $/hr</button>':money(lCost(l)))+'</td><td class="r"><button class="sm dng" data-act="delLabor" data-id="'+l.id+'" aria-label="Delete">✕</button></td></tr>'}).join('')+
+ d.labor.map(function(l){return '<tr><td>'+esc(dOnly(l.date))+'</td><td>'+esc(l.empName||crewName(d,l.empId))+(l.ot?' <span class="tag">OT</span>':'')+'</td><td class="r">'+qv(l.hours)+'</td><td class="r">'+((l.rate===''||l.rate==null)?'<button class="sm" data-act="editLabor" data-id="'+l.id+'">set $/hr</button>':money(lCost(l)))+'</td><td class="r"><button class="sm dng" data-act="delLabor" data-id="'+l.id+'" aria-label="Delete">✕</button></td></tr>'}).join('')+
  (d.labor.length?'':'<tr><td colspan="5" class="mu">No labor logged yet.</td></tr>')+'</table>'+
  (d.crew.length?'<div class="g3" style="margin-top:6px"><div><label>Employee</label><select data-lb="empId">'+d.crew.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+'</option>'}).join('')+'</select></div><div><label>Date</label><input type="date" data-lb="date" value="'+today()+'"></div><div><label>Hours</label><input data-lb="hours" inputmode="decimal" placeholder="8"></div></div>'+
   '<label style="display:flex;align-items:center;gap:8px;color:#f2f4f7"><input type="checkbox" data-lb="ot" style="width:22px;min-height:22px"> Overtime</label><button style="width:100%;margin-top:6px" data-act="addLabor">+ Add labor</button>':'<div class="mu" style="margin-top:6px">Add an employee to log hours. Cost = hours × rate × burden (× OT multiplier if OT).</div>')+
  '<div class="row" style="margin-top:8px"><b class="grow">Labor subtotal</b><span class="tot">'+money(t.L)+'</span></div></div></div>';
  h+='<h3>Materials</h3><div class="card"><table><tr><th>Item</th><th class="r">Qty</th><th class="r">Unit $</th><th class="r">Total</th><th></th></tr>'+
- d.mats.map(function(m){return '<tr><td>'+esc(m.item)+(m.supplier?'<div class="mu">'+esc(m.supplier)+'</div>':'')+'</td><td class="r">'+dec(num(m.qty))+' '+esc(m.unit||'')+'</td><td class="r"><button class="sm" data-act="editMat" data-id="'+m.id+'" aria-label="Edit price">'+(m.price===''||m.price==null?'set $':money(num(m.price)))+'</button></td><td class="r">'+money(mCost(m))+'</td><td class="r"><button class="sm dng" data-act="delMat" data-id="'+m.id+'" aria-label="Delete">✕</button></td></tr>'}).join('')+
+ d.mats.map(function(m){return '<tr><td>'+esc(m.item)+(m.supplier?'<div class="mu">'+esc(m.supplier)+'</div>':'')+'</td><td class="r">'+qv(m.qty)+' '+esc(m.unit||'')+'</td><td class="r"><button class="sm" data-act="editMat" data-id="'+m.id+'" aria-label="Edit price">'+(m.price===''||m.price==null?'set $':mv(m.price))+'</button></td><td class="r">'+money(mCost(m))+'</td><td class="r"><button class="sm dng" data-act="delMat" data-id="'+m.id+'" aria-label="Delete">✕</button></td></tr>'}).join('')+
  (d.mats.length?'':'<tr><td colspan="5" class="mu">No materials yet.</td></tr>')+'</table>'+
  '<div class="g2" style="margin-top:6px"><div><label>Item</label><input data-mt="item" placeholder="2x2x1/4 angle"></div><div><label>Supplier</label><input data-mt="supplier" placeholder="optional"></div></div>'+
  '<div class="g3"><div><label>Qty</label><input data-mt="qty" inputmode="decimal" placeholder="1"></div><div><label>Unit</label><input data-mt="unit" placeholder="ft, ea"></div><div><label>Unit price $</label><input data-mt="price" inputmode="decimal" placeholder="0"></div></div>'+
@@ -232,9 +236,9 @@ function vJob(){var id=view.id;return Promise.all([db.get('jobs',id),db.by('entr
   return jobData(id).then(function(d){h+=laborHtml(d)+costHtml(costs)+totalsHtml(d);
   h+='<div class="row" style="margin-top:14px"><button class="grow dng" data-act="delJob">Delete job</button></div>';
   root.innerHTML=h})})}
-function costHtml(costs){var sub={},tot=0;CATS.forEach(function(c){sub[c]=0});costs.forEach(function(c){var t=num(c.qty)*num(c.unitCost);sub[c.cat]=(sub[c.cat]||0)+t;tot+=t});
+function costHtml(costs){var sub={},tot=0;CATS.forEach(function(c){sub[c]=0});costs.forEach(function(c){var t=oCost(c);sub[c.cat]=(sub[c.cat]||0)+t;tot+=t});
   var h='<h3>Other costs</h3><div class="card"><table><tr><th>Item</th><th class="r">Qty</th><th class="r">Unit $</th><th class="r">Total</th><th></th></tr>';
-  costs.forEach(function(c){h+='<tr><td><span class="tag">'+esc(c.cat)+'</span> '+esc(c.desc)+'</td><td class="r">'+dec(num(c.qty))+' '+esc(c.unit||'')+'</td><td class="r">'+money(num(c.unitCost))+'</td><td class="r">'+money(num(c.qty)*num(c.unitCost))+'</td><td class="r"><button class="sm dng" data-act="delCost" data-id="'+c.id+'" aria-label="Delete">✕</button></td></tr>'});
+  costs.forEach(function(c){h+='<tr><td><span class="tag">'+esc(c.cat)+'</span> '+esc(c.desc)+'</td><td class="r">'+qv(c.qty)+' '+esc(c.unit||'')+'</td><td class="r">'+mv(c.unitCost)+'</td><td class="r">'+money(oCost(c))+'</td><td class="r"><button class="sm dng" data-act="delCost" data-id="'+c.id+'" aria-label="Delete">✕</button></td></tr>'});
   if(!costs.length)h+='<tr><td colspan="5" class="mu">No cost items yet.</td></tr>';
   h+='</table><div style="margin-top:8px">'+CATS.filter(function(c){return sub[c]}).map(function(c){return '<div class="row"><span class="grow mu" style="text-transform:capitalize">'+c+'</span><span>'+money(sub[c])+'</span></div>'}).join('')+
   '<div class="row"><b class="grow">Other costs subtotal</b><span class="tot" id="jwTot">'+money(tot)+'</span></div></div>'+
@@ -265,7 +269,7 @@ function readEntry(){var e=view.entry;root.querySelectorAll('[data-e]').forEach(
 function touchJob(id){return db.get('jobs',id).then(function(j){if(j){j.updated=Date.now();return db.put('jobs',j)}})}
 
 // ---------- events ----------
-function onClick(ev){var t=ev.target.closest('[data-act]');if(!t||!root.contains(t)||t.tagName==='INPUT')return;var a=t.getAttribute('data-act'),id=t.getAttribute('data-id');
+function onClick(ev){var t=ev.target.closest('[data-act]');if(!t||!root.contains(t)||t.tagName==='INPUT')return;var a=t.getAttribute('data-act'),id=t.getAttribute('data-id');if(/^(addCost|addLabor|addMat|addCrew|saveBid)$/.test(a)){var bx=[].filter.call(root.querySelectorAll('input[inputmode="decimal"]'),function(i){return badV(i.value)});if(bx.length){bx.forEach(function(i){i.style.outline='2px solid #ff4d4d'});toast('Fix the red field'+(bx.length>1?'s':'')+': numbers 0 or more only');bx[0].focus();return}}
  var A={
   newJob:function(){go({name:'jobEdit'})},openJob:function(){go({name:'job',id:id})},editJob:function(){go({name:'jobEdit',id:view.id})},
   back:function(){go(view.name==='jobEdit'&&view.id?{name:'job',id:view.id}:{name:'list'})},
@@ -288,8 +292,8 @@ function onClick(ev){var t=ev.target.closest('[data-act]');if(!t||!root.contains
   delCrew:function(){confirmBox('Remove this employee from the roster? Their logged labor stays.','Remove').then(function(ok){if(ok)db.del('crew',id).then(render)})},
   addLabor:function(){var g=function(k){return $('[data-lb="'+k+'"]',root)};var hrs=num(g('hours').value);if(!hrs){toast('Enter hours');return}var eid=g('empId').value;
     db.get('crew',eid).then(function(c){if(!c)return;return db.put('labor',{id:uid(),jobId:view.id,empId:eid,empName:c.name,date:g('date').value,hours:hrs,ot:g('ot').checked,rate:num(c.rate),burden:num(c.burden)||1,otMult:num(c.otMult)||1.5,created:Date.now()})}).then(function(){touchJob(view.id);render()})},
-  editMat:function(){db.get('mats',id).then(function(m){if(!m)return;return ask('Unit price $ for '+(m.item||'item'),m.price===''?'':String(m.price),'Qty '+dec(num(m.qty))+' '+(m.unit||'')).then(function(v){if(v==null)return;m.price=String(v).trim()===''?'':num(v);return db.put('mats',m).then(function(){touchJob(view.id);render()})})})},
-  editLabor:function(){db.get('labor',id).then(function(l){if(!l)return;return ask('Hourly rate $ for '+(l.empName||'labor'),'',dec(num(l.hours))+' hr').then(function(v){if(v==null||String(v).trim()==='')return;l.rate=num(v);return db.put('labor',l).then(function(){touchJob(view.id);render()})})})},
+  editMat:function(){db.get('mats',id).then(function(m){if(!m)return;return ask('Unit price $ for '+(m.item||'item'),m.price===''?'':String(m.price),'Qty '+dec(num(m.qty))+' '+(m.unit||'')).then(function(v){if(v==null)return;if(badV(v)){toast('Enter a price of 0 or more');return}m.price=String(v).trim()===''?'':num(v);return db.put('mats',m).then(function(){touchJob(view.id);render()})})})},
+  editLabor:function(){db.get('labor',id).then(function(l){if(!l)return;return ask('Hourly rate $ for '+(l.empName||'labor'),'',dec(num(l.hours))+' hr').then(function(v){if(v==null||String(v).trim()==='')return;if(badV(v)){toast('Enter a rate of 0 or more');return}l.rate=num(v);return db.put('labor',l).then(function(){touchJob(view.id);render()})})})},
   delLabor:function(){confirmBox('Delete this labor entry?').then(function(ok){if(ok)db.del('labor',id).then(render)})},
   addMat:function(){var g=function(k){return $('[data-mt="'+k+'"]',root).value.trim()};if(!g('item')){toast('Enter an item');return}
     db.put('mats',{id:uid(),jobId:view.id,item:g('item'),qty:g('qty')===''?1:num(g('qty')),unit:g('unit'),price:num(g('price')),supplier:g('supplier'),created:Date.now()}).then(function(){touchJob(view.id);render()})},
@@ -371,16 +375,16 @@ function openEditor(photo){return loadImg(photo.blob).then(function(img){
 
 // ---------- report ----------
 function reportData(jobId){return Promise.all([db.get('jobs',jobId),db.by('entries','jobId',jobId),db.by('costs','jobId',jobId),db.by('photos','jobId',jobId),jobData(jobId)]).then(function(r){return {crew:r[4].crew,labor:r[4].labor,mats:r[4].mats,job:r[0],ents:r[1].sort(function(a,b){return a.ts-b.ts}),costs:r[2].sort(function(a,b){return a.created-b.created}),photos:r[3].sort(function(a,b){return a.created-b.created})}})}
-function reportHtml(d,src){var j=d.job,tot=0,sub={};d.costs.forEach(function(c){var t=num(c.qty)*num(c.unitCost);tot+=t;sub[c.cat]=(sub[c.cat]||0)+t});
+function reportHtml(d,src){var j=d.job,tot=0,sub={};d.costs.forEach(function(c){var t=oCost(c);tot+=t;sub[c.cat]=(sub[c.cat]||0)+t});
  var h='<h1>'+esc(j.name)+'</h1><div>'+esc(j.client||'')+'</div><div>'+esc(j.address||'')+(j.lat!=null?' · GPS '+j.lat+', '+j.lng:'')+'</div><div style="color:#555;font-size:13px">Status: '+esc(j.status)+(j.start?' · Start '+dOnly(j.start):'')+(j.end?' · Due '+dOnly(j.end):'')+' · Report '+dt(Date.now())+'</div>'+(j.notes?'<p style="white-space:pre-wrap">'+esc(j.notes)+'</p>':'');
  h+='<h2>Job walk entries ('+d.ents.length+')</h2>';
  d.ents.forEach(function(e){var ps=d.photos.filter(function(p){return p.entryId===e.id});h+='<div class="ent"><b>'+esc(e.area||'General')+'</b> <span style="color:#555;font-size:13px">'+dt(e.ts)+'</span>'+((e.tags||[]).length?' <i style="color:#555">['+e.tags.map(esc).join(', ')+']</i>':'')+
   (e.notes?'<p style="white-space:pre-wrap;margin:4px 0">'+esc(e.notes)+'</p>':'')+
   ((e.meas||[]).length?'<table><tr><th>Measurement</th><th class="r">Value</th></tr>'+e.meas.map(function(m){return '<tr><td>'+esc(m.label)+(m.est?' (estimate from photo scale)':'')+'</td><td class="r">'+esc(m.value)+' '+esc(m.unit)+'</td></tr>'}).join('')+'</table>':'')+
   ps.map(function(p){return '<div><img src="'+src(p)+'" alt="photo">'+(p.marked?'<div style="font-size:11px;color:#555">Marked-up photo (original kept on device)</div>':'')+'</div>'}).join('')+'</div>'});
- var t3=sums(d);h+='<h2>Labor</h2><table><tr><th>Date</th><th>Employee</th><th class="r">Hours</th><th class="r">Rate</th><th class="r">Cost</th></tr>'+d.labor.map(function(l){return '<tr><td>'+esc(dOnly(l.date))+'</td><td>'+esc(l.empName||crewName(d,l.empId))+(l.ot?' (OT x'+dec(num(l.otMult)||1.5)+')':'')+'</td><td class="r">'+dec(num(l.hours))+'</td><td class="r">'+money(num(l.rate))+(num(l.burden)&&num(l.burden)!==1?' x'+dec(num(l.burden)):'')+'</td><td class="r">'+money(lCost(l))+'</td></tr>'}).join('')+'<tr><td colspan="4" class="r"><b>Labor subtotal</b></td><td class="r"><b>'+money(t3.L)+'</b></td></tr></table>';
- h+='<h2>Materials</h2><table><tr><th>Item</th><th>Supplier</th><th class="r">Qty</th><th class="r">Unit price</th><th class="r">Total</th></tr>'+d.mats.map(function(m){return '<tr><td>'+esc(m.item)+'</td><td>'+esc(m.supplier||'')+'</td><td class="r">'+dec(num(m.qty))+' '+esc(m.unit||'')+'</td><td class="r">'+money(num(m.price))+'</td><td class="r">'+money(mCost(m))+'</td></tr>'}).join('')+'<tr><td colspan="4" class="r"><b>Materials subtotal</b></td><td class="r"><b>'+money(t3.M)+'</b></td></tr></table>';
- h+='<h2>Other costs</h2><table><tr><th>Category</th><th>Description</th><th class="r">Qty</th><th class="r">Unit cost</th><th class="r">Total</th></tr>'+d.costs.map(function(c){return '<tr><td>'+esc(c.cat)+'</td><td>'+esc(c.desc)+'</td><td class="r">'+dec(num(c.qty))+' '+esc(c.unit||'')+'</td><td class="r">'+money(num(c.unitCost))+'</td><td class="r">'+money(num(c.qty)*num(c.unitCost))+'</td></tr>'}).join('')+
+ var t3=sums(d);h+='<h2>Labor</h2><table><tr><th>Date</th><th>Employee</th><th class="r">Hours</th><th class="r">Rate</th><th class="r">Cost</th></tr>'+d.labor.map(function(l){return '<tr><td>'+esc(dOnly(l.date))+'</td><td>'+esc(l.empName||crewName(d,l.empId))+(l.ot?' (OT x'+dec(num(l.otMult)||1.5)+')':'')+'</td><td class="r">'+qv(l.hours)+'</td><td class="r">'+mv(l.rate)+(num(l.burden)&&num(l.burden)!==1?' x'+dec(num(l.burden)):'')+'</td><td class="r">'+money(lCost(l))+'</td></tr>'}).join('')+'<tr><td colspan="4" class="r"><b>Labor subtotal</b></td><td class="r"><b>'+money(t3.L)+'</b></td></tr></table>';
+ h+='<h2>Materials</h2><table><tr><th>Item</th><th>Supplier</th><th class="r">Qty</th><th class="r">Unit price</th><th class="r">Total</th></tr>'+d.mats.map(function(m){return '<tr><td>'+esc(m.item)+'</td><td>'+esc(m.supplier||'')+'</td><td class="r">'+qv(m.qty)+' '+esc(m.unit||'')+'</td><td class="r">'+mv(m.price)+'</td><td class="r">'+money(mCost(m))+'</td></tr>'}).join('')+'<tr><td colspan="4" class="r"><b>Materials subtotal</b></td><td class="r"><b>'+money(t3.M)+'</b></td></tr></table>';
+ h+='<h2>Other costs</h2><table><tr><th>Category</th><th>Description</th><th class="r">Qty</th><th class="r">Unit cost</th><th class="r">Total</th></tr>'+d.costs.map(function(c){return '<tr><td>'+esc(c.cat)+'</td><td>'+esc(c.desc)+'</td><td class="r">'+qv(c.qty)+' '+esc(c.unit||'')+'</td><td class="r">'+mv(c.unitCost)+'</td><td class="r">'+money(oCost(c))+'</td></tr>'}).join('')+
  CATS.filter(function(c){return sub[c]}).map(function(c){return '<tr><td colspan="4" class="r" style="text-transform:capitalize">'+c+' subtotal</td><td class="r">'+money(sub[c])+'</td></tr>'}).join('')+
  '<tr><td colspan="4" class="r"><b>Other costs subtotal</b></td><td class="r"><b>'+money(tot)+'</b></td></tr></table><h2>Job totals</h2><table><tr><td>Labor</td><td class="r">'+money(t3.L)+'</td></tr><tr><td>Materials</td><td class="r">'+money(t3.M)+'</td></tr><tr><td>Other costs</td><td class="r">'+money(t3.O)+'</td></tr><tr><td><b>Grand job total</b></td><td class="r"><b>'+money(t3.T)+'</b></td></tr></table>'+(j.bid&&j.bid.saved?'<p><b>Saved bid total: '+money(bidCalc(t3,j.bid).total)+'</b></p>':'')+'<p style="color:#777;font-size:11px;margin-top:16px">Papa\'s Shop · Job Walk report</p>';return h}
 function openReport(jobId){return reportData(jobId).then(function(d){return openDoc(d.job.name+' job walk',function(){return reportHtml(d,function(p){return ourl(p.marked||p.blob)})},
@@ -410,9 +414,10 @@ function importJson(file){return file.text().then(function(t){var d=JSON.parse(t
  return Promise.all(ops).then(function(){toast('Imported '+d.jobs.length+' job'+(d.jobs.length===1?'':'s'));render()})}).catch(function(e){toast('Import failed: '+e.message)})}
 
 // ---------- mount ----------
+function badMark(e){var t=e.target;if(!t||t.tagName!=='INPUT'||t.getAttribute('inputmode')!=='decimal')return;var v=t.value.trim(),n=parseFloat(v.replace(/[$,]/g,''));t.style.outline=badV(v)?'2px solid #ff4d4d':'';t.title=t.style.outline?'Must be 0 or more — counted as 0':''}
 function mount(el){if(!document.getElementById('jw-css')){var s=document.createElement('style');s.id='jw-css';s.textContent=CSS;document.head.appendChild(s)}
- unmount();root=el;el.classList.add('jw');el.addEventListener('click',onClick);el.addEventListener('change',onChange);el.addEventListener('input',onChange);view=window.__jwOpen?{name:'job',id:window.__jwOpen}:{name:'list'};window.__jwOpen=null;return open().then(render)}
-function unmount(){if(!root)return;root.removeEventListener('click',onClick);root.removeEventListener('change',onChange);root.removeEventListener('input',onChange);root.classList.remove('jw');root.innerHTML='';freeUrls();root=null}
+ unmount();root=el;el.classList.add('jw');el.addEventListener('click',onClick);el.addEventListener('change',onChange);el.addEventListener('input',onChange);el.addEventListener('input',badMark);view=window.__jwOpen?{name:'job',id:window.__jwOpen}:{name:'list'};window.__jwOpen=null;return open().then(render)}
+function unmount(){if(!root)return;root.removeEventListener('click',onClick);root.removeEventListener('change',onChange);root.removeEventListener('input',onChange);root.removeEventListener('input',badMark);root.classList.remove('jw');root.innerHTML='';freeUrls();root=null}
 
 // ---------- public helpers (work without mount) ----------
 function listJobs(all){return db.all('jobs').then(function(js){return js.filter(function(j){return all||j.status!=='Done'}).sort(function(a,b){return (b.updated||b.created||0)-(a.updated||a.created||0)})})}
