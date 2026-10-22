@@ -68,6 +68,8 @@ nav button{font-size:10px}
 #copeT{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 header{padding-top:max(10px,calc(env(safe-area-inset-top) + 8px))!important;padding-left:calc(14px + env(safe-area-inset-left));padding-right:calc(14px + env(safe-area-inset-right))}main{padding-left:calc(10px + env(safe-area-inset-left));padding-right:calc(10px + env(safe-area-inset-right))}body{height:100dvh}
 #onb{position:fixed;inset:0;background:#111418;z-index:50;display:none;flex-direction:column;align-items:center;overflow:auto;padding:calc(30px + env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left))}
+body:has(#onb[style*="flex"]) nav{display:none!important}
+#onbNext{position:sticky;bottom:0;flex:none;min-height:48px;box-shadow:0 10px 0 10px #111418}
 #onb h2{margin:10px 0 4px;color:#ffb020;letter-spacing:2px;font-weight:900}#onb .hint{text-align:center}
 #onbF{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:420px;margin-top:16px}
 #onbF button{padding:16px 8px;border:2px solid #2a2f37;border-radius:12px;background:#1d222a;color:#fff;font-weight:800;font-size:15px}#onbF button small{display:block;color:#7c8594;font-size:11px;margin-top:4px;font-weight:700}
@@ -1066,7 +1068,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script>
 <script>
-var APP_VERSION="v41";window.APP_VERSION=APP_VERSION;document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION});document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION})});
+var APP_VERSION="v42";window.APP_VERSION=APP_VERSION;document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION});document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION})});
 (function(){var RX=/-?Infinity|NaN|undefined/g;function scrub(root){if(!root||!root.querySelectorAll)return;var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n;while(n=w.nextNode()){if(RX.test(n.nodeValue)){RX.lastIndex=0;n.nodeValue=n.nodeValue.replace(RX,"–")}RX.lastIndex=0}}
  function go(){new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(x){if(x.nodeType==1){if(x.closest&&x.closest("section,.card"))scrub(x)}else if(x.nodeType==3&&x.parentNode&&x.parentNode.closest&&x.parentNode.closest("section,.card")&&RX.test(x.nodeValue)){RX.lastIndex=0;x.nodeValue=x.nodeValue.replace(RX,"–")}RX.lastIndex=0})})}).observe(document.body,{childList:true,subtree:true});document.querySelectorAll("section").forEach(scrub)}
  if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
