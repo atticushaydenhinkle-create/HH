@@ -20,7 +20,7 @@ main{flex:1;overflow-y:auto;padding:0 10px 10px}
 .ch{margin-top:10px;background:#12161b;border:2px solid #2a2f37;border-radius:12px;overflow:hidden}
 .tg{display:flex}.tg button{flex:1;padding:10px;font-size:16px;font-weight:700;background:#1d222a;color:#9aa4b2;border:0}
 .tg button.on{background:#ffb020;color:#000}
-#rows{display:grid;grid-template-columns:1fr 1fr;max-height:230px;overflow-y:auto;overscroll-behavior:contain}
+#rows{display:grid;grid-template-columns:1fr 1fr}
 #rows button{display:flex;justify-content:space-between;padding:10px 12px;font-size:17px;background:none;color:#f2f4f7;border:0;border-bottom:1px solid #222831;border-right:1px solid #222831;font-variant-numeric:tabular-nums}
 #rows button.s16 b{color:#ffb020}#rows button span{color:#4da3ff}
 #rows button:active{background:#2b3442}
@@ -68,13 +68,12 @@ nav button{font-size:10px}
 #copeT{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 header{padding-top:max(10px,calc(env(safe-area-inset-top) + 8px))!important;padding-left:calc(14px + env(safe-area-inset-left));padding-right:calc(14px + env(safe-area-inset-right))}main{padding-left:calc(10px + env(safe-area-inset-left));padding-right:calc(10px + env(safe-area-inset-right))}body{height:100dvh}
 #onb{position:fixed;inset:0;background:#111418;z-index:50;display:none;flex-direction:column;align-items:center;overflow:auto;padding:calc(30px + env(safe-area-inset-top)) max(18px,env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left))}
-body:has(#onb[style*="flex"]) nav{display:none!important}
 #onbNext{position:sticky;bottom:0;flex:none;min-height:48px;box-shadow:0 10px 0 10px #111418}
 #onb h2{margin:10px 0 4px;color:#ffb020;letter-spacing:2px;font-weight:900}#onb .hint{text-align:center}
 #onbF{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:420px;margin-top:16px}
 #onbF button{padding:16px 8px;border:2px solid #2a2f37;border-radius:12px;background:#1d222a;color:#fff;font-weight:800;font-size:15px}#onbF button small{display:block;color:#7c8594;font-size:11px;margin-top:4px;font-weight:700}
 #onbF button.on{border-color:#ffb020;background:#2b2412}
-.exm{margin-top:10px;border:1px solid #2a2f37;border-radius:10px;padding:6px 10px}.exm summary{font-weight:800;color:#ffb020;cursor:pointer}.exb ol{padding-left:20px;margin:6px 0}.exb li{margin:4px 0}.exb svg{display:block;margin:6px auto}.exLoad{margin-top:6px;padding:10px 14px;border-radius:10px;border:0;background:#ffb020;color:#111;font-weight:900}</style><style id="scrollfix">html,body{height:100%;overflow:hidden;overscroll-behavior:none}body{height:100vh;height:100dvh;width:100%;max-width:100vw}body{position:fixed;inset:0;overflow:hidden}main{min-height:0;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}img,svg,video,canvas{max-width:100%}table{max-width:100%}pre{white-space:pre-wrap;overflow-wrap:anywhere}</style><style>html,body,button,input,select,textarea,a,label{touch-action:manipulation}input,select,textarea{font-size:max(16px,1em)!important}</style>
+.exm{margin-top:10px;border:1px solid #2a2f37;border-radius:10px;padding:6px 10px}.exm summary{font-weight:800;color:#ffb020;cursor:pointer}.exb ol{padding-left:20px;margin:6px 0}.exb li{margin:4px 0}.exb svg{display:block;margin:6px auto}.exLoad{margin-top:6px;padding:10px 14px;border-radius:10px;border:0;background:#ffb020;color:#111;font-weight:900}</style><script>try{if(localStorage.getItem("hhfabNavCollapsed")=="1")document.documentElement.classList.add("navC")}catch(e){}</script><style id="scrollfix">html,body{height:100%;overflow:hidden;overscroll-behavior:none}body{height:100vh;height:100dvh;width:100%;max-width:100vw}body{position:fixed;inset:0;overflow:hidden}main{min-height:0;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}img,svg,video,canvas{max-width:100%}table{max-width:100%}pre{white-space:pre-wrap;overflow-wrap:anywhere}</style><style>html,body,button,input,select,textarea,a,label{touch-action:manipulation}input,select,textarea{font-size:max(16px,1em)!important}</style>
 <script>(function(){var last=0;document.addEventListener("touchend",function(e){var t=e.target,n=Date.now();if(t&&t.closest&&t.closest("input,textarea,select,[contenteditable],#hhLogo,#ppGame,#pwGame,#gmMenu,button,a,label,[role=button],.keys,#rows")){last=n;return}if(n-last<300&&e.cancelable)e.preventDefault();last=n},{passive:false});["gesturestart","gesturechange"].forEach(function(ev){document.addEventListener(ev,function(e){if(e.cancelable)e.preventDefault()},{passive:false})})})();</script>
 <script>window.hhSAT=function(){var p=window._hhSATp;if(!p){p=document.createElement("div");p.style.cssText="position:fixed;top:0;left:0;height:env(safe-area-inset-top);width:0;visibility:hidden;pointer-events:none";document.documentElement.appendChild(p);window._hhSATp=p}return p.offsetHeight||0};</script>
 <style id="refresh-v31">
@@ -412,6 +411,20 @@ a{color:#4da3ff}
 </section>
 </main>
 <nav><button class="on" data-s="calc"><i>🧮</i>Calc</button><button data-s="bends"><i>📐</i>Bends</button><button data-s="angles"><i>📏</i>Angles</button><button data-s="pipe"><i>🛢</i>Pipe</button><button data-s="more"><i>☰</i>More</button></nav>
+<style id="navfold">nav{padding-right:calc(44px + max(4px,env(safe-area-inset-right)))}
+#navTab{position:fixed;right:max(4px,env(safe-area-inset-right));bottom:env(safe-area-inset-bottom);width:44px;height:44px;min-width:44px;min-height:44px;padding:0;margin:0;z-index:8;display:flex;align-items:center;justify-content:center;background:#1d222a;border:1px solid #2a2f37;border-radius:12px;color:#c9d1db;font-size:18px;line-height:1}
+#navTab:active{background:#2b3442}
+html.navC nav{height:0;min-height:0;overflow:hidden;visibility:hidden;border-top-width:0;padding-top:0;padding-bottom:0}
+html.navC main{padding-bottom:calc(10px + 44px + 12px + env(safe-area-inset-bottom))}
+html.onbOpen nav,html.onbOpen #navTab{display:none!important}</style>
+<button id="navTab" type="button" aria-controls="nav" aria-expanded="true" aria-label="Hide menu bar">▾</button>
+<script id="navfoldjs">(function(){var K="hhfabNavCollapsed",H=document.documentElement,b=document.getElementById("navTab"),o=document.getElementById("onb"),n=document.querySelector("nav");n.id="nav";
+function paint(){var c=H.classList.contains("navC");b.textContent=c?"▴":"▾";b.setAttribute("aria-expanded",c?"false":"true");b.setAttribute("aria-label",c?"Show menu bar":"Hide menu bar")}
+function set(c){H.classList.toggle("navC",c);try{if(c)localStorage.setItem(K,"1");else localStorage.removeItem(K)}catch(e){}if(c){var m=document.getElementById("moreMenu");if(m)m.style.display="none"}paint();if(window.hhFitMore)hhFitMore()}
+b.addEventListener("click",function(){set(!H.classList.contains("navC"))});
+function ob(){H.classList.toggle("onbOpen",!!o&&o.style.display=="flex")}
+if(o){new MutationObserver(ob).observe(o,{attributes:true,attributeFilter:["style"]});ob()}
+paint()})();</script>
 <script id="math">
 function gcd(a,b){return b?gcd(b,a%b):a}
 // nearest fraction with denominator d, reduced, as mixed inch string
@@ -936,11 +949,11 @@ function onboard(){var t=getTabs().join(","),saved=localStorage.getItem("hhField
  if(!onbSel&&hasTabs&&!saved)onbSel="keep";
  q("onbF").innerHTML=FIELDS.map(function(f){return '<button data-f="'+f[0]+'"'+(onbSel==f[0]?' class="on"':"")+">"+f[1]+"<small>"+(f[2]?f[2].split(",").map(function(k){return PAGES[k][1]}).join(" · "):"Pick your own tabs")+"</small></button>"}).join("")+(hasTabs&&onbSel=="keep"?'<button data-f="keep" class="on" style="grid-column:1/3">Keep my current tabs<small>'+getTabs().map(function(k){return PAGES[k][1]}).join(" · ")+"</small></button>":"");
  q("onbF").querySelectorAll("button").forEach(function(b){b.onclick=function(){onbSel=b.dataset.f;q("onbF").querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x==b)})}});
- q("onbSt").value=localStorage.getItem("hhState")||"";q("onb").style.display="flex"}
+ q("onbSt").value=localStorage.getItem("hhState")||"";q("onb").style.display="flex";document.documentElement.classList.add("onbOpen")}
 q("onbNext").onclick=function(){var f=FIELDS.filter(function(x){return x[0]==onbSel})[0];
  if(f){localStorage.setItem("hhField",f[0]);if(f[2]){localStorage.setItem("hhTabs",JSON.stringify(f[2].split(",")))}}
  else if(!onbSel&&!localStorage.getItem("hhTabs")){/* nothing picked: keep defaults */}
- if(q("onbSt").value)localStorage.setItem("hhState",q("onbSt").value);window.cdRender&&cdRender();localStorage.setItem("hhOnboarded","1");q("onb").style.display="none";renderNav();tabForm(getTabs());q("tbDone").style.display="";go("tabs")};
+ if(q("onbSt").value)localStorage.setItem("hhState",q("onbSt").value);window.cdRender&&cdRender();localStorage.setItem("hhOnboarded","1");q("onb").style.display="none";document.documentElement.classList.remove("onbOpen");renderNav();tabForm(getTabs());q("tbDone").style.display="";go("tabs")};
 q("tbDone").onclick=function(){var t=formTabs();if(new Set(t).size<3){q("tbErr").textContent="Each tab can only be used once.";return}localStorage.setItem("hhTabs",JSON.stringify(t));localStorage.setItem("hhOnboarded","1");q("tbDone").style.display="none";renderNav();go(t[0]);toast("You're all set",1200);setTimeout(function(){window.maybeInstallTip&&maybeInstallTip()},1400)};
 
 // ---- Construction trades (v11) ----
@@ -1068,7 +1081,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script>
 <script>
-var APP_VERSION="v42";window.APP_VERSION=APP_VERSION;document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION});document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION})});
+var APP_VERSION="v43";window.APP_VERSION=APP_VERSION;document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION});document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION})});
 (function(){var RX=/-?Infinity|NaN|undefined/g;function scrub(root){if(!root||!root.querySelectorAll)return;var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n;while(n=w.nextNode()){if(RX.test(n.nodeValue)){RX.lastIndex=0;n.nodeValue=n.nodeValue.replace(RX,"–")}RX.lastIndex=0}}
  function go(){new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(x){if(x.nodeType==1){if(x.closest&&x.closest("section,.card"))scrub(x)}else if(x.nodeType==3&&x.parentNode&&x.parentNode.closest&&x.parentNode.closest("section,.card")&&RX.test(x.nodeValue)){RX.lastIndex=0;x.nodeValue=x.nodeValue.replace(RX,"–")}RX.lastIndex=0})})}).observe(document.body,{childList:true,subtree:true});document.querySelectorAll("section").forEach(scrub)}
  if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
@@ -2648,7 +2661,7 @@ document.addEventListener("touchend",function(e){if(!st)return;var s=st;st=null;
 function sync(){var cur=document.querySelector(".screen.on"),id=cur&&cur.id,nb=id&&document.querySelector('nav button[data-s="'+id+'"]')||(cur?document.querySelector("nav button[data-s=more]"):null);document.querySelectorAll("nav button").forEach(function(x){if(x!==nb)x.removeAttribute("aria-current")});if(nb&&nb.getAttribute("aria-current")!="page")nb.setAttribute("aria-current","page")}
 window.hhSwipe.sync=sync;new MutationObserver(sync).observe(document.querySelector("main")||document.body,{subtree:true,attributes:true,attributeFilter:["class"]});sync()})();</script>
 <script id="morefit">(function(){var m=document.getElementById("moreMenu");if(!m)return;var was=false;
-function fit(){var open=m.style.display=="flex";if(!open){was=false;return}var h=document.querySelector("header"),n=document.querySelector("nav"),top=(h?h.getBoundingClientRect().bottom:0)+6,bot=(n?n.getBoundingClientRect().top:innerHeight-70)-6,mh=Math.max(120,bot-top);
+function fit(){var open=m.style.display=="flex";if(!open){was=false;return}var h=document.querySelector("header"),n=document.querySelector(document.documentElement.classList.contains("navC")?"#navTab":"nav"),top=(h?h.getBoundingClientRect().bottom:0)+6,bot=(n?n.getBoundingClientRect().top:innerHeight-70)-6,mh=Math.max(120,bot-top);
  var B=(innerHeight-bot)+"px",M=mh+"px";if(m.style.bottom!==B)m.style.bottom=B;if(m.style.maxHeight!==M)m.style.maxHeight=M;if(!was){was=true;m.scrollTop=0;var sc=m.querySelector(".mmScroll");if(sc)sc.scrollTop=0}}
 new MutationObserver(fit).observe(m,{attributes:true,attributeFilter:["style"],childList:true});addEventListener("resize",fit);if(window.visualViewport)visualViewport.addEventListener("resize",fit);window.hhFitMore=fit})();</script><style id="fasttapcss">button,a,label,[role=button],summary{touch-action:manipulation}.keys,.keys button,#rows button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;transition:none}#rows button.pressed{background:#2b3442}</style><script id="fasttap">(function(){var SEL=".keys button,#rows button,[data-fasttap] button",cur=null;
 function on(b,v){if(b)b.classList.toggle("pressed",v)}
