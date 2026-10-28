@@ -224,40 +224,41 @@ a{color:#4da3ff}
 <section class="screen" id="deck"></section>
 <section class="screen" id="stucco"></section>
 <section class="screen" id="handrail">
-<div class="card"><h3>HANDRAIL</h3><div class="seg" id="hrSaw"><button data-s="band">Bandsaw<br><small>angle only</small></button><button data-s="chop">Miter / chop saw<br><small>angle + tilt</small></button></div><div class="hint" id="hrSawH"></div></div>
+<div class="card"><h3>HANDRAIL</h3><div class="seg" id="hrSaw"><button data-s="band">Bandsaw<br><small>angle only</small></button><button data-s="chop">Miter / chop saw<br><small>angle + tilt</small></button></div><div class="hint" id="hrSawH"></div>
+<div style="margin:8px 0 2px;font-size:12.5px;color:#a7b0bd;font-weight:700">Length units</div><div class="seg" id="hrUnit" role="group" aria-label="Length units"><button data-m="std" class="on" aria-pressed="true">Standard<br><small>as before</small></button><button data-m="in" aria-pressed="false">All inches</button><button data-m="ft" aria-pressed="false">All feet</button></div><div class="hint" id="hrUnitH">Standard: run and post spacing in feet, everything else in inches (the original layout). All inches / All feet switch every length box and result on this page. Boxes are converted, and what you typed is kept, so switching back loses nothing.</div></div>
 <div class="card"><h3>1) STAIR RAIL</h3><div class="seg" id="hrIn"><button data-m="step" class="on">Per step</button><button data-m="tot">Total rise/run</button></div><div class="fld">
-<label><span id="hrRL">Rise per step (in)</span><input id="hrR" inputmode="decimal" value="7"></label>
-<label><span id="hrTL">Run per step (in)</span><input id="hrT" inputmode="decimal" value="11"></label>
+<label><span id="hrRL">Rise per step (in)</span><input id="hrR" data-nu="in" inputmode="decimal" value="7"></label>
+<label><span id="hrTL">Run per step (in)</span><input id="hrT" data-nu="in" inputmode="decimal" value="11"></label>
 <label>Risers (steps)<input id="hrN" inputmode="decimal" value="8"></label>
-<label>Max post spacing (ft)<input id="hrSp" inputmode="decimal" value="4"></label>
-<label>Rail height (in)<input id="hrH" inputmode="decimal" value="36"></label>
-<label>Guard height (in)<input id="hrG" inputmode="decimal" value="42"></label>
-<label>Top rail size (in)<input id="hrRS" inputmode="decimal" value="1.5"></label>
-<label>Post width (in)<input id="hrPW" inputmode="decimal" value="1.5"></label>
+<label>Max post spacing (ft)<input id="hrSp" data-nu="ft" inputmode="decimal" value="4"></label>
+<label>Rail height (in)<input id="hrH" data-nu="in" inputmode="decimal" value="36"></label>
+<label>Guard height (in)<input id="hrG" data-nu="in" inputmode="decimal" value="42"></label>
+<label>Top rail size (in)<input id="hrRS" data-nu="in" inputmode="decimal" value="1.5"></label>
+<label>Post width (in)<input id="hrPW" data-nu="in" inputmode="decimal" value="1.5"></label>
 </div><div id="hrSvg"></div><div id="hrOut"></div></div>
 <div class="card"><h3>BOTTOM RAIL</h3><div class="seg" id="brU"><button data-m="on" class="on">Use bottom rail</button><button data-m="off">None</button></div><div class="seg" id="brM" style="margin-top:6px"><button data-m="stair" class="on">Stair</button><button data-m="lvl">Level</button></div><div class="fld">
-<label><span id="brCL">Clearance, plumb above nosing line (in)</span><input id="brC" inputmode="decimal" value="3.5"></label>
-<label>Bottom rail size / depth (in)<input id="brS" inputmode="decimal" value="1.5"></label>
+<label><span id="brCL">Clearance, plumb above nosing line (in)</span><input id="brC" data-nu="in" inputmode="decimal" value="3.5"></label>
+<label>Bottom rail size / depth (in)<input id="brS" data-nu="in" inputmode="decimal" value="1.5"></label>
 </div><div class="hint">Stair uses the Stair Rail inputs above; Level uses the Level Guardrail inputs below. Pickets, Level guardrail and the cut list follow this card.</div><div id="brSvg"></div><div id="brOut"></div></div>
 <div class="card"><h3>2) PICKETS / BALUSTERS</h3><div class="seg" id="pkM"><button data-m="lvl" class="on">Level</button><button data-m="stair">Stair (rake)</button></div><div class="fld">
-<label>Opening, clear between posts (in)<input id="pkO" inputmode="decimal" value="46.5"></label>
-<label>Picket width (in)<input id="pkW" inputmode="decimal" value="1/2"></label>
-<label>Max gap (in)<input id="pkG" inputmode="decimal" value="3.875"></label>
-<label class="pkS">Plumb clear between rails (in)<input id="pkL" inputmode="decimal" value="30"></label>
+<label>Opening, clear between posts (in)<input id="pkO" data-nu="in" inputmode="decimal" value="46.5"></label>
+<label>Picket width (in)<input id="pkW" data-nu="in" inputmode="decimal" value="1/2"></label>
+<label>Max gap (in)<input id="pkG" data-nu="in" inputmode="decimal" value="3.875"></label>
+<label class="pkS">Plumb clear between rails (in)<input id="pkL" data-nu="in" inputmode="decimal" value="30"></label>
 </div><div class="hint pkS">Stair: enter the opening measured level (horizontal). Pickets between parallel rails are all the same length.</div><div id="pkOut"></div></div>
 <div class="card"><h3>3) LEVEL GUARDRAIL</h3><div class="seg" id="lgM"><button data-m="pk" class="on">Pickets</button><button data-m="mid">Mid-rails</button></div><div class="fld">
-<label>Run length (ft)<input id="lgL" inputmode="decimal" value="12"></label>
-<label>Height (in)<input id="lgH" inputmode="decimal" value="42"></label>
-<label>Max post spacing (ft)<input id="lgSp" inputmode="decimal" value="4"></label>
-<label>Post size (in)<input id="lgP" inputmode="decimal" value="1.5"></label>
-<label>Top rail size (in)<input id="lgT" inputmode="decimal" value="1.5"></label>
-<label>Picket / mid-rail size (in)<input id="lgK" inputmode="decimal" value="1/2"></label>
+<label>Run length (ft)<input id="lgL" data-nu="ft" inputmode="decimal" value="12"></label>
+<label>Height (in)<input id="lgH" data-nu="in" inputmode="decimal" value="42"></label>
+<label>Max post spacing (ft)<input id="lgSp" data-nu="ft" inputmode="decimal" value="4"></label>
+<label>Post size (in)<input id="lgP" data-nu="in" inputmode="decimal" value="1.5"></label>
+<label>Top rail size (in)<input id="lgT" data-nu="in" inputmode="decimal" value="1.5"></label>
+<label>Picket / mid-rail size (in)<input id="lgK" data-nu="in" inputmode="decimal" value="1/2"></label>
 </div><div id="lgSvg"></div><div id="lgOut"></div></div>
 <div class="card"><h3>4) RAIL RETURNS / BENDS</h3><div class="fld">
-<label>Bender centerline radius (in)<input id="rbR" inputmode="decimal" value="5"></label>
+<label>Bender centerline radius (in)<input id="rbR" data-nu="in" inputmode="decimal" value="5"></label>
 <label>Bend angle (°)<input id="rbA" inputmode="decimal" value="32.47"></label>
-<label>Leg 1 to intersection (in)<input id="rbL1" inputmode="decimal" value="12"></label>
-<label>Leg 2 to intersection (in)<input id="rbL2" inputmode="decimal" value="60"></label>
+<label>Leg 1 to intersection (in)<input id="rbL1" data-nu="in" inputmode="decimal" value="12"></label>
+<label>Leg 2 to intersection (in)<input id="rbL2" data-nu="in" inputmode="decimal" value="60"></label>
 </div><button class="btn" id="rbUse" style="margin-top:6px">Use stair angle</button><div id="rbOut"></div></div>
 <div class="card"><h3>CUT LIST</h3><div id="hcList" class="hint"></div><div style="display:flex;gap:6px;margin-top:6px"><button class="btn" id="hcShare">Share</button><button class="btn" id="hcNote">Save to Notes</button><button class="btn" id="hcMat">Add to My Materials</button></div></div>
 <div class="card"><h3>5) CODE QUICK REFERENCE</h3><div class="hint warn"><b>Typical IBC/IRC, verify local code</b></div>
@@ -366,7 +367,7 @@ a{color:#4da3ff}
 <div class="hint">Typical: 1/4"/ft for 3" and smaller drains, 1/8"/ft for 4" and larger (check local code).</div></div>
 <div class="card"><h3>PIPE OFFSET</h3><div class="seg" id="poA"><button data-a="11.25">11¼°</button><button data-a="22.5">22½°</button><button data-a="45" class="on">45°</button><button data-a="60">60°</button></div><div class="fld">
 <label class="w">Offset (in) – center to center, e.g. 12<input id="poO" inputmode="decimal" value="12"></label></div><div id="poOut"></div></div></section>
-<div id="moreMenu"><button data-s="tap">🔩 Tap &amp; Drill</button><button data-s="materials">🧱 Materials</button><button data-s="weld">🔥 Weld Settings</button><button data-s="notes">📝 Notes</button><button id="instBtn">📲 How to add to Home Screen</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">Papa's Shop <span class="verV"></span></div></div><div class="toast" id="toast"></div>
+<div id="moreMenu"><button data-s="tap">🔩 Tap &amp; Drill</button><button data-s="materials">🧱 Materials</button><button data-s="weld">🔥 Weld Settings</button><button data-s="wlayout">📏 Weld Layout</button><button data-s="notes">📝 Notes</button><button id="instBtn">📲 How to add to Home Screen</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">Papa's Shop <span class="verV"></span></div></div><div class="toast" id="toast"></div>
 <div id="onb"><img src="logo-icon.svg" width="110" height="110" alt="Papa's Shop logo"><h2>Papa's Shop</h2><div style="font-size:20px;font-weight:900;margin-top:6px">What field are you in?</div><div class="hint">We'll set up your tabs. You can change them anytime.</div>
 <div id="onbF"></div><label class="hint" style="width:100%;max-width:420px;margin-top:12px;display:block">Your state (optional — sets Codes &amp; Regs)<select id="onbSt" style="width:100%"></select></label><button class="btn am" id="onbNext" style="width:100%;max-width:420px;margin-top:16px">Continue</button></div>
 <section class="screen" id="materials"><div class="card"><h3>MATERIALS</h3>
@@ -380,7 +381,7 @@ a{color:#4da3ff}
 <label id="mwPl" style="display:none">Plate width (in)<input id="mwW" inputmode="decimal" value="48"></label><label>Qty<input id="mwQ" inputmode="numeric" value="1"></label>
 </div><div id="mwOut"></div><div class="hint">Aluminum ≈ .35 × steel; stainless ≈ 1.02 × steel.</div></div></section>
 <section class="screen" id="weld">
-<div data-fasttap style="margin-top:10px"><button class="btn" id="wlJump" type="button" style="width:100%;min-height:44px">📏 Weld layout — stitch / skip spacing ↓</button></div>
+<div data-fasttap style="margin-top:10px"><button class="btn" id="wlJump" type="button" style="width:100%;min-height:44px">📏 Weld Layout (stitch / skip spacing) →</button></div>
 
 <div class="card"><h3>WELD SETTINGS</h3><div class="hint" style="color:#ff4d4d;font-size:13px">⚠ Starting points only — run a test bead on scrap.</div><div class="fld" style="margin-top:6px">
 <label>Brand<select id="wBr"></select></label><label>Machine<select id="wMa"></select></label>
@@ -389,21 +390,23 @@ a{color:#4da3ff}
 <label class="w" id="wInL">Input power<select id="wIn"><option value="230">230/240 V</option><option value="115">115/120 V</option></select></label>
 </div></div>
 <div class="card"><h3 id="wHead">SETTINGS</h3><div id="wOut"></div><div class="hint" id="wSrc" style="margin-top:8px"></div></div>
+</section>
+<section class="screen" id="wlayout">
 <div class="card" id="wlCard" data-fasttap><h3>WELD LAYOUT — STITCH / SKIP</h3>
 <div class="hint" style="font-size:13px;margin-top:4px">Space intermittent welds along a run. Pick what you know and it solves the rest.</div>
-<div class="seg" id="wlMode" style="margin-top:8px"><button type="button" data-v="count" class="on">Know the gap → find # of welds</button><button type="button" data-v="gap">Know # of welds → find the gap</button></div>
+<div class="seg" id="wlMode" role="group" aria-label="Solve for" style="margin-top:8px"><button type="button" data-v="count" class="on" aria-pressed="true">Know the gap → find # of welds</button><button type="button" data-v="gap" aria-pressed="false">Know # of welds → find the gap</button></div>
 <div class="fld" style="margin-top:8px">
 <label>Overall length — feet<input id="wlFt" inputmode="decimal" placeholder="0" autocomplete="off" autocapitalize="off"></label>
 <label>+ inches (fractions OK)<input id="wlIn" inputmode="text" enterkeyhint="done" placeholder="48 or 3 1/2" autocomplete="off" autocapitalize="off"></label>
-<label>Weld length (in)<input id="wlW" inputmode="text" enterkeyhint="done" placeholder="2 or 1 1/2" autocomplete="off" autocapitalize="off"></label>
-<label>End margin, each end (in) — optional<input id="wlM" inputmode="text" enterkeyhint="done" placeholder="0" autocomplete="off" autocapitalize="off"></label>
+<label class="w">Weld length (in)<input id="wlW" inputmode="text" enterkeyhint="done" placeholder="2 or 1 1/2" autocomplete="off" autocapitalize="off"></label>
+<label class="w">End margin, each end (in) — optional<input id="wlM" inputmode="text" enterkeyhint="done" placeholder="0" autocomplete="off" autocapitalize="off" aria-describedby="wlMHelp"><span class="hint" id="wlMHelp" style="display:block;margin-top:4px;font-weight:600">Bare space left at each end of the run before the first weld and after the last.</span></label>
 <label class="w" id="wlGRow"><span id="wlGLbl">Gap between welds (clear, edge to edge)</span><input id="wlG" inputmode="text" enterkeyhint="done" placeholder="4 or 3 1/4" autocomplete="off" autocapitalize="off"></label>
 <label class="w" id="wlNRow" style="display:none">Number of welds<input id="wlN" inputmode="numeric" enterkeyhint="done" placeholder="5" autocomplete="off"></label>
 </div>
-<div id="wlGTRow"><div class="hint" style="margin-top:8px">Gap value means</div><div class="seg" id="wlGT"><button type="button" data-v="clear" class="on">Clear gap (edge to edge)</button><button type="button" data-v="pitch">Pitch (center to center)</button></div></div>
-<div class="hint" style="margin-top:8px">Ends of the run</div><div class="seg" id="wlEnds"><button type="button" data-v="weld" class="on">Weld at both ends</button><button type="button" data-v="gap">Gap at both ends</button></div>
-<div id="wlCRRow"><div class="hint" style="margin-top:8px">When the count isn't a whole number</div><div class="seg" id="wlCR"><button type="button" data-v="near" class="on">Nearest</button><button type="button" data-v="up">More welds</button><button type="button" data-v="down">Fewer welds</button></div></div>
-<div class="hint" style="margin-top:8px">Round gaps to</div><div class="seg" id="wlRes"><button type="button" data-v="8">1/8"</button><button type="button" data-v="16" class="on">1/16"</button><button type="button" data-v="32">1/32"</button></div>
+<div id="wlGTRow"><div class="hint" style="margin-top:8px">Gap value means</div><div class="seg" id="wlGT" role="group" aria-label="Gap value means"><button type="button" data-v="clear" class="on" aria-pressed="true">Clear gap (edge to edge)</button><button type="button" data-v="pitch" aria-pressed="false">Pitch (center to center)</button></div></div>
+<div class="hint" style="margin-top:8px">Ends of the run</div><div class="seg" id="wlEnds" role="group" aria-label="Ends of the run"><button type="button" data-v="weld" class="on" aria-pressed="true">Weld at both ends</button><button type="button" data-v="gap" aria-pressed="false">Gap at both ends</button></div>
+<div id="wlCRRow"><div class="hint" style="margin-top:8px">When the count isn't a whole number</div><div class="seg" id="wlCR" role="group" aria-label="When the count isn't a whole number"><button type="button" data-v="near" class="on" aria-pressed="true">Nearest</button><button type="button" data-v="up" aria-pressed="false">More welds</button><button type="button" data-v="down" aria-pressed="false">Fewer welds</button></div></div>
+<div class="hint" style="margin-top:8px">Round gaps to</div><div class="seg" id="wlRes" role="group" aria-label="Round gaps to"><button type="button" data-v="8" aria-pressed="false">1/8"</button><button type="button" data-v="16" class="on" aria-pressed="true">1/16"</button><button type="button" data-v="32" aria-pressed="false">1/32"</button></div><div class="hint" id="wlResHelp" style="margin-top:6px;font-weight:600">Gaps are rounded DOWN to this fraction. If that leaves room over, some gaps step up one mark so the welds still fill the run; anything left under one mark is shown as the remainder.</div>
 <div id="wlOut" aria-live="polite"></div>
 </div>
 <script id="wlmath">
@@ -419,9 +422,10 @@ function parse(str){
  var s=String(str==null?"":str).replace(/["\u201D\u2033]/g,"").replace(/\s*(inches|inch|in)\s*$/i,"").replace(/^\s+|\s+$/g,"").replace(/\s+/g," "),m,u;
  if(!s)return{err:"empty"};
  if(s.charAt(0)=="-")return{err:"neg"};
- if((m=/^(\d{1,5})(?: |-)(\d{1,5})\/(\d{1,5})$/.exec(s))){if(+m[3]==0)return{err:"bad"};u=+m[1]*U+rdiv(+m[2]*U,+m[3])}
+ if((m=/^(\d{1,9})(?: |-)(\d{1,5})\/(\d{1,5})$/.exec(s))){if(+m[3]==0)return{err:"bad"};u=+m[1]*U+rdiv(+m[2]*U,+m[3])}
  else if((m=/^(\d{1,5})\/(\d{1,5})$/.exec(s))){if(+m[2]==0)return{err:"bad"};u=rdiv(+m[1]*U,+m[2])}
  else if(/^(\d{1,9}(\.\d{0,6})?|\.\d{1,6})$/.test(s)){u=Math.round(parseFloat(s)*U)}
+ else if(/^\d{10,}(\.\d*)?$/.test(s))return{err:"big"};
  else return{err:"bad"};
  if(u>MAXIN*U)return{err:"big"};
  return{u:u}}
@@ -476,19 +480,20 @@ if(!q("wlCard"))return;
 var U=WL.U,st={mode:"count",gt:"clear",ends:"weld",cr:"near",res:"16"},last=null;
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function F(n,d){return WL.fmt(n,d)}
+var BIGT="10,000 in (833 ft 4 in)";
 function val(id,name,req){var s=q(id).value,p;if(!String(s).replace(/\s/g,""))return req?{blank:true}:{u:0};p=WL.parse(s);
  if(p.err=="neg")return{err:name+" can't be negative."};
- if(p.err=="big")return{err:name+" is too large."};
+ if(p.err=="big")return{err:name+" is too large. The longest length this handles is "+BIGT+"."};
  if(p.err)return{err:name+" isn't a number I can read. Use 48, 2.5, 3/8 or 2 1/2."};
  return p}
 function build(){
  var ft=val("wlFt","Feet",false),inn=val("wlIn","Inches",false),w=val("wlW","Weld length",true),m=val("wlM","End margin",false),g=null,n=null,x;
  var all=[ft,inn,w,m];
  if(st.mode=="count"){g=val("wlG",st.gt=="pitch"?"Pitch":"Gap",true);all.push(g)}
- else{var s=q("wlN").value.replace(/\s/g,"");if(!s)n={blank:true};else if(/^-/.test(s))n={err:"Number of welds can't be negative."};else if(!/^\d{1,4}$/.test(s))n={err:"Number of welds must be a whole number, 1 or more."};else n={v:+s};all.push(n)}
+ else{var s=q("wlN").value.replace(/\s/g,"");if(!s)n={blank:true};else if(/^-/.test(s))n={err:"Number of welds can't be negative."};else if(/^\d{4,}$/.test(s)&&+s>500)n={err:"Number of welds is too large. The most this handles is 500."};else if(!/^\d{1,4}$/.test(s))n={err:"Number of welds must be a whole number, 1 or more."};else n={v:+s};all.push(n)}
  for(x=0;x<all.length;x++)if(all[x].err)return{err:all[x].err};
  var L=ft.u*12+inn.u;
- if(L>10000*U)return{err:"Overall length is too large."};
+ if(L>10000*U)return{err:"Overall length is too large. The longest length this handles is "+BIGT+"."};
  if(L==0&&(q("wlFt").value.replace(/\s/g,"")||q("wlIn").value.replace(/\s/g,"")))return{err:"Overall length must be greater than 0."};
  if(L==0||w.blank||(g&&g.blank)||(n&&n.blank))return{wait:true};
  return{o:{L:L,w:w.u,m:m.u,ends:st.ends,mode:st.mode,gapType:st.gt,g:g?g.u:0,n:n?n.v:0,cr:st.cr,res:+st.res}}}
@@ -536,7 +541,7 @@ function render(){
   N.push("For "+esc(ask)+", "+plural(r.n,"weld","welds")+" fit"+(r.n==1?"s":"")+(r.clamped?(r.clamped=="max"?" (limited so the welds fit end to end).":" (at least 1 weld)."):(same?" exactly.":"; the gap is adjusted so the layout fits the run exactly.")))}
  if(r.k>0&&!r.uniform){
   var parts=[];if(r.b)parts.push("<b>"+r.b+" \u00D7 "+esc(F(r.lo).t)+"</b>");if(r.a)parts.push("<b>"+r.a+" \u00D7 "+esc(F(r.hi).t)+"</b>");
-  N.push("Rounding to 1/"+r.res+'" changes the spacing: the exact even gap is <b>'+esc(gapAvg.t)+"</b>, which isn't a 1/"+r.res+'" mark. Use '+parts.join(" + ")+(r.R>0?" and leave <b>"+esc(F(r.R).t)+"</b> over":"")+" (nearest single mark is "+esc(F(r.near).t)+", off by "+(r.dev/U).toFixed(4)+'").')}
+  N.push("Gaps rounded DOWN to 1/"+r.res+'" marks: the exact even gap is <b>'+esc(gapAvg.t)+"</b>, which isn't a 1/"+r.res+'" mark, so gaps are cut at <b>'+esc(F(r.lo).t)+"</b>"+(r.a?", with "+r.a+" of them stepped up one mark to <b>"+esc(F(r.hi).t)+"</b> so the welds still fill the run":"")+". Use "+parts.join(" + ")+(r.R>0?" and leave <b>"+esc(F(r.R).t)+"</b> over (less than one mark)":"")+" (nearest single mark is "+esc(F(r.near).t)+", off by "+(r.dev/U).toFixed(4)+'").')}
  else if(r.k>0&&r.uniform&&r.mode=="count"&&r.req&&((r.req.gap!=null&&r.req.gap!=r.lo)||(r.req.pitch!=null&&r.req.pitch!=r.w+r.lo)))N.push("Gap adjusted from "+esc(r.req.gap!=null?F(r.req.gap).t:F(r.req.pitch-r.w).t)+" to <b>"+esc(F(r.lo).t)+"</b> so the welds fit the run exactly.");
  if(r.k==0&&r.R>0)N.push("One weld: <b>"+esc(F(r.R).t)+"</b> of the run is left unwelded; place the weld where the drawing says.");
  if(r.k>0&&r.uniform&&r.R==0&&r.mode=="gap")N.push("All "+(r.k==1?"1 gap":r.k+" gaps")+" are the same size.");
@@ -553,16 +558,17 @@ function render(){
  o.innerHTML=h;
  q("wlCopy").onclick=copy}
 function copy(){
- if(!last)return;var t=summary(last),done=function(){if(window.toast)toast("Layout copied",1600)};
- function fb(){var a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;opacity:0;left:-999px";document.body.appendChild(a);a.select();try{document.execCommand("copy");done()}catch(e){if(window.toast)toast("Couldn't copy",2000)}document.body.removeChild(a)}
+ if(!last)return;var t=summary(last),done=function(){if(window.toast)toast("Layout copied",1600)},fail=function(){if(window.toast)toast("Couldn't copy",2000)};
+ function fb(){var a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;opacity:0;left:-999px";document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand("copy")}catch(e){}if(ok)done();else fail();document.body.removeChild(a)}
  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,fb);else fb()}
-function seg(id,key,after){var box=q(id),bs=box.querySelectorAll("button");
- Array.prototype.forEach.call(bs,function(b){b.onclick=function(){st[key]=b.getAttribute("data-v");Array.prototype.forEach.call(bs,function(x){x.classList.toggle("on",x===b)});if(after)after();render()}})}
+function seg(id,key,label,after){var box=q(id),bs=box.querySelectorAll("button");box.setAttribute("role","group");box.setAttribute("aria-label",label);
+ function sync(){Array.prototype.forEach.call(bs,function(x){x.setAttribute("aria-pressed",x.classList.contains("on")?"true":"false")})}sync();
+ Array.prototype.forEach.call(bs,function(b){b.onclick=function(){st[key]=b.getAttribute("data-v");Array.prototype.forEach.call(bs,function(x){x.classList.toggle("on",x===b)});sync();if(after)after();render()}})}
 function layoutMode(){var c=st.mode=="count";q("wlGRow").style.display=c?"":"none";q("wlGTRow").style.display=c?"":"none";q("wlCRRow").style.display=c?"":"none";q("wlNRow").style.display=c?"none":""}
 function gLbl(){q("wlGLbl").textContent=st.gt=="pitch"?"Pitch (center to center)":"Gap between welds (clear, edge to edge)"}
-seg("wlMode","mode",layoutMode);seg("wlGT","gt",gLbl);seg("wlEnds","ends");seg("wlCR","cr");seg("wlRes","res");
+seg("wlMode","mode","Solve for",layoutMode);seg("wlGT","gt","Gap value means",gLbl);seg("wlEnds","ends","Ends of the run");seg("wlCR","cr","When the count isn't a whole number");seg("wlRes","res","Round gaps to");
 ["wlFt","wlIn","wlW","wlM","wlG","wlN"].forEach(function(i){q(i).addEventListener("input",render);q(i).addEventListener("change",render)});
-var j=q("wlJump");if(j)j.onclick=function(){q("wlCard").scrollIntoView({block:"start"})};
+var j=q("wlJump");if(j)j.onclick=function(){window.go&&window.go("wlayout")};
 layoutMode();gLbl();render();
 window.hhWeldLayout={solve:WL.solve,parse:WL.parse,fmt:WL.fmt,summary:function(){return last?summary(last):""}};
 })();
@@ -1009,15 +1015,15 @@ opts("wBr",BRANDS.map(function(b){return[b,b]}),"Hobart");q("wBr").onchange=wBra
 wBrand();q("wTh").value="16ga";wThk();
 q("weld").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));var m=q("toast");m.textContent=decStr(+t.dataset.v,4)+' → Calc';m.style.display="block";setTimeout(function(){m.style.display="none"},1200)});
 // ---- Customizable tabs ----
-var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld"],handrail:["🪜","Handrail"],gates:["🚪","Gates"],materials:["🧱","Materials"],framing:["🪚","Framing"],lumber:["🪵","Lumber"],roof:["🏠","Roofing"],siding:["🧱","Siding"],deck:["🪵","Decking"],stucco:["🏚","Stucco"],cutlist:["✂️","Cut List"],tmpl:["🖨","Templates"],wsym:["🔣","Weld Symbols"],jobcard:["🧾","Job Card"],concrete:["🏗","Concrete"],elec:["⚡","Electrical"],plumb:["🚰","Plumbing"],codes:["📜","Codes"],notes:["📝","Notes"],jobwalk:["📋","Job Walk"],feedback:["⭐","Feedback"]},DEF_TABS=["bends","angles","pipe"];
-var GROUPS=[["weld","Welding / Fab",["bends","angles","pipe","weld","tap","materials","handrail","gates","cutlist","tmpl","wsym"]],["carp","Carpentry / Framing",["framing","lumber","roof","siding","deck","stucco"]],["conc","Concrete",["concrete"]],["elec","Electrical",["elec"]],["plumb","Plumbing",["plumb"]],["mgmt","Management",["jobwalk","jobcard"]],["gen","General",["codes","notes","feedback"]]],
+var PAGES={bends:["📐","Bends"],angles:["📏","Angles"],pipe:["🛢","Pipe"],tap:["🔩","Tap/Drill"],weld:["🔥","Weld Settings"],wlayout:["📏","Weld Layout"],handrail:["🪜","Handrail"],gates:["🚪","Gates"],materials:["🧱","Materials"],framing:["🪚","Framing"],lumber:["🪵","Lumber"],roof:["🏠","Roofing"],siding:["🧱","Siding"],deck:["🪵","Decking"],stucco:["🏚","Stucco"],cutlist:["✂️","Cut List"],tmpl:["🖨","Templates"],wsym:["🔣","Weld Symbols"],jobcard:["🧾","Job Card"],concrete:["🏗","Concrete"],elec:["⚡","Electrical"],plumb:["🚰","Plumbing"],codes:["📜","Codes"],notes:["📝","Notes"],jobwalk:["📋","Job Walk"],feedback:["⭐","Feedback"]},DEF_TABS=["bends","angles","pipe"];
+var GROUPS=[["weld","Welding / Fab",["bends","angles","pipe","weld","wlayout","tap","materials","handrail","gates","cutlist","tmpl","wsym"]],["carp","Carpentry / Framing",["framing","lumber","roof","siding","deck","stucco"]],["conc","Concrete",["concrete"]],["elec","Electrical",["elec"]],["plumb","Plumbing",["plumb"]],["mgmt","Management",["jobwalk","jobcard"]],["gen","General",["codes","notes","feedback"]]],
  FIELD_GRP={sheet:"weld",pipe:"weld",struct:"weld",welder:"weld",fab:"weld",carp:"carp",conc:"conc",elec:"elec",plumb:"plumb",gc:"carp",mgr:"mgmt"};
 function getTabs(){try{var t=JSON.parse(localStorage.getItem("hhTabs"));if(t&&t.map){t=t.map(function(x){return x=="takeoffs"?"materials":x});var u=[];t.forEach(function(x){if(PAGES[x]&&u.indexOf(x)<0)u.push(x)});DEF_TABS.concat(Object.keys(PAGES)).forEach(function(x){if(u.length<3&&u.indexOf(x)<0)u.push(x)});if(u.join()!=t.join()&&t.length)localStorage.setItem("hhTabs",JSON.stringify(u));t=u}if(t&&t.length==3&&t.every(function(x){return PAGES[x]})&&new Set(t).size==3)return t}catch(e){}return DEF_TABS.slice()}
 function renderNav(){var t=getTabs(),cur=document.querySelector(".screen.on");cur=cur?cur.id:"calc";
  document.querySelector("nav").innerHTML='<button data-s="calc"><i>🧮</i>Calc</button>'+t.map(function(k){return '<button data-s="'+k+'"><i>'+PAGES[k][0]+"</i>"+PAGES[k][1]+"</button>"}).join("")+'<button data-s="more"><i>☰</i>More</button>';
  var more=Object.keys(PAGES).filter(function(k){return t.indexOf(k)<0});
  var fg=FIELD_GRP[localStorage.getItem("hhField")]||"weld",gs=GROUPS.slice().sort(function(x,y){return(y[0]==fg)-(x[0]==fg)});
- q("moreMenu").innerHTML='<div class="mmScroll">'+gs.map(function(g){var it=g[2];if(!it.length)return"";return '<details class="mmG"'+(g[0]==fg?" open":"")+"><summary>"+g[1]+(g[0]==fg?" ★":"")+"</summary>"+it.map(function(k){return '<button data-s="'+k+'">'+PAGES[k][0]+" "+(k=="weld"?"Weld Settings":k=="tap"?"Tap &amp; Drill":PAGES[k][1])+"</button>"}).join("")+"</details>"}).join("")+'<button data-s="feedback" style="color:#ffb020">⭐ Rate this app</button><button data-s="tabs">⚙️ Customize Tabs</button><button id="favBtn" style="color:#ffb020">★ Favorites</button><button id="bkBtn">💾 Settings backup</button><button id="fieldBtn">🧑‍🏭 Change my field</button><button id="instBtn">📲 How to add to Home Screen</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">Papa&#39;s Shop <span class="verV">'+(window.APP_VERSION||"")+"</span></div></div>";
+ q("moreMenu").innerHTML='<div class="mmScroll">'+gs.map(function(g){var it=g[2];if(!it.length)return"";return '<details class="mmG"'+(g[0]==fg?" open":"")+"><summary>"+g[1]+(g[0]==fg?" ★":"")+"</summary>"+it.map(function(k){return '<button data-s="'+k+'">'+PAGES[k][0]+" "+(k=="tap"?"Tap &amp; Drill":PAGES[k][1])+"</button>"}).join("")+"</details>"}).join("")+'<button data-s="feedback" style="color:#ffb020">⭐ Rate this app</button><button data-s="tabs">⚙️ Customize Tabs</button><button id="favBtn" style="color:#ffb020">★ Favorites</button><button id="bkBtn">💾 Settings backup</button><button id="fieldBtn">🧑‍🏭 Change my field</button><button id="instBtn">📲 How to add to Home Screen</button><button id="updBtn">🔄 Check for Updates</button><div id="verLbl" style="padding:8px 26px;font-size:12px;color:#7c8594;font-weight:700">Papa&#39;s Shop <span class="verV">'+(window.APP_VERSION||"")+"</span></div></div>";
  document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){if(b.dataset.s=="more"){var m=q("moreMenu");m.style.display=m.style.display=="flex"?"none":"flex"}else go(b.dataset.s)}});
  document.querySelectorAll("#moreMenu button[data-s]").forEach(function(b){b.onclick=function(){go(b.dataset.s)}});
  q("updBtn").onclick=function(){window.checkForUpdates&&checkForUpdates()};q("instBtn").onclick=function(){q("moreMenu").style.display="none";showInstallTip(true)};q("fieldBtn").onclick=function(){q("moreMenu").style.display="none";onboard()};go(cur)}
@@ -1274,7 +1280,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script>
 <script>
-var APP_VERSION="v44";window.APP_VERSION=APP_VERSION;document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION});document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION})});
+var APP_VERSION="v46";window.APP_VERSION=APP_VERSION;document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION});document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION})});
 (function(){var RX=/-?Infinity|NaN|undefined/g;function scrub(root){if(!root||!root.querySelectorAll)return;var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n;while(n=w.nextNode()){if(RX.test(n.nodeValue)){RX.lastIndex=0;n.nodeValue=n.nodeValue.replace(RX,"–")}RX.lastIndex=0}}
  function go(){new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(x){if(x.nodeType==1){if(x.closest&&x.closest("section,.card"))scrub(x)}else if(x.nodeType==3&&x.parentNode&&x.parentNode.closest&&x.parentNode.closest("section,.card")&&RX.test(x.nodeValue)){RX.lastIndex=0;x.nodeValue=x.nodeValue.replace(RX,"–")}RX.lastIndex=0})})}).observe(document.body,{childList:true,subtree:true});document.querySelectorAll("section").forEach(scrub)}
  if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
@@ -1387,7 +1393,7 @@ setTimeout(maybeInstallTip,1500);
  function paint(){[].forEach.call(q("fbStars").children,function(e){e.style.color=+e.dataset.r<=r?"#ffb020":"#4a5160"});q("fbStarL").textContent=LBL[r]}
  q("fbStars").onclick=function(e){var t=e.target.closest("[data-r]");if(t){r=+t.dataset.r;paint()}};
  q("fbType").onclick=function(e){var b=e.target.closest("button");if(!b)return;ty=b.dataset.t;[].forEach.call(this.children,function(x){x.classList.toggle("on",x==b)})};
- q("fbPage").innerHTML='<option value="">—</option><option>Calculator</option>'+["Bends","Angles","Pipe","Tap / Drill","Weld Settings","Materials","Framing","Lumber","Concrete","Electrical","Plumbing","Notes"].map(function(k){return"<option>"+k+"</option>"}).join("")+"<option>Other / whole app</option>";
+ q("fbPage").innerHTML='<option value="">—</option><option>Calculator</option>'+["Bends","Angles","Pipe","Tap / Drill","Weld Settings","Weld Layout","Materials","Framing","Lumber","Concrete","Electrical","Plumbing","Notes"].map(function(k){return"<option>"+k+"</option>"}).join("")+"<option>Other / whole app</option>";
  function dev(){var u=navigator.userAgent,m=u.match(/\(([^)]+)\)/),os=m?m[1].split(";").slice(0,2).join(";").trim():"",b=(u.match(/(CriOS|FxiOS|EdgiOS|Edg|Chrome|Firefox|Version)\/[\d.]+/)||[""])[0].replace("Version","Safari");return(os+" "+b).trim().slice(0,90)+((window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone?" · Home Screen app":" · browser")}
  function build(){var st=r?r+"★":"no rating";return{subj:"Papa's Shop feedback - "+ty+" - "+st,body:["Rating: "+(r?"★".repeat(r)+"☆".repeat(5-r)+" ("+r+"/5)":"not rated"),"Type: "+ty,"Page: "+(q("fbPage").value||"(not specified)"),"","Message:",q("fbMsg").value.trim(),"","Name: "+(q("fbName").value.trim()||"(not given)"),"Trade: "+(q("fbTrade").value.trim()||"(not given)"),"","App version: "+APP_VERSION,"Device: "+dev()].join("\n")}}
  function url(){var f=build();return"mailto:ahh.2015@icloud.com?subject="+encodeURIComponent(f.subj)+"&body="+encodeURIComponent(f.body.replace(/\r?\n/g,"\r\n"))}
@@ -1817,8 +1823,39 @@ q("mlNote").onclick=function(){if(!rows.length)return toast("List is empty",1200
  hhNotes.put({id:"n"+now.toString(36)+Math.random().toString(36).slice(2,6),title:"Materials – "+new Date().toLocaleDateString(),job:"",body:text(),photos:[],created:now,updated:now}).then(function(){toast("Saved to Notes",1300)})};
 q("mlClr").onclick=function(){if(!rows.length||!confirm("Clear all materials?"))return;rows=[];save();render()};
 render();window.__ml={text:text,tot:tot,rows:function(){return rows}}})();</script>
-<script id="hrjs">(function(){var q=function(i){return document.getElementById(i)},P=function(s){var v=parseIn(String(s));return isFinite(v)?v:NaN},D=Math.PI/180;
-function R(l,v,u){if(!isFinite(v))return '<div class="rs">'+l+"<b>–</b></div>";u=u==null?'"':u;var d=u=="°"?2:u=="n"?0:3;if(u=="n")u="";return '<div class="rs">'+l+'<b class="tv" data-v="'+v+'">'+decStr(v,d)+u+(u=='"'?"<i>"+toFrac(v,16)+'"</i>':"")+"</b></div>"}
+<script id="unitsjs">(function(){var q=function(i){return document.getElementById(i)},MODE={},LEG={},LEG2={};
+function mode(s){return MODE[s]||"std"}
+function eff(s,e){var m=mode(s);return m=="std"?(e.dataset.nu||"in"):m}
+function dec(v,p){var t=(+v.toFixed(p)).toString();return t.replace(/^(-?)0\./,"$1.")}
+function gcd(a,b){return b?gcd(b,a%b):a}
+/* feet-inches text with 1/16 in rounding: 4' 3 1/2" */
+function ftIn(v){if(!isFinite(v))return"–";var neg=v<0;v=Math.abs(v);var n=Math.round(v*16),f=Math.floor(n/192),r=n-f*192,w=Math.floor(r/16),fn=r%16,g=fn?gcd(fn,16):1;return(neg?"-":"")+f+"' "+(w||!fn?w:"")+(fn?(w?" ":"")+fn/g+"/"+16/g:"")+'"'}
+/* text for a box that is in feet: decimal feet if exact to 4 places, else feet' inches" so nothing is lost */
+function ftTxt(inch){var f=inch/12,r4=+f.toFixed(4);if(Math.abs(r4*12-inch)<1e-6)return dec(r4,4);var w=Math.floor(inch/12);return w+"' "+dec(inch-12*w,4)+'"'}
+function num(x){return typeof x=="number"&&isFinite(x)}
+function norm(t){return String(t).replace(/[\u2032\u2019\u2018]/g,"'").replace(/[\u2033\u201d\u201c]/g,'"')}
+/* feet-inches text. A dash right after the foot mark is a separator (5'-3" = 63 in), never a minus. Negative feet or inches are rejected (NaN). */
+function parseFt(t){t=norm(t).trim();var m=/^(.*?)\s*(?:'|ft|feet)\s*(.*)$/i.exec(t);
+ if(m){var f=m[1]===""?0:parseIn(m[1]);var r=m[2].replace(/^[-\u2013\u2014]\s*/,"").replace(/\s*(?:"|in(?:ches)?)\s*$/i,"").trim();var i=r===""?0:parseIn(r);if(!num(f)||!num(i)||f<0||i<0)return NaN;return f*12+i}
+ m=/^(.*?)\s*(?:"|in(?:ches)?)$/i.exec(t);if(m)return parseIn(m[1]);return null}
+function parseText(s,e,t){var u=eff(s,e),md=mode(s);if(md!="std")t=norm(t);if(u=="ft"){var mk=parseFt(t);if(mk!==null)return mk}var v=(md!="std"&&LEG2[s]||LEG[s])(t);return u=="ft"?v*12:v}
+function sync(s,e){if(e.dataset.disp===undefined||e.value!==e.dataset.disp){e.dataset.ex=String(parseText(s,e,e.value));e.dataset.src=e.value;e.dataset.su=eff(s,e);e.dataset.disp=e.value}}
+function read(s,id){var e=q(id);sync(s,e);return +e.dataset.ex}
+function setL(s,id,inch){var e=q(id),t=dec(inch,3);e.dataset.ex=String(+t);e.dataset.src=t;e.dataset.su="in";e.value=eff(s,e)=="ft"?ftTxt(+t):t;e.dataset.disp=e.value}
+function relabel(n,u){var t=n.nodeType==3?n.nodeValue:n.textContent,r=t.replace(/\((in|ft)(?=[,)])/,"("+u);if(r!==t){if(n.nodeType==3)n.nodeValue=r;else n.textContent=r;return 1}}
+function labels(s){var sec=q(s);if(!sec)return;[].forEach.call(sec.querySelectorAll("[data-nu]"),function(e){var l=e.closest("label");if(!l)return;var u=eff(s,e);[].some.call(l.childNodes,function(n){if(n.nodeType==3||(n.nodeType==1&&!n.querySelector("input,select")&&n!==e))return relabel(n,u)})})}
+function setMode(s,m){var it=[].slice.call(q(s).querySelectorAll("[data-nu]"));it.forEach(function(e){sync(s,e)});MODE[s]=m;
+ it.forEach(function(e){var u=eff(s,e),ex=+e.dataset.ex;
+  if(e.dataset.su===u||!isFinite(ex)){e.value=e.dataset.src;e.dataset.su=u;e.dataset.ex=String(parseText(s,e,e.value))}
+  else e.value=u=="ft"?ftTxt(ex):dec(ex,4);
+  e.dataset.disp=e.value});labels(s)}
+function fm(s,v,d){if(!isFinite(v))return"–";return mode(s)=="ft"?dec(v/12,4)+" ft":dec(v,d==null?3:d)+'"'}
+function al(s,v){return mode(s)=="ft"?ftIn(v):toFrac(v,16)+'"'}
+function tvv(s,v){return mode(s)=="ft"?v/12:v}
+window.hhUnits={reg:function(s,fn,fn2){LEG[s]=fn;if(fn2)LEG2[s]=fn2},read:read,setL:setL,setMode:setMode,labels:labels,mode:mode,fm:fm,al:al,tvv:tvv,ftIn:ftIn,ftTxt:ftTxt,parseFt:parseFt,eff:eff};
+})();</script>
+<script id="hrjs">(function(){var q=function(i){return document.getElementById(i)},P=function(s){var v=parseIn(String(s));return isFinite(v)?v:NaN},D=Math.PI/180,U=window.hhUnits,fm=function(v,d){return U.fm("handrail",v,d)},al=function(v){return U.al("handrail",v)},fz=function(v,d){return U.mode("handrail")=="ft"?fm(v,d)+" ("+al(v)+")":fm(v,d)},tvv=function(v){return U.tvv("handrail",v)},Lv=function(id){return U.read("handrail",id)};U.reg("handrail",P);
+function R(l,v,u){if(!isFinite(v))return '<div class="rs">'+l+"<b>–</b></div>";u=u==null?'"':u;if(u=='"')return '<div class="rs">'+l+'<b class="tv" data-v="'+tvv(v)+'">'+fm(v,3)+"<i>"+al(v)+"</i></b></div>";var d=u=="°"?2:u=="n"?0:3;if(u=="n")u="";return '<div class="rs">'+l+'<b class="tv" data-v="'+v+'">'+decStr(v,d)+u+"</b></div>"}
 function H(t){return '<div class="hint" style="margin-top:4px">'+t+"</div>"}
 function sg(id,cb){q(id).addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;q(id).querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x==b)});cb()})}
 function on(id){return q(id).querySelector(".on").dataset.m}
@@ -1827,92 +1864,92 @@ function sawUI(){q("hrSaw").querySelectorAll("button").forEach(function(b){b.cla
 q("hrSaw").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;localStorage.setItem("hhSaw",b.dataset.s);sawUI();all()});
 var CL={st:[],pk:[],lg:[],br:[]},ST={a:NaN},BR={};
 function A(l,v){return R(l+(saw()=="band"?" (vise)":" (miter)"),v,"°")}
-function stair(){var tot=on("hrIn")=="tot",n=Math.round(P(q("hrN").value)),r=P(q("hrR").value),t=P(q("hrT").value);
+function stair(){var tot=on("hrIn")=="tot",n=Math.round(P(q("hrN").value)),r=Lv("hrR"),t=Lv("hrT");
  q("hrRL").textContent=tot?"Total rise (in)":"Rise per step (in)";q("hrTL").textContent=tot?"Total run (in)":"Run per step (in)";
  if(tot&&n>0){r=r/n;t=n>1?t/(n-1):NaN}
- var th=Math.atan2(r,t)/D,hyp=Math.hypot(r,t),Ln=(n-1)*hyp,Lb=Ln+hyp,sp=P(q("hrSp").value)*12,Hh=P(q("hrH").value),G=P(q("hrG").value),rs=P(q("hrRS").value),pw=P(q("hrPW").value);ST.a=th;ST.np=NaN;
+ var th=Math.atan2(r,t)/D,hyp=Math.hypot(r,t),Ln=(n-1)*hyp,Lb=Ln+hyp,sp=Lv("hrSp"),Hh=Lv("hrH"),G=Lv("hrG"),rs=Lv("hrRS"),pw=Lv("hrPW");ST.a=th;ST.np=NaN;
  if(!(n>1&&r>0&&t>0&&sp>0&&n<500)){q("hrOut").innerHTML=H(sp>0||!(n>1&&r>0&&t>0)?"Enter rise, run and at least 2 risers.":"Post spacing must be more than 0.");q("hrSvg").innerHTML="";CL.st=[];return list()}
  var np=Math.max(2,Math.ceil(Ln/sp-1e-9)+1),ps=Ln/(np-1),c=Math.cos(th*D),tn=Math.tan(th*D);ST.np=np;ST.ps=ps;var
  und=function(h){return h-rs/c},lp=function(h){return und(h)+pw/2*tn},spt=function(h){return und(h)-pw/2*tn};
- q("hrOut").innerHTML='<div class="big">STAIR ANGLE<b class="tv" data-v="'+th+'">'+decStr(th,2)+"°</b>"+decStr(r,3)+'" rise / '+decStr(t,3)+'" run</div>'+
+ q("hrOut").innerHTML='<div class="big">STAIR ANGLE<b class="tv" data-v="'+th+'">'+decStr(th,2)+"°</b>"+fm(r,3)+' rise / '+fm(t,3)+' run</div>'+
  R("Rail along pitch, nosing to nosing",Ln)+R("+ 1 tread bottom extension (sloped)",Lb)+R("+ 12\" level top extension",12)+R("Total rail developed length",Lb+12)+
  "<h3 style='margin-top:8px'>CUT ANGLES</h3>"+A("Rail end into plumb post",th)+A("Post top to follow rake",th)+A("Sloped-to-level return, each piece (kneel)",th/2)+A("Sloped-to-plumb drop, each piece",(90-th)/2)+A("Level-to-plumb return, each piece",45)+
  "<h3 style='margin-top:8px'>POST LAYOUT</h3>"+R("Posts",np,"n")+R("Spacing along rail (c-c)",ps)+R("Spacing level (c-c)",ps*c)+
- R("Handrail post, long point ("+decStr(Hh,2)+'" to top of rail)',Hh>0?lp(Hh):NaN)+R("Handrail post, short point",Hh>0?spt(Hh):NaN)+R("Guard post, long point ("+decStr(G,2)+'")',G>0?lp(G):NaN)+R("Guard post, short point",G>0?spt(G):NaN)+(Hh>0&&G>0?"":'<div class="hint err" style="margin-top:4px">Enter a '+(Hh>0?"guard":"rail")+' height greater than 0.</div>')+
+ R("Handrail post, long point ("+fm(Hh,2)+' to top of rail)',Hh>0?lp(Hh):NaN)+R("Handrail post, short point",Hh>0?spt(Hh):NaN)+R("Guard post, long point ("+fm(G,2)+')',G>0?lp(G):NaN)+R("Guard post, short point",G>0?spt(G):NaN)+(Hh>0&&G>0?"":'<div class="hint err" style="margin-top:4px">Enter a '+(Hh>0?"guard":"rail")+' height greater than 0.</div>')+
  H('Heights measured plumb from the nosing line at the post centerline, top of rail to nosing. If a post sits back from the nosing by x, add x·tan(angle) = x × '+decStr(tn,4)+'. Add base plate/embed as needed. Post top cut '+decStr(th,2)+'°.');
- CL.st=[["Stair rail "+decStr(rs,3)+'" (incl. ext.)',1,Lb+12],["Stair posts "+decStr(pw,3)+'" (long pt, cut '+decStr(th,2)+'°)',np,lp(Hh)]];
+ CL.st=[["Stair rail "+fz(rs,3)+' (incl. ext.)',1,Lb+12],["Stair posts "+fz(pw,3)+' (long pt, cut '+decStr(th,2)+'°)',np,lp(Hh)]];
  var W=340,Hs=170,sx=(W-40)/(n*t+12),sy=(Hs-30)/(n*r+Hh),s=Math.min(sx,sy),X=function(x){return 20+x*s},Y=function(y){return Hs-10-y*s},p="M"+X(0)+","+Y(0);
  for(var i=1;i<=n;i++){p+=" L"+X((i-1)*t)+","+Y(i*r)+" L"+X(i<n?i*t:(n-1)*t+12+t)+","+Y(i*r)}
  var x0=-t,y0=Hh,x1=(n-1)*t,y1=(n-1)*r+r+Hh-r;var g='<svg viewBox="0 0 '+W+" "+Hs+'" style="width:100%;background:#12161c;border-radius:8px;margin:6px 0"><path d="'+p+'" fill="none" stroke="#7c8594" stroke-width="2"/>'+
  '<line x1="'+X(0)+'" y1="'+Y(r)+'" x2="'+X((n-1)*t)+'" y2="'+Y(n*r)+'" stroke="#555" stroke-dasharray="4 3"/>'+
  '<polyline points="'+X(-t)+","+Y(Hh)+" "+X((n-1)*t)+","+Y(n*r+Hh)+" "+X((n-1)*t+12)+","+Y(n*r+Hh)+'" fill="none" stroke="#4da3ff" stroke-width="3"/>';
- for(var k=0;k<np;k++){var hx=k*ps*c,hy=r+hx*tn;g+='<line x1="'+X(hx)+'" y1="'+Y(hy)+'" x2="'+X(hx)+'" y2="'+Y(hy+Hh)+'" stroke="#ffb020" stroke-width="2"/>'}
+ for(var k=0;k<Math.min(np,400);k++){var hx=k*ps*c,hy=r+hx*tn;g+='<line x1="'+X(hx)+'" y1="'+Y(hy)+'" x2="'+X(hx)+'" y2="'+Y(hy+Hh)+'" stroke="#ffb020" stroke-width="2"/>'}
  g+='<text x="'+X(n*t*.15)+'" y="'+(Hs-12)+'" fill="#9aa4b2" font-size="11">'+decStr(th,2)+'° · dashed = nosing line</text></svg>';q("hrSvg").innerHTML=g;list()}
-function brail(){var use=on("brU")=="on",st=on("brM")=="stair",C=P(q("brC").value),B=P(q("brS").value);
+function brail(){var use=on("brU")=="on",st=on("brM")=="stair",C=Lv("brC"),B=Lv("brS");
  q("brOut").innerHTML="";q("brCL").textContent=st?"Clearance, plumb above nosing line (in)":"Clearance above floor (in)";BR={use:use,st:st};
  if(!use){q("brOut").innerHTML=H("No bottom rail: pickets run to the floor/treads or are base-mounted. Openings still must stay under the 4\" sphere.");q("brSvg").innerHTML="";CL.br=[];return list()}
  if(!(C>=0&&B>0)){q("brOut").innerHTML=H("Enter clearance and rail size.");CL.br=[];return list()}
- var wn=C>4?'<div class="hint" style="color:#ff5c5c;margin-top:4px"><b>⚠ '+decStr(C,3)+'" clearance is over 4": a 4" sphere would pass under the rail (IBC 1015.4 / IRC R312.1.3). Keep it under 4".</b></div>':"",o=wn,svg="";
- if(st){var th=ST.a,c=Math.cos(th*D),tn=Math.tan(th*D),pw=P(q("hrPW").value),Hh=P(q("hrH").value),rs=P(q("hrRS").value),np=ST.np,ps=ST.ps;
+ var wn=C>4?'<div class="hint" style="color:#ff5c5c;margin-top:4px"><b>⚠ '+fm(C,3)+' clearance is over 4": a 4" sphere would pass under the rail (IBC 1015.4 / IRC R312.1.3). Keep it under 4".</b></div>':"",o=wn,svg="";
+ if(st){var th=ST.a,c=Math.cos(th*D),tn=Math.tan(th*D),pw=Lv("hrPW"),Hh=Lv("hrH"),rs=Lv("hrRS"),np=ST.np,ps=ST.ps;
   if(isFinite(th)&&np>1&&!(Hh>0)){q("brOut").innerHTML='<div class="big">RESULT<b>–</b></div><div class="hint err">Rail height must be more than 0.</div>';CL.br=[];return list()}if(!isFinite(th)||!(np>1)){q("brOut").innerHTML=H("Fill in the Stair Rail inputs first.");CL.br=[];return list()}
   var bays=np-1,clrL=ps*c-pw,len=clrL/c,lp=len+B*tn,pb=B/c,top=C+pb,clear=(Hh-rs/c)-top;
   BR.open=clrL;BR.L=clear;BR.bays=bays;BR.th=th;
-  o+='<div class="big">BOTTOM RAIL (STAIR)<b class="tv" data-v="'+len+'">'+decStr(len,3)+'"</b>'+bays+" piece"+(bays>1?"s":"")+", short point along pitch</div>"+
+  o+='<div class="big">BOTTOM RAIL (STAIR)<b class="tv" data-v="'+tvv(len)+'">'+fm(len,3)+'</b>'+bays+" piece"+(bays>1?"s":"")+", short point along pitch</div>"+
   R("Long point length (top/bottom faces differ by size × tan)",lp)+R("Clear between posts, level",clrL)+A("End cuts, both ends (parallel)",th)+
-  "<h3 style='margin-top:8px'>POST MARKS (plumb from nosing line at post CL)</h3>"+R("Bottom of bottom rail",C)+R("Top of bottom rail (plumb depth "+decStr(pb,3)+'")',top)+R("Underside of top rail",Hh-rs/c)+R("Uphill face of post, add",pw/2*tn)+R("Downhill face of post, subtract",pw/2*tn)+
-  R("Plumb clear, bottom rail to top rail",clear)+H("Rail measured "+decStr(B,3)+'" square to its length shows '+decStr(pb,3)+'" plumb on the post. IRC R312.1.3: the triangle formed by the riser, tread and bottom rail must not pass a 6" sphere.');
-  CL.br=[["Stair bottom rail "+decStr(B,3)+'" (short pt, cut '+decStr(th,2)+"° parallel)",bays,len]];
+  "<h3 style='margin-top:8px'>POST MARKS (plumb from nosing line at post CL)</h3>"+R("Bottom of bottom rail",C)+R("Top of bottom rail (plumb depth "+fz(pb,3)+')',top)+R("Underside of top rail",Hh-rs/c)+R("Uphill face of post, add",pw/2*tn)+R("Downhill face of post, subtract",pw/2*tn)+
+  R("Plumb clear, bottom rail to top rail",clear)+H("Rail measured "+fz(B,3)+' square to its length shows '+fm(pb,3)+' plumb on the post. IRC R312.1.3: the triangle formed by the riser, tread and bottom rail must not pass a 6" sphere.');
+  CL.br=[["Stair bottom rail "+fz(B,3)+' (short pt, cut '+decStr(th,2)+"° parallel)",bays,len]];
   var W=340,Hs=185,x0=30,y0=150+(-pw)*0,s=Math.min(280/(clrL+3*pw),135/((clrL+3*pw)*tn+Hh));y0=160-pw*tn*s;
   var X=function(h){return x0+h*s},Y=function(h,v){return y0-(h*tn+v)*s},a=-pw/2,b=clrL+pw/2,nl=function(h){return h},p='<svg viewBox="0 0 '+W+" "+Hs+'" style="width:100%;background:#12161c;border-radius:8px;margin:6px 0">';
   p+='<line x1="'+X(-pw)+'" y1="'+Y(-pw,0)+'" x2="'+X(clrL+pw*2)+'" y2="'+Y(clrL+pw*2,0)+'" stroke="#7c8594" stroke-dasharray="4 3"/>';
   p+='<polygon points="'+[X(-pw),Y(-pw,Hh-rs/c),X(clrL+pw*2),Y(clrL+pw*2,Hh-rs/c),X(clrL+pw*2),Y(clrL+pw*2,Hh),X(-pw),Y(-pw,Hh)].join(" ").replace(/(\S+) (\S+)/g,"$1,$2")+'" fill="#4da3ff"/>';
   p+='<polygon points="'+[X(0),Y(0,C),X(clrL),Y(clrL,C),X(clrL),Y(clrL,top),X(0),Y(0,top)].join(" ").replace(/(\S+) (\S+)/g,"$1,$2")+'" fill="#4fd18b"/>';
   [[-pw,0],[clrL,clrL+pw]].forEach(function(z){p+='<polygon points="'+[X(z[0]),Y(z[0],0),X(z[1]),Y(z[1],0),X(z[1]),Y(z[1],Hh),X(z[0]),Y(z[0],Hh)].join(" ").replace(/(\S+) (\S+)/g,"$1,$2")+'" fill="#ffb020"/>'});
-  var pw2=P(q("pkW").value)||.5,g=P(q("pkG").value)||3.875,n=Math.max(0,Math.ceil((clrL-g)/(pw2+g)-1e-9)),gp=(clrL-n*pw2)/(n+1);for(var i=0;i<n;i++){var hx=gp+i*(pw2+gp)+pw2/2;p+='<line x1="'+X(hx)+'" y1="'+Y(hx,top)+'" x2="'+X(hx)+'" y2="'+Y(hx,Hh-rs/c)+'" stroke="#9aa4b2" stroke-width="2"/>'}
-  var mx=clrL*.5;p+='<line x1="'+X(mx)+'" y1="'+Y(mx,0)+'" x2="'+X(mx)+'" y2="'+Y(mx,C)+'" stroke="#ff5c5c" stroke-width="1.5"/><text x="'+(X(mx)+4)+'" y="'+(Y(mx,C/2)+18)+'" fill="#ff5c5c" font-size="11">'+decStr(C,2)+'" clr</text><text x="8" y="180" fill="#9aa4b2" font-size="10">blue top rail · green bottom rail · posts · pickets · dashed nosing</text></svg>';svg=p}
- else{var L=P(q("lgL").value)*12,Hl=P(q("lgH").value),sp=P(q("lgSp").value)*12,ps2=P(q("lgP").value),T=P(q("lgT").value);
+  var pw2=Lv("pkW")||.5,g=Lv("pkG")||3.875,n=Math.max(0,Math.ceil((clrL-g)/(pw2+g)-1e-9)),gp=(clrL-n*pw2)/(n+1);for(var i=0;i<Math.min(n,400);i++){var hx=gp+i*(pw2+gp)+pw2/2;p+='<line x1="'+X(hx)+'" y1="'+Y(hx,top)+'" x2="'+X(hx)+'" y2="'+Y(hx,Hh-rs/c)+'" stroke="#9aa4b2" stroke-width="2"/>'}
+  var mx=clrL*.5;p+='<line x1="'+X(mx)+'" y1="'+Y(mx,0)+'" x2="'+X(mx)+'" y2="'+Y(mx,C)+'" stroke="#ff5c5c" stroke-width="1.5"/><text x="'+(X(mx)+4)+'" y="'+(Y(mx,C/2)+18)+'" fill="#ff5c5c" font-size="11">'+fm(C,2)+' clr</text><text x="8" y="180" fill="#9aa4b2" font-size="10">blue top rail · green bottom rail · posts · pickets · dashed nosing</text></svg>';svg=p}
+ else{var L=Lv("lgL"),Hl=Lv("lgH"),sp=Lv("lgSp"),ps2=Lv("lgP"),T=Lv("lgT");
   if(!(L>0&&Hl>0&&sp>0)){q("brOut").innerHTML=H("Fill in the Level Guardrail inputs first.");CL.br=[];return list()}
   var np2=Math.max(2,Math.ceil(L/sp-1e-9)+1),bays2=np2-1,cc=L/bays2,open=cc-ps2,clear2=(Hl-T)-(C+B);BR.open=open;BR.L=clear2;BR.bays=bays2;
-  o+='<div class="big">BOTTOM RAIL (LEVEL)<b class="tv" data-v="'+open+'">'+decStr(open,3)+'"</b>'+bays2+" pieces, square cut, between posts</div>"+R("Post spacing c-c",cc)+R("Minus post width",ps2)+
+  o+='<div class="big">BOTTOM RAIL (LEVEL)<b class="tv" data-v="'+tvv(open)+'">'+fm(open,3)+'</b>'+bays2+" pieces, square cut, between posts</div>"+R("Post spacing c-c",cc)+R("Minus post width",ps2)+
   "<h3 style='margin-top:8px'>POST MARKS (from floor)</h3>"+R("Bottom of bottom rail",C)+R("Top of bottom rail",C+B)+R("Underside of top rail",Hl-T)+R("Clear, bottom rail to top rail",clear2);
   CL.br=[];
   var s2=260/cc,Y2=function(v){return 150-v*(130/Hl)},X2=function(h){return 40+h*s2},p2='<svg viewBox="0 0 340 170" style="width:100%;background:#12161c;border-radius:8px;margin:6px 0"><line x1="20" y1="150" x2="330" y2="150" stroke="#7c8594"/>';
   p2+='<rect x="'+X2(-ps2/2)+'" y="'+Y2(Hl)+'" width="'+(cc+ps2)*s2+'" height="'+T*130/Hl+'" fill="#4da3ff"/><rect x="'+X2(ps2/2)+'" y="'+Y2(C+B)+'" width="'+open*s2+'" height="'+B*130/Hl+'" fill="#4fd18b"/>';
   [0,cc].forEach(function(z){p2+='<rect x="'+X2(z-ps2/2)+'" y="'+Y2(Hl-T)+'" width="'+ps2*s2+'" height="'+(Hl-T)*130/Hl+'" fill="#ffb020"/>'});
-  var k=P(q("lgK").value)||.5,n2=Math.max(0,Math.ceil((open-3.875)/(k+3.875)-1e-9)),g2=(open-n2*k)/(n2+1);for(var j=0;j<n2;j++){var x=ps2/2+g2+j*(k+g2);p2+='<rect x="'+X2(x)+'" y="'+Y2(Hl-T)+'" width="'+Math.max(1.5,k*s2)+'" height="'+clear2*130/Hl+'" fill="#9aa4b2"/>'}
-  p2+='<line x1="'+X2(cc/2)+'" y1="150" x2="'+X2(cc/2)+'" y2="'+Y2(C)+'" stroke="#ff5c5c" stroke-width="1.5"/><text x="'+(X2(cc/2)+4)+'" y="146" fill="#ff5c5c" font-size="11">'+decStr(C,2)+'" clr</text><text x="8" y="14" fill="#9aa4b2" font-size="11">top rail · bottom rail · posts · pickets</text></svg>';svg=p2}
+  var k=Lv("lgK")||.5,n2=Math.max(0,Math.ceil((open-3.875)/(k+3.875)-1e-9)),g2=(open-n2*k)/(n2+1);for(var j=0;j<Math.min(n2,400);j++){var x=ps2/2+g2+j*(k+g2);p2+='<rect x="'+X2(x)+'" y="'+Y2(Hl-T)+'" width="'+Math.max(1.5,k*s2)+'" height="'+clear2*130/Hl+'" fill="#9aa4b2"/>'}
+  p2+='<line x1="'+X2(cc/2)+'" y1="150" x2="'+X2(cc/2)+'" y2="'+Y2(C)+'" stroke="#ff5c5c" stroke-width="1.5"/><text x="'+(X2(cc/2)+4)+'" y="146" fill="#ff5c5c" font-size="11">'+fm(C,2)+' clr</text><text x="8" y="14" fill="#9aa4b2" font-size="11">top rail · bottom rail · posts · pickets</text></svg>';svg=p2}
  q("brSvg").innerHTML=svg;q("brOut").innerHTML=o;list()}
-function pick(){if(BR.use)q("pkM").querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x.dataset.m==(BR.st?"stair":"lvl"))});var st=on("pkM")=="stair",O=P(q("pkO").value),w=P(q("pkW").value),g=P(q("pkG").value),L=P(q("pkL").value),th=ST.a,c=Math.cos(th*D);
+function pick(){if(BR.use)q("pkM").querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x.dataset.m==(BR.st?"stair":"lvl"))});var st=on("pkM")=="stair",O=Lv("pkO"),w=Lv("pkW"),g=Lv("pkG"),L=Lv("pkL"),th=ST.a,c=Math.cos(th*D);
  document.querySelectorAll("#handrail .pkS").forEach(function(e){e.style.display=st?"":"none"});
  if(!(O>0&&w>0&&g>0)){q("pkOut").innerHTML=H("Enter opening, picket width and max gap.");CL.pk=[];return list()}
- var brN="";if(BR.use&&isFinite(BR.open)&&(BR.st==st)){O=BR.open;L=BR.L;q("pkO").value=decStr(O,3);if(st)q("pkL").value=decStr(L,3);brN=H("Using Bottom Rail card: opening "+decStr(O,3)+'" per bay × '+BR.bays+" bays, picket "+(st?"plumb ":"")+"length "+decStr(L,3)+'" (top rail underside to top of bottom rail).')}
- var n=Math.max(0,Math.ceil((O-g)/(w+g)-1e-9)),gap=(O-n*w)/(n+1),m=[];for(var i=0;i<n;i++)m.push(gap+i*(w+gap));
- var o=brN+'<div class="big">PICKETS / BAY<b class="tv" data-v="'+n+'">'+n+"</b>equal gap "+decStr(gap,3)+'" ≈ '+toFrac(gap,16)+'"</div>'+R("Exact gap",gap)+(brN?R("Total pickets ("+BR.bays+" bays)",n*BR.bays,"n")+(!st?R("Picket length",L):""):"")+R("On-center",w+gap)+
- "<h3 style='margin-top:8px'>LAYOUT MARKS FROM FIRST POST"+(st?" (level / along rail)":"")+"</h3><div style='max-height:220px;overflow:auto;overscroll-behavior:contain'><table style='width:100%;font-size:13px'><tr><th>#</th><th>Left edge</th><th>Center</th>"+(st?"<th>Along rail</th>":"")+"</tr>"+m.map(function(x,i){return "<tr><td>"+(i+1)+'</td><td class="tv" data-v="'+x+'">'+decStr(x,3)+'"</td><td class="tv" data-v="'+(x+w/2)+'">'+decStr(x+w/2,3)+'"</td>'+(st?'<td class="tv" data-v="'+x/c+'">'+decStr(x/c,3)+'"</td>':"")+"</tr>"}).join("")+"</table></div>"+H("Tap any number to send it to Calc.");
+ var brN="";if(BR.use&&isFinite(BR.open)&&(BR.st==st)){O=BR.open;L=BR.L;U.setL("handrail","pkO",O);if(st)U.setL("handrail","pkL",L);brN=H("Using Bottom Rail card: opening "+fm(O,3)+' per bay × '+BR.bays+" bays, picket "+(st?"plumb ":"")+"length "+fz(L,3)+' (top rail underside to top of bottom rail).')}
+ var n=Math.max(0,Math.ceil((O-g)/(w+g)-1e-9)),gap=(O-n*w)/(n+1),m=[];if(n>2000){q("pkOut").innerHTML=H("That works out to "+n+" pickets per bay — too many to list. Check the opening, picket width and max gap.");CL.pk=[];return list()}for(var i=0;i<n;i++)m.push(gap+i*(w+gap));
+ var o=brN+'<div class="big">PICKETS / BAY<b class="tv" data-v="'+n+'">'+n+"</b>equal gap "+fm(gap,3)+' ≈ '+al(gap)+'</div>'+R("Exact gap",gap)+(brN?R("Total pickets ("+BR.bays+" bays)",n*BR.bays,"n")+(!st?R("Picket length",L):""):"")+R("On-center",w+gap)+
+ "<h3 style='margin-top:8px'>LAYOUT MARKS FROM FIRST POST"+(st?" (level / along rail)":"")+"</h3><div style='max-height:220px;overflow:auto;overscroll-behavior:contain'><table style='width:100%;font-size:13px'><tr><th>#</th><th>Left edge</th><th>Center</th>"+(st?"<th>Along rail</th>":"")+"</tr>"+m.map(function(x,i){return "<tr><td>"+(i+1)+'</td><td class="tv" data-v="'+tvv(x)+'">'+fm(x,3)+'</td><td class="tv" data-v="'+tvv((x+w/2))+'">'+fm(x+w/2,3)+'</td>'+(st?'<td class="tv" data-v="'+tvv(x/c)+'">'+fm(x/c,3)+'</td>':"")+"</tr>"}).join("")+"</table></div>"+H("Tap any number to send it to Calc.");
  var pl=st?L:NaN;if(st&&isFinite(th)){o+="<h3 style='margin-top:8px'>STAIR PICKETS</h3>"+R("Picket length (plumb, each edge)",L)+A("End cuts, both ends (parallel)",th)+H("Both ends cut the same direction (parallelogram). Gap measured level; 4\" sphere also applies to the triangle under the bottom rail.")}
- var tq=brN?n*BR.bays:n;CL.pk=(brN&&!st)?[]:n?[["Pickets "+decStr(w,3)+'"'+(st?" (plumb, cut "+decStr(th,2)+"° both ends)":""),tq,(st||brN)?L:NaN]]:[];q("pkOut").innerHTML=o;list()}
-function lvl(){var L=P(q("lgL").value)*12,Hh=P(q("lgH").value),sp=P(q("lgSp").value)*12,ps=P(q("lgP").value),T=P(q("lgT").value),bu=BR.use,B=bu?P(q("brS").value):0,C=bu?P(q("brC").value):P(q("brC").value),k=P(q("lgK").value),pk=on("lgM")=="pk";
+ var tq=brN?n*BR.bays:n;CL.pk=(brN&&!st)?[]:n?[["Pickets "+fz(w,3)+(st?" (plumb, cut "+decStr(th,2)+"° both ends)":""),tq,(st||brN)?L:NaN]]:[];q("pkOut").innerHTML=o;list()}
+function lvl(){var L=Lv("lgL"),Hh=Lv("lgH"),sp=Lv("lgSp"),ps=Lv("lgP"),T=Lv("lgT"),bu=BR.use,B=bu?Lv("brS"):0,C=bu?Lv("brC"):Lv("brC"),k=Lv("lgK"),pk=on("lgM")=="pk";
  if(!(L>0&&Hh>0&&sp>0)){q("lgOut").innerHTML=H("Enter run, height and spacing.");CL.lg=[];return list()}
- var np=Math.max(2,Math.ceil(L/sp-1e-9)+1),bays=np-1,cc=L/bays,open=cc-ps,postL=Hh-T,o=R("Posts",np,"n")+R("Post spacing c-c",cc)+R("Clear opening per bay",open)+R("Post length (top rail sits on posts)",postL)+R("Top rail (one piece)",L)+(bu?R("Bottom rail pieces between posts",bays,"n")+R("Bottom rail piece length",open):""),cl=[["Posts "+decStr(ps,3)+'"',np,postL],["Top rail "+decStr(T,3)+'"',1,L]];if(bu&&!BR.st)cl.push(["Bottom rail "+decStr(B,3)+'"',bays,open]);
+ var np=Math.max(2,Math.ceil(L/sp-1e-9)+1),bays=np-1,cc=L/bays,open=cc-ps,postL=Hh-T,o=R("Posts",np,"n")+R("Post spacing c-c",cc)+R("Clear opening per bay",open)+R("Post length (top rail sits on posts)",postL)+R("Top rail (one piece)",L)+(bu?R("Bottom rail pieces between posts",bays,"n")+R("Bottom rail piece length",open):""),cl=[["Posts "+fz(ps,3),np,postL],["Top rail "+fz(T,3),1,L]];if(bu&&!BR.st)cl.push(["Bottom rail "+fz(B,3),bays,open]);
  var vert=postL-C-B;var svgI="";
- if(pk){var n=Math.max(0,Math.ceil((open-3.875)/(k+3.875)-1e-9)),g=(open-n*k)/(n+1);o+=R("Pickets per bay",n,"n")+R("Total pickets",n*bays,"n")+R("Picket length (bottom rail to top rail)",vert)+R("Equal gap",g);cl.push(["Pickets "+decStr(k,3)+'"',n*bays,vert]);for(var i=0;i<n;i++)svgI+='<rect x="'+(60+(ps/2+g+i*(k+g))/cc*220)+'" y="30" width="2" height="90" fill="#9aa4b2"/>'}
- else{var sp2=postL-C,nm=Math.max(0,Math.ceil((sp2-3.875)/(k+3.875)-1e-9)),g2=(sp2-nm*k)/(nm+1);o+=R("Mid-rails per bay (gap < 4\")",nm,"n")+R("Equal vertical gap",g2)+R("Mid-rail length",open)+H("Bottom rail counted as one of the rails; mid-rails replace pickets. Horizontal rails are climbable, check local code.");cl[2]=["Bottom/mid rails "+decStr(k,3)+'"',bays*nm,open]}
- o+=H("Cut list assumes square-cut ends, rails welded between posts, top rail capped over posts. Bottom rail "+decStr(C,3)+'" off the floor'+(bu?" (Bottom Rail card)":", no bottom rail")+(C>4?' – ⚠ over 4", fails the sphere rule.':" keeps the 4\" rule."));
- q("lgSvg").innerHTML='<svg viewBox="0 0 340 140" style="width:100%;background:#12161c;border-radius:8px;margin:6px 0"><rect x="40" y="22" width="260" height="8" fill="#4da3ff"/><rect x="40" y="20" width="10" height="110" fill="#ffb020"/><rect x="170" y="30" width="10" height="100" fill="#ffb020"/><rect x="290" y="30" width="10" height="100" fill="#ffb020"/>'+(bu?'<rect x="50" y="116" width="120" height="4" fill="#4fd18b"/>':'')+''+svgI+'<text x="190" y="80" fill="#9aa4b2" font-size="11">'+np+" posts @ "+decStr(cc,2)+'"</text></svg>';
+ if(pk){var n=Math.max(0,Math.ceil((open-3.875)/(k+3.875)-1e-9)),g=(open-n*k)/(n+1);o+=R("Pickets per bay",n,"n")+R("Total pickets",n*bays,"n")+R("Picket length (bottom rail to top rail)",vert)+R("Equal gap",g);cl.push(["Pickets "+fz(k,3),n*bays,vert]);for(var i=0;i<Math.min(n,400);i++)svgI+='<rect x="'+(60+(ps/2+g+i*(k+g))/cc*220)+'" y="30" width="2" height="90" fill="#9aa4b2"/>'}
+ else{var sp2=postL-C,nm=Math.max(0,Math.ceil((sp2-3.875)/(k+3.875)-1e-9)),g2=(sp2-nm*k)/(nm+1);o+=R("Mid-rails per bay (gap < 4\")",nm,"n")+R("Equal vertical gap",g2)+R("Mid-rail length",open)+H("Bottom rail counted as one of the rails; mid-rails replace pickets. Horizontal rails are climbable, check local code.");cl[2]=["Bottom/mid rails "+fm(k,3),bays*nm,open]}
+ o+=H("Cut list assumes square-cut ends, rails welded between posts, top rail capped over posts. Bottom rail "+fm(C,3)+' off the floor'+(bu?" (Bottom Rail card)":", no bottom rail")+(C>4?' – ⚠ over 4", fails the sphere rule.':" keeps the 4\" rule."));
+ q("lgSvg").innerHTML='<svg viewBox="0 0 340 140" style="width:100%;background:#12161c;border-radius:8px;margin:6px 0"><rect x="40" y="22" width="260" height="8" fill="#4da3ff"/><rect x="40" y="20" width="10" height="110" fill="#ffb020"/><rect x="170" y="30" width="10" height="100" fill="#ffb020"/><rect x="290" y="30" width="10" height="100" fill="#ffb020"/>'+(bu?'<rect x="50" y="116" width="120" height="4" fill="#4fd18b"/>':'')+''+svgI+'<text x="190" y="80" fill="#9aa4b2" font-size="11">'+np+" posts @ "+fm(cc,2)+'</text></svg>';
  q("lgOut").innerHTML=o;CL.lg=cl;list()}
-function bend(){var Rr=P(q("rbR").value),a=P(q("rbA").value),l1=P(q("rbL1").value),l2=P(q("rbL2").value);if(!(Rr>0&&a>0&&a<180)){q("rbOut").innerHTML=H("Enter a radius and an angle between 0 and 180.");return}
+function bend(){var Rr=Lv("rbR"),a=P(q("rbA").value),l1=Lv("rbL1"),l2=Lv("rbL2");if(!(Rr>0&&a>0&&a<180)){q("rbOut").innerHTML=H("Enter a radius and an angle between 0 and 180.");return}
  var T=Rr*Math.tan(a/2*D),arc=Rr*a*D,dev=l1+l2-2*T+arc;
- q("rbOut").innerHTML=R("Tangent (setback)",T)+R("Arc length",arc)+R("Gain",2*T-arc)+R("Bend start mark from end 1",l1-T)+R("Bend end mark",l1-T+arc)+'<div class="big">CUT PIPE TO<b class="tv" data-v="'+dev+'">'+decStr(dev,3)+'"</b>≈ '+toFrac(dev,16)+'"</div>'+
+ q("rbOut").innerHTML=R("Tangent (setback)",T)+R("Arc length",arc)+R("Gain",2*T-arc)+R("Bend start mark from end 1",l1-T)+R("Bend end mark",l1-T+arc)+'<div class="big">CUT PIPE TO<b class="tv" data-v="'+tvv(dev)+'">'+fm(dev,3)+'</b>≈ '+al(dev)+'</div>'+
  "<h3 style='margin-top:8px'>WELDED (MITERED) TRANSITIONS</h3>"+A("Kneel: sloped to level, each piece",a/2)+A("Gooseneck: sloped to plumb, each piece",(90-a)/2)+A("Gooseneck: plumb to level, each piece",45)+H("Marks on the pipe centerline. Bender CLR is the die's centerline radius. Check springback on a scrap; most benders need 1–3° over.")}
 function clCln(){var d=0;["st","br","pk","lg"].forEach(function(k){CL[k]=(CL[k]||[]).filter(function(c){var bad=typeof c[2]=="number"&&!(c[2]>0)||!(+c[1]>0)&&/^-?[\d.]+$/.test(String(c[1]));if(bad)d++;return!bad})});return d}
-function list(){var dr=clCln(),all=CL.st.concat(CL.br,CL.pk,CL.lg);q("hcList").innerHTML=(dr?'<div class="hint err">'+dr+' line'+(dr>1?"s":"")+' left out (length or count of 0 or less) — check the inputs.</div>':"")+(all.length?all.map(function(c){return "• "+c[0]+": <b>"+c[1]+"</b>"+(isFinite(c[2])?' @ <b class="tv" data-v="'+c[2]+'">'+decStr(c[2],3)+'"</b> ('+toFrac(c[2],16)+'")':"")}).join("<br>"):"Nothing yet.")}
-function text(){clCln();return "Papa's Shop – Handrail cut list\n"+CL.st.concat(CL.br,CL.pk,CL.lg).map(function(c){return "• "+c[0]+": "+c[1]+(isFinite(c[2])?" @ "+decStr(c[2],3)+'" ('+toFrac(c[2],16)+'")':"")}).join("\n")+(isFinite(ST.a)?"\nStair angle: "+decStr(ST.a,2)+"° ("+(saw()=="band"?"bandsaw vise":"miter")+" angles from square)":"")}
+function list(){var dr=clCln(),all=CL.st.concat(CL.br,CL.pk,CL.lg);q("hcList").innerHTML=(dr?'<div class="hint err">'+dr+' line'+(dr>1?"s":"")+' left out (length or count of 0 or less) — check the inputs.</div>':"")+(all.length?all.map(function(c){return "• "+c[0]+": <b>"+c[1]+"</b>"+(isFinite(c[2])?' @ <b class="tv" data-v="'+tvv(c[2])+'">'+fm(c[2],3)+'</b> ('+al(c[2])+')':"")}).join("<br>"):"Nothing yet.")}
+function text(){clCln();return "Papa's Shop – Handrail cut list\n"+CL.st.concat(CL.br,CL.pk,CL.lg).map(function(c){return "• "+c[0]+": "+c[1]+(isFinite(c[2])?" @ "+fm(c[2],3)+' ('+al(c[2])+')':"")}).join("\n")+(isFinite(ST.a)?"\nStair angle: "+decStr(ST.a,2)+"° ("+(saw()=="band"?"bandsaw vise":"miter")+" angles from square)":"")}
 q("hcShare").onclick=function(){var t=text();if(navigator.share)navigator.share({title:"Handrail cut list",text:t}).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast("Copied list",1200)})};
 q("hcNote").onclick=function(){if(!window.hhNotes)return toast("Notes unavailable",1500);var now=Date.now();hhNotes.put({id:"n"+now.toString(36)+Math.random().toString(36).slice(2,6),title:"Handrail – "+new Date().toLocaleDateString(),job:"",body:text(),photos:[],created:now,updated:now}).then(function(){toast("Saved to Notes",1300)})};
-q("hcMat").onclick=function(){var K="hhMyMats",rows;try{rows=JSON.parse(localStorage.getItem(K))||[]}catch(e){rows=[]}clCln();var all=CL.st.concat(CL.br,CL.pk,CL.lg);all.forEach(function(c){rows.push({item:c[0]+(isFinite(c[2])?" @ "+decStr(c[2],3)+'"':""),qty:String(c[1]),unit:"pcs",price:""})});localStorage.setItem(K,JSON.stringify(rows));toast("Added "+all.length+" lines to My Materials (reopen app to refresh list)",1800)};
+q("hcMat").onclick=function(){var K="hhMyMats",rows;try{rows=JSON.parse(localStorage.getItem(K))||[]}catch(e){rows=[]}clCln();var all=CL.st.concat(CL.br,CL.pk,CL.lg);all.forEach(function(c){rows.push({item:c[0]+(isFinite(c[2])?" @ "+fm(c[2],3):""),qty:String(c[1]),unit:"pcs",price:""})});localStorage.setItem(K,JSON.stringify(rows));toast("Added "+all.length+" lines to My Materials (reopen app to refresh list)",1800)};
 q("rbUse").onclick=function(){if(isFinite(ST.a)){q("rbA").value=decStr(ST.a,2);bend()}};
-function all(){stair();brail();pick();lvl();bend()}
-sg("hrIn",all);sg("pkM",pick);sg("lgM",lvl);sg("brU",all);sg("brM",function(){var st=on("brM")=="stair";q("pkM").querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x.dataset.m==(st?"stair":"lvl"))});all()});
+function all(){stair();brail();pick();lvl();bend();U.labels("handrail");[].forEach.call(q("handrail").querySelectorAll(".tv[data-v]"),function(e){if(!isFinite(+e.dataset.v)||e.dataset.v===""){e.removeAttribute("data-v");e.classList.remove("tv")}})}
+sg("hrIn",all);sg("hrUnit",function(){var m=on("hrUnit");q("hrUnit").querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",x.dataset.m==m)});U.setMode("handrail",m);all();if(window.hhGuard)hhGuard(q("handrail"))});sg("pkM",pick);sg("lgM",lvl);sg("brU",all);sg("brM",function(){var st=on("brM")=="stair";q("pkM").querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x.dataset.m==(st?"stair":"lvl"))});all()});
 q("handrail").addEventListener("input",function(e){var id=e.target.id||"";if(/^hr/.test(id))all();else if(/^br/.test(id))all();else if(/^pk/.test(id))pick();else if(/^lg/.test(id)){brail();pick();lvl()}else if(/^rb/.test(id))bend()});
 q("handrail").addEventListener("click",function(e){var t=e.target.closest(".tv");if(!t)return;justEq=true;expr="";ins(decStr(+t.dataset.v,4));toast(decStr(+t.dataset.v,4)+" → Calc",1200)});
 document.addEventListener("click",function(e){var b=e.target.closest("[data-s=handrail]");if(b){sawUI();all()}},true);
@@ -2224,13 +2261,18 @@ btn(q("rfAOut"),"Roofing",function(){var r=rows("rfAOut"),b=0,sq=0;Object.keys(r
 btn(q("mwOut"),"Steel",function(){var g=q("mwG"),s=q("mwS"),Q=N(val("mwQ"))||1,L=N(val("mwFt"))+N(val("mwIn"))/12,w=q("mwOut").innerText.match(/([\d.]+) lb/),sd=s&&s.selectedIndex>=0?s.options[s.selectedIndex].text:"";if(!sd)return[];var pl=g.value=="Plate"?" × "+val("mwW")+'" wide':"";return[{item:g.value+" "+sd+pl+" × "+(+L.toFixed(3))+"'"+(w?" ("+(N(w[1])/Q).toFixed(1)+" lb ea)":""),qty:Q,unit:"pcs"}]});
 })();</script>
 <script id="gtjs">(function(){var q=function(i){return document.getElementById(i)},S=q("gates");if(!S)return;
-var SH=window.hhShapes||[];
+var SH=window.hhShapes||[],U=window.hhUnits,UM=function(){return U.mode("gates")};U.reg("gates",parseFloat,function(t){var v=parseIn(String(t));return typeof v=="number"&&isFinite(v)?v:NaN});
+function dec(v,p){var t=(+v.toFixed(p)).toString();return t.replace(/^(-?)0\./,"$1.")}
+function ftS(x){return dec(x/12,4)+" ft"}
 function rs(l,v){return'<div class="rs">'+l+"<b>"+v+"</b></div>"}function H(t,c){return'<div class="hint"'+(c?' style="color:'+c+'"':"")+">"+t+"</div>"}
-function f(id){var v=parseFloat(q(id).value);return isFinite(v)?v:0}
-function fr(x){var s=x<0?"-":"";x=Math.abs(x);var w=Math.floor(x),n=Math.round((x-w)*16);if(n==16){w++;n=0}var g=function(a,b){return b?g(b,a%b):a},d=g(n,16);return s+(w||!n?w:"")+(n?(w?" ":"")+(n/d)+"/"+(16/d):"")+'"'}
+function f(id){var e=q(id),v=e.hasAttribute("data-nu")?U.read("gates",id):parseFloat(e.value);return isFinite(v)?v:0}
+function fF(id){return UM()=="std"?(function(){var v=parseFloat(q(id).value);return isFinite(v)?v:0})():f(id)/12}
+function fr(x){if(UM()=="ft")return ftS(x);var s=x<0?"-":"";x=Math.abs(x);var w=Math.floor(x),n=Math.round((x-w)*16);if(n==16){w++;n=0}var g=function(a,b){return b?g(b,a%b):a},d=g(n,16);return s+(w||!n?w:"")+(n?(w?" ":"")+(n/d)+"/"+(16/d):"")+'"'}
+function frx(x){return UM()=="ft"?ftS(x)+" ("+U.ftIn(x)+")":fr(x)}
+function fo(x,d){var m=UM();return m=="std"?(x/12).toFixed(d)+" ft":m=="in"?fr(x):ftS(x)}
 function pw(n){var m=n.match(/^(\d+(?:\.\d+)?)(?:x|")/)||n.match(/^(\d+)\/(\d+)"/);if(!m)return 1;if(n.match(/^(\d+)\/(\d+)"/)){var p=n.match(/^(\d+)\/(\d+)"/);return p[1]/p[2]}var w=n.match(/^(\d+)-(\d+)\/(\d+)"/);return +m[1]}
 function so(cat,def){var L=SH.filter(function(s){return cat.indexOf(s[0])>=0});return L.map(function(s,i){return'<option value="'+SH.indexOf(s)+'"'+(s[1]==def?" selected":"")+">"+s[0].replace(" tube","")+" "+s[1]+" ("+s[2].toFixed(2)+" lb/ft)</option>"}).join("")}
-function inp(id,l,v){return'<label>'+l+'<input id="'+id+'" inputmode="decimal" value="'+v+'"></label>'}
+function inp(id,l,v,nu){return'<label>'+l+'<input id="'+id+'"'+(nu?' data-nu="'+nu+'"':"")+' inputmode="decimal" value="'+v+'"></label>'}
 var FR=["Square tube","Rect tube"],PK=["Square tube","Square bar","Round bar","Rect tube"];
 // published ratings (verified 2026-10-19)
 var WH=[["D&D SHUT IT HardCORE 4\" V-groove wheel (CI2415/CI2420)",1500,"max gate weight 1,500 lb; 3,000 lb max gate load","https://www.hooverfence.com/shut-it-hardcore-v-groove-wheel"],["D&D SHUT IT HardCORE 6\" V-groove wheel (CI2615/CI2620/CI2625)",2200,"max gate weight 2,200 lb; 5,000 lb max gate load","https://us.ddtech.com/products/shut-it-hardcore-wheel-six-inch"]];
@@ -2238,19 +2280,21 @@ var TK=[["D&D SHUT IT HardCORE 4\" cantilever wheel assembly (CI2240)",1500,"max
 var OP=[["slide","LiftMaster CSL24UL (24 VDC)",1500,50,"I–IV","continuous duty","https://igate.multisalesinc.com/WOEB/Docs/CSL24UL_DataSheet.pdf"],["slide","LiftMaster SL3000UL 1/2 HP",1000,50,"I–IV","continuous duty","https://www.liftmaster.com/sl3000ul-slide-gate-operator/p/SL3000UL"],["slide","LiftMaster SL3000UL 1 HP",2000,50,"I–IV","continuous duty","https://www.liftmaster.com/sl3000ul-slide-gate-operator/p/SL3000UL"],["slide","DoorKing 9150 1/2 HP",1000,30,"I–IV","continuous duty","https://www.doorking.com/wp-content/uploads/2020/12/9150-cutsheet-Rev_11-20.pdf"],["slide","DoorKing 9150 1 HP",1500,45,"I–IV","continuous duty","https://www.doorking.com/wp-content/uploads/2020/12/9150-cutsheet-Rev_11-20.pdf"],
 ["swing","LiftMaster LA412 (12 VDC arm)",550,16,"I","50 cycles/day; chart: 850 lb@10', 750@12', 650@14', 550@16'","https://gatedepot.com/amfile/file/download/file/57121/product/29521/",[[10,850],[12,750],[14,650],[16,550]]],["swing","Mighty Mule MM371W (single) / MM372W (dual, per leaf)",550,16,"residential","medium duty","https://media.tractorsupply.com/is/content/TractorSupplyCompany/tsc/product/1/42/97/59/1429759_Bro1.pdf"],["swing","Mighty Mule TS571W (single)",850,18,"residential","heavy duty","https://media.tractorsupply.com/is/content/TractorSupplyCompany/tsc/product/1/42/97/59/1429759_Bro1.pdf"],["swing","Ghost Controls TDS2 (dual, per leaf)",900,20,"residential (UL 325 7th ed.)","weight limit drops as leaf gets longer — check the manual's chart","https://assets.unilogcorp.com/187/ITEM/DOC/Ghost_Controls_102162450_Instruction_Installation_Manual.pdf"]];
 S.innerHTML='<div class="card"><h3>GATES</h3><div class="seg" id="gtT"><button data-t="swing" class="on">Swing</button><button data-t="roll">Rolling / V-track</button><button data-t="cant">Cantilever</button></div>'+
-'<div class="fld"><label>Leaves<select id="gtLv"><option value="1">Single</option><option value="2">Double</option></select></label>'+inp("gtW","Opening, post to post (in)",144)+inp("gtH","Gate height (in)",60)+inp("gtG","Ground clearance (in)",3)+
-'<label class="w">Frame tube<select id="gtF">'+so(FR,"2x2x.12")+'</select></label><label class="w">Picket<select id="gtP">'+so(PK,"3/4\" square")+'</select></label>'+inp("gtPG","Max clear gap between pickets (in) – 3.875 for 4\" sphere",3.875)+inp("gtMR","Mid rails (count)",1)+
-'<span class="gS" style="display:contents">'+inp("gtHG","Hinge-side gap (in)",0.75)+inp("gtLG","Latch / center gap (in)",0.75)+inp("gtSag","Sag allowance – set latch end high (in)",0.25)+'</span>'+
-'<span class="gR" style="display:contents">'+inp("gtOv","Overlap past opening each end (in)",6)+'</span>'+
+'<div style="margin:8px 0 2px;font-size:12.5px;color:#a7b0bd;font-weight:700">Length units</div><div class="seg" id="gtUnit" role="group" aria-label="Length units"><button data-m="std" class="on" aria-pressed="true">Standard<br><small>as before</small></button><button data-m="in" aria-pressed="false">All inches</button><button data-m="ft" aria-pressed="false">All feet</button></div><div class="hint">Standard: inches (and operator max length in feet) as before. All inches / All feet switch every length box and result on this page; what you typed is kept, so switching back loses nothing.</div>'+
+'<div class="fld"><label>Leaves<select id="gtLv"><option value="1">Single</option><option value="2">Double</option></select></label>'+inp("gtW","Opening, post to post (in)",144,"in")+inp("gtH","Gate height (in)",60,"in")+inp("gtG","Ground clearance (in)",3,"in")+
+'<label class="w">Frame tube<select id="gtF">'+so(FR,"2x2x.12")+'</select></label><label class="w">Picket<select id="gtP">'+so(PK,"3/4\" square")+'</select></label>'+inp("gtPG","Max clear gap between pickets (in) – 3.875 in for 4\" sphere",3.875,"in")+inp("gtMR","Mid rails (count)",1)+
+'<span class="gS" style="display:contents">'+inp("gtHG","Hinge-side gap (in)",0.75,"in")+inp("gtLG","Latch / center gap (in)",0.75,"in")+inp("gtSag","Sag allowance – set latch end high (in)",0.25,"in")+'</span>'+
+'<span class="gR" style="display:contents">'+inp("gtOv","Overlap past opening each end (in)",6,"in")+'</span>'+
 '<span class="gC" style="display:contents">'+inp("gtTl","Tail % of opening (top-hang ~50% typical)",50)+'</span></div><div id="gtOut"></div></div>'+
 '<div class="card"><h3>ROLLER / WHEEL LOAD CHECK</h3><div class="fld"><label class="w">Wheel / truck<select id="gtWh"></select></label>'+inp("gtWR","Your rated load (lb) – blank = use selected",'')+'</div><div id="gtWO"></div></div>'+
-'<div class="card"><h3>OPERATOR SIZING</h3><div class="fld"><label>Use<select id="gtCl"><option value="1">Residential (UL 325 Class I)</option><option value="2">Commercial (Class II–IV)</option></select></label>'+inp("gtOR","Your operator rated max weight (lb, optional)",'')+inp("gtOL","…and max length (ft, optional)",'')+'</div><div id="gtOO"></div></div>'+
+'<div class="card"><h3>OPERATOR SIZING</h3><div class="fld"><label>Use<select id="gtCl"><option value="1">Residential (UL 325 Class I)</option><option value="2">Commercial (Class II–IV)</option></select></label>'+inp("gtOR","Your operator rated max weight (lb, optional)",'')+inp("gtOL","…and max length (ft, optional)",'',"ft")+'</div><div id="gtOO"></div></div>'+
 '<div class="card"><h3>GATE SAFETY (AUTOMATED)</h3><div style="font-size:14px">'+
 '<p><b>UL 325</b> (operators): each entrapment zone needs monitored external entrapment protection — photo eyes (non-contact) and/or edge sensors (contact) — in addition to the operator\'s built-in sensing. Classes: I residential, II commercial/general access, III industrial/limited access, IV restricted access.</p>'+
 '<p><b>ASTM F2200</b> (gate construction, slide gates): guard/cover exposed weight-bearing rollers ≤ 8 ft above grade; openings from grade to 48" must stop a <b>2-1/4" sphere</b>, 48"–72" a <b>4" sphere</b> — in the gate and the fence it covers when open; positive stops both ways; no bottom protrusions over ½"; gate can\'t fall more than 45° if it comes off its hardware; no latch on an automatic gate.</p>'+
 '<p><b>Pedestrians:</b> vehicle gates are not for foot traffic — provide a separate pedestrian gate (F2200 doesn\'t cover pedestrian gates). Mount user controls out of reach of the gate (6 ft+ away is common) and put warning signs on both sides.</p>'+
 '<p>4" sphere rule for pickets applies to guards/pool barriers and most residential fences — check local code. Automated slide gates need the tighter F2200 screening above.</p></div></div>';
-var T="swing",last=null;
+var T="swing",last=null;U.labels("gates");
+q("gtUnit").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;q("gtUnit").querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x==b);x.setAttribute("aria-pressed",x==b)});U.setMode("gates",b.dataset.m);calc();if(window.hhGuard)hhGuard(q("gates"))});
 q("gtT").querySelectorAll("button").forEach(function(b,_,a){b.onclick=function(){a.forEach(function(x){x.classList.remove("on")});b.classList.add("on");T=b.dataset.t;calc()}});
 function pick(inner,pwid,gap){var n=Math.max(0,Math.ceil((inner-gap)/(pwid+gap)));var g=n?(inner-n*pwid)/(n+1):inner;return{n:n,g:g}}
 function calc(){S.querySelectorAll(".gS").forEach(function(e){e.style.display=T=="swing"?"contents":"none"});S.querySelectorAll(".gR").forEach(function(e){e.style.display=T=="roll"?"contents":"none"});S.querySelectorAll(".gC").forEach(function(e){e.style.display=T=="cant"?"contents":"none"});q("gtLv").parentNode.style.display=T=="swing"?"":"none";
@@ -2262,15 +2306,15 @@ function calc(){S.querySelectorAll(".gS").forEach(function(e){e.style.display=T=
  if(T=="swing"){var bh=Hh-2*tw,bw=inW,bl=Math.sqrt(bh*bh+bw*bw),ba=Math.atan(bh/bw)*180/Math.PI;cut.push(["Diagonal brace (low hinge → high latch), long point",lv,bl,F[1]])}
  if(T=="cant"||T=="roll"){if(T=="cant")cut.push(["Extra top rail / track tube (cantilever)",1,inW,F[1]])}
  var wt=0;cut.forEach(function(c){var s=SH.filter(function(x){return x[1]==c[3]})[0];wt+=c[1]*c[2]/12*(s?s[2]:0)});wt*=1.05;
- o+=rs(T=="swing"?"Leaf width"+(lv>1?" (each)":""):"Gate length",fr(L)+" ("+(L/12).toFixed(2)+" ft)");
- if(T=="cant")o+=rs("Tail (counterbalance)",fr(L-W)+" — typical: top-hang 4-wheel ~50%, bottom-hang ~25%; follow the hardware maker");
- if(T=="roll")o+=rs("V-track length (opening + gate length)",((W+L)/12).toFixed(2)+" ft")+rs("Wheels","2 V-groove (front & rear of bottom rail)")+rs("Stops","2 positive stops + top guide rollers on a post");
- if(T=="cant"){var sp=L-W;o+=rs("Roller truck spacing (≈ tail)",fr(sp))+rs("Posts","2 support posts (truck pairs) + 1 receiver post")+rs("Ground gap",f("gtG")+'" (2–4" typical; gate never touches grade)')}
- o+=rs("Pickets per leaf / gate",pk.n+" @ "+fr(pk.g)+" clear"+(pk.g>gap+1e-6?" ⚠":""))+rs("Picket cut length",fr(pkL));
- if(T=="swing"){o+=rs("Brace length / angle",fr(bl)+" @ "+ba.toFixed(1)+"° (cut both ends at "+ba.toFixed(1)+"°/"+(90-ba).toFixed(1)+"°)")+rs("Hinges",(Hh>72||L>96?3:2)+" per leaf — top ~6\" down, bottom ~6\" up (typical)")+rs("Hinge spacing",fr(Hh-12))+rs("Sag allowance","set latch end "+fr(f("gtSag"))+" high")+rs("Gaps","hinge "+fr(f("gtHG"))+", "+(lv>1?"center":"latch")+" "+fr(f("gtLG"))+", ground "+fr(f("gtG")));if(lv>1)o+=rs("Drop rod","1 on the inactive leaf + cane bolt keeper in the drive")}
- o+=rs("Height of gate frame",fr(Hh)+" (top of frame "+fr(Hh+f("gtG"))+" above grade)");
+ o+=rs(T=="swing"?"Leaf width"+(lv>1?" (each)":""):"Gate length",UM()=="ft"?frx(L):fr(L)+" ("+(L/12).toFixed(2)+" ft)");
+ if(T=="cant")o+=rs("Tail (counterbalance)",frx(L-W)+" — typical: top-hang 4-wheel ~50%, bottom-hang ~25%; follow the hardware maker");
+ if(T=="roll")o+=rs("V-track length (opening + gate length)",fo(W+L,2))+rs("Wheels","2 V-groove (front & rear of bottom rail)")+rs("Stops","2 positive stops + top guide rollers on a post");
+ if(T=="cant"){var sp=L-W;o+=rs("Roller truck spacing (≈ tail)",frx(sp))+rs("Posts","2 support posts (truck pairs) + 1 receiver post")+rs("Ground gap",(UM()=="ft"?ftS(f("gtG")):f("gtG")+'"')+' (2–4" typical; gate never touches grade)')}
+ o+=rs("Pickets per leaf / gate",pk.n+" @ "+frx(pk.g)+" clear"+(pk.g>gap+1e-6?" ⚠":""))+rs("Picket cut length",frx(pkL));
+ if(T=="swing"){o+=rs("Brace length / angle",frx(bl)+" @ "+ba.toFixed(1)+"° (cut both ends at "+ba.toFixed(1)+"°/"+(90-ba).toFixed(1)+"°)")+rs("Hinges",(Hh>72||L>96?3:2)+" per leaf — top ~6\" down, bottom ~6\" up (typical)")+rs("Hinge spacing",frx(Hh-12))+rs("Sag allowance","set latch end "+frx(f("gtSag"))+" high")+rs("Gaps","hinge "+frx(f("gtHG"))+", "+(lv>1?"center":"latch")+" "+frx(f("gtLG"))+", ground "+frx(f("gtG")));if(lv>1)o+=rs("Drop rod","1 on the inactive leaf + cane bolt keeper in the drive")}
+ o+=rs("Height of gate frame",frx(Hh)+" (top of frame "+frx(Hh+f("gtG"))+" above grade)");
  o+='<div class="big">EST. WEIGHT'+(lv>1?" (total)":"")+"<b>"+Math.round(wt)+" lb</b>"+(lv>1?"≈ "+Math.round(wt/lv)+" lb per leaf · ":"")+"steel, +5% welds/caps</div>";
- o+='<details class="ms" open><summary>Cut list</summary><div class="mw"><table class="mt"><thead><tr><th>Part</th><th>Qty</th><th>Length</th><th>Stock</th></tr></thead><tbody>'+cut.map(function(c){return"<tr><td>"+c[0]+'</td><td class="d">'+c[1]+'</td><td class="d">'+fr(c[2])+'</td><td class="d">'+c[3]+"</td></tr>"}).join("")+"</tbody></table></div></details>";
+ o+='<details class="ms" open><summary>Cut list</summary><div class="mw"><table class="mt"><thead><tr><th>Part</th><th>Qty</th><th>Length</th><th>Stock</th></tr></thead><tbody>'+cut.map(function(c){return"<tr><td>"+c[0]+'</td><td class="d">'+c[1]+'</td><td class="d">'+(UM()=="ft"?ftS(c[2])+"<br><small>"+U.ftIn(c[2])+"</small>":fr(c[2]))+'</td><td class="d">'+c[3]+"</td></tr>"}).join("")+"</tbody></table></div></details>";
  var bySt={};cut.forEach(function(c){bySt[c[3]]=(bySt[c[3]]||0)+c[1]*c[2]/12});Object.keys(bySt).forEach(function(k){var lf=bySt[k]*1.1;items.push({item:k+" (gate stock, +10% drops)",qty:Math.ceil(lf),unit:"lf"},{item:k+" 24' sticks",qty:Math.ceil(lf/24),unit:"sticks",off:1})});
  if(T=="swing")items.push({item:"Gate hinges",qty:(Hh>72||L>96?3:2)*lv,unit:"ea"},{item:lv>1?"Drop rod + center latch":"Gate latch",qty:1,unit:"ea"});
  if(T=="roll")items.push({item:"V-track",qty:Math.ceil((W+L)/12),unit:"ft"},{item:"V-groove wheels",qty:2,unit:"ea"},{item:"Gate stops",qty:2,unit:"ea"},{item:"Guide roller assembly",qty:1,unit:"ea"});
@@ -2286,14 +2330,14 @@ function wheel(){if(!last)return;var list=T=="cant"?TK:T=="roll"?WH:[],sel=q("gt
  else if(w)o+=rs("Published max gate weight",w[1]+" lb — "+(wt<=w[1]?"✔ gate "+Math.round(wt)+" lb OK":"✖ gate too heavy"))+H("Source: "+w[0]+" — "+w[2]+'. <a href="'+w[3]+'" target="_blank" rel="noopener" style="color:#4da3ff">spec</a> · verify current specs.');
  o+=H("Guide rollers: no published load rating found — use the maker's spec. They take side load, not gate weight.");q("gtWO").innerHTML=o}
 function oper(){if(!last)return;var ty=T=="swing"?"swing":"slide",wt=last.wt/(T=="swing"?last.lv:1),Lf=last.L/12,cl=q("gtCl").value,o="";
- if(ty=="slide")o+=rs("Chain length (≈ travel + mounting)",Math.ceil(last.W/12+(T=="cant"?last.L/12-last.W/12:0)+4)+" ft — gate length + ~2 ft each end for brackets (check the operator manual)");
- o+=rs(ty=="swing"?"Leaf to move":"Gate to move",Math.round(wt)+" lb, "+Lf.toFixed(1)+" ft");
- var uw=f("gtOR"),ul=f("gtOL");if(uw||ul)o+=rs("Your operator",((!uw||wt<=uw)&&(!ul||Lf<=ul))?"✔ within rating":"✖ over rating");
+ if(ty=="slide")o+=rs("Chain length (≈ travel + mounting)",(UM()=="in"?Math.ceil(last.W/12+(T=="cant"?last.L/12-last.W/12:0)+4)*12+'"':Math.ceil(last.W/12+(T=="cant"?last.L/12-last.W/12:0)+4)+" ft")+" — gate length + ~2 ft each end for brackets (check the operator manual)");
+ o+=rs(ty=="swing"?"Leaf to move":"Gate to move",Math.round(wt)+" lb, "+(UM()=="in"?fr(last.L):Lf.toFixed(1)+" ft"));
+ var uw=f("gtOR"),ul=fF("gtOL");if(uw||ul)o+=rs("Your operator",((!uw||wt<=uw)&&(!ul||Lf<=ul))?"✔ within rating":"✖ over rating");
  o+='<div style="margin-top:6px;font-size:13px;color:#9aa4b2;font-weight:700">Published ratings ('+(ty=="swing"?"swing arm/linear":"chain-drive slide")+'):</div>';
  OP.filter(function(p){return p[0]==ty}).forEach(function(p){var mw=p[2];if(p[7]){var r=p[7].filter(function(x){return Lf<=x[0]})[0];mw=r?r[1]:0}var ok=wt<=mw&&Lf<=p[3]&&(cl=="1"||!/residential|^I$/.test(p[4]));
   o+='<div class="rs" style="display:block"><b style="float:none;color:'+(ok?"#4cd964":"#ff4d4d")+'">'+(ok?"✔ ":"✖ ")+p[1]+'</b><div style="font-size:12px">Max '+p[2]+" lb / "+p[3]+" ft · UL 325 Class "+p[4]+" · "+p[5]+'</div><div style="font-size:12px"><a href="'+p[6]+'" target="_blank" rel="noopener" style="color:#4da3ff">Source</a> · verify current specs</div></div>'});
  o+=H("List checked 2026-10-19 from manufacturer/dealer spec sheets. Ratings assume level ground and free-rolling/swinging hardware — check the manufacturer's spec, wind load (solid gates) and cycles per day.");q("gtOO").innerHTML=o}
-S.addEventListener("input",function(e){if(e.target.id=="gtWR"||e.target.id=="gtWh")wheel();else if(/^gtO|gtCl/.test(e.target.id))oper();else calc()});S.addEventListener("change",function(e){if(e.target.id=="gtWh")wheel();else if(e.target.id=="gtCl")oper();else calc()});
+S.addEventListener("input",function(e){if(e.target.id=="gtWR"||e.target.id=="gtWh")wheel();else if(/^(gtOR|gtOL|gtCl)$/.test(e.target.id))oper();else calc()});S.addEventListener("change",function(e){if(e.target.id=="gtWh")wheel();else if(e.target.id=="gtCl")oper();else calc()});
 var b=document.createElement("button");b.className="btn am atjBtn";b.textContent="➕ Add to Job";q("gtOut").insertAdjacentElement("afterend",b);b.onclick=function(){if(last&&window.hhATJ)hhATJ.open("Gate",last.items)};
 calc()})();</script>
 <script id="extjs">(function(){var q=function(i){return document.getElementById(i)};
@@ -2638,7 +2682,7 @@ q("wsCard").addEventListener("input",wsCalc);q("wsCard").addEventListener("chang
 
 /* =============== 2. JOB CARDS =============== */
 var JK="hhJobCard";function jc(){try{return JSON.parse(localStorage.getItem(JK))||{title:"",job:"",items:[]}}catch(e){return{title:"",job:"",items:[]}}}function jcs(o){localStorage.setItem(JK,JSON.stringify(o));jcBadge()}
-var PIN=["bends","angles","pipe","weld","handrail","gates","cutlist","tmpl","wsym","materials","framing","lumber","roof","concrete","siding","deck","stucco","elec","plumb"];
+var PIN=["bends","angles","pipe","weld","handrail","gates","cutlist","tmpl","wsym","wlayout","materials","framing","lumber","roof","concrete","siding","deck","stucco","elec","plumb"];
 function hasOut(c){return!!c.querySelector(".out,.big,.rs,[id$=Out],.clStick")}
 function capture(c){var t=(c.querySelector("h3")||{}).textContent||"Calculator";t=t.replace(/📌.*$/,"").trim();var lines=[];
  var src=[c];if(!c.querySelector("label")){var pv=c.previousElementSibling;while(pv&&pv.classList.contains("card")&&!hasOut(pv)){src.unshift(pv);pv=pv.previousElementSibling}}
@@ -2767,7 +2811,7 @@ var G=[["tcL",0,1,1e5,"tcOut","Side length must be more than 0."],["kCC",0,1,1e5
 ["cT",0,0,89.9,"cOut","Tilt must be 0–89.9°."],["cN",3,0,360,"cOut","Sides must be 3 or more."],["rS",0,0,1e5,"rOut","Rise can't be negative."],["rRoll",0,0,1e5,"roOut","Roll can't be negative."],["rSet",0,0,1e5,"roOut","Set can't be negative."],
 ["oOff",0,1,1e5,"oOut","Offset must be more than 0."],["eoD",0,1,1e4,"eoOut","Offset depth must be more than 0."]];
 var byId={};G.forEach(function(g){(byId[g[0]]=byId[g[0]]||[]).push(g)});
-function bad(g){var e=document.getElementById(g[0]);if(!e)return null;var t=String(e.value).trim();if(!t&&e.placeholder&&/optional/i.test((e.closest("label")||{}).textContent||""))return null;var v=parseIn(t);return!(isFinite(v)&&(g[2]?v>g[1]:v>=g[1])&&v<=g[3])}
+function bad(g){var e=document.getElementById(g[0]);if(!e)return null;var t=String(e.value).trim();if(!t&&e.placeholder&&/optional/i.test((e.closest("label")||{}).textContent||""))return null;var v,sc=e.closest("section");if(e.hasAttribute("data-nu")&&sc&&window.hhUnits&&hhUnits.mode(sc.id)!="std")v=hhUnits.read(sc.id,e.id);else v=parseIn(t);return!(isFinite(v)&&(g[2]?v>g[1]:v>=g[1])&&v<=g[3])}
 function apply(sec){var hits={};G.forEach(function(g){var e=document.getElementById(g[0]);if(!e||(sec&&!sec.contains(e))||!bad(g))return;g[4].split(",").forEach(function(o){(hits[o]=hits[o]||[]).push(g[5])})});
  Object.keys(hits).forEach(function(o){var s=sec||document;var els=sec?[].slice.call(sec.querySelectorAll('[id="'+o+'"]')):[];if(!els.length&&document.getElementById(o))els=[document.getElementById(o)];var m=hits[o].filter(function(x,i,a){return a.indexOf(x)==i});els.forEach(function(el){el.innerHTML='<div class="big">RESULT<b>–</b></div><div class="hint err">'+m.join(" ")+"</div>"})})}
 function run(e){var t=e.target;if(!t||!t.id)return;var sec=t.closest("section")||null;setTimeout(function(){apply(sec)},0);setTimeout(function(){apply(sec)},120)}
