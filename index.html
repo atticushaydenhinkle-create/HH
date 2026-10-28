@@ -97,6 +97,19 @@ nav button{min-height:52px}
 .exm summary,.exLoad{min-height:44px}
 a{color:#4da3ff}
 </style>
+<style id="wlcss">
+#wlCard .seg button{min-height:44px;line-height:1.2;padding:4px 6px}
+#wlCard .out{grid-template-columns:repeat(auto-fit,minmax(125px,1fr))}
+#wlCard .out div b{font-size:19px;overflow-wrap:anywhere}
+#wlCard .out div[data-s]::after{content:attr(data-s);display:block;color:#7c8594;font-weight:600;font-size:11px;margin-top:2px}
+#wlCard .wlw{color:#ff4d4d;font-weight:800;font-size:14px;background:#2a1212;border:1px solid #ff4d4d;border-radius:8px;padding:10px;margin-top:10px;line-height:1.35}
+#wlCard .wln{font-size:13px;color:#aab3c0;line-height:1.4;margin-top:8px;font-weight:600}
+#wlCard .wln b{color:#4da3ff}
+#wlCard .wlchk{font-size:13px;color:#aab3c0;line-height:1.45;margin-top:8px;background:#0b0e12;border:1px solid #262c35;border-radius:8px;padding:8px;font-weight:600;overflow-wrap:anywhere}
+#wlCard .wlchk b{color:#4da3ff}
+#wlCard svg{width:100%;height:auto;display:block;margin-top:10px;background:#000;border-radius:8px}
+#wlCard .wlbtn{width:100%;min-height:44px;margin-top:10px}
+</style>
 </head><body>
 <header style="display:flex;align-items:center;gap:8px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="38" height="38" aria-label="Papa's Shop logo — tap 3 times"><rect width="38" height="38" aria-label="Papa's Shop logo — tap 3 times" rx="112" fill="#121519"/><path fill="#ECEEF0" d="M96 124h40v81.0h62v-81.0h40v200h-40v-81.0h-62v81.0h-40z"/><rect x="84" y="124" width="64" height="16" fill="#ECEEF0"/><rect x="84" y="308" width="64" height="16" fill="#ECEEF0"/><rect x="186" y="124" width="64" height="16" fill="#ECEEF0"/><rect x="186" y="308" width="64" height="16" fill="#ECEEF0"/><path fill="#ECEEF0" d="M274 124h40v81.0h62v-81.0h40v200h-40v-81.0h-62v81.0h-40z"/><rect x="262" y="124" width="64" height="16" fill="#ECEEF0"/><rect x="262" y="308" width="64" height="16" fill="#ECEEF0"/><rect x="364" y="124" width="64" height="16" fill="#ECEEF0"/><rect x="364" y="308" width="64" height="16" fill="#ECEEF0"/><path d="M84 348 Q256 414 428 348 L428 374 Q256 447.8 84 374 Z" fill="#FFB81C"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 12 595 92" height="22" style="width:auto;height:22px;display:block" role="img" aria-label="Papa's Shop"><path fill="#ECEEF0" d="M54.96 42.28Q54.96 49.84 52.14 55.540000000000006Q49.32 61.24 44.16 64.36Q39.0 67.48 32.28 67.48H24.48Q23.88 67.48 23.88 68.08V98.56Q23.88 99.16 23.46 99.58Q23.04 100.0 22.439999999999998 100.0H5.3999999999999995Q4.8 100.0 4.38 99.58Q3.96 99.16 3.96 98.56V17.439999999999998Q3.96 16.840000000000003 4.38 16.42Q4.8 16.0 5.3999999999999995 16.0H31.32Q38.28 16.0 43.620000000000005 19.300000000000004Q48.96 22.60000000000001 51.96 28.60000000000001Q54.96 34.60000000000001 54.96 42.28ZM35.04 42.760000000000005Q35.04 38.080000000000005 33.06 35.56Q31.08 33.040000000000006 27.84 33.040000000000006H24.48Q23.88 33.040000000000006 23.88 33.64V51.52Q23.88 52.120000000000005 24.48 52.120000000000005H27.84Q31.08 52.120000000000005 33.06 49.660000000000004Q35.04 47.2 35.04 42.760000000000005ZM98.88 98.68 97.32 88.24Q97.32 87.64 96.6 87.64H83.63999999999999Q82.91999999999999 87.64 82.91999999999999 88.24L81.47999999999999 98.68Q81.36 100.0 79.91999999999999 100.0H62.879999999999995Q61.31999999999999 100.0 61.67999999999999 98.44L79.08 17.320000000000007Q79.32 16.0 80.63999999999999 16.0H100.19999999999999Q101.52 16.0 101.75999999999999 17.320000000000007L119.03999999999999 98.44L119.16 98.92Q119.16 100.0 117.84 100.0H100.44Q99.0 100.0 98.88 98.68ZM86.03999999999999 72.28H94.07999999999998Q94.56 72.28 94.56 71.68L90.24 44.32Q90.11999999999999 43.84 89.88 43.84Q89.63999999999999 43.84 89.52 44.32L85.56 71.68Q85.56 72.28 86.03999999999999 72.28ZM178.8 42.28Q178.8 49.84 175.98000000000002 55.540000000000006Q173.16 61.24 168.0 64.36Q162.84 67.48 156.12 67.48H148.32Q147.72 67.48 147.72 68.08V98.56Q147.72 99.16 147.3 99.58Q146.88 100.0 146.28 100.0H129.24Q128.64000000000001 100.0 128.22 99.58Q127.8 99.16 127.8 98.56V17.439999999999998Q127.8 16.840000000000003 128.22 16.42Q128.64000000000001 16.0 129.24 16.0H155.16Q162.12 16.0 167.46 19.300000000000004Q172.8 22.60000000000001 175.8 28.60000000000001Q178.8 34.60000000000001 178.8 42.28ZM158.88 42.760000000000005Q158.88 38.080000000000005 156.9 35.56Q154.92000000000002 33.040000000000006 151.68 33.040000000000006H148.32Q147.72 33.040000000000006 147.72 33.64V51.52Q147.72 52.120000000000005 148.32 52.120000000000005H151.68Q154.92000000000002 52.120000000000005 156.9 49.660000000000004Q158.88 47.2 158.88 42.760000000000005ZM222.72 98.68 221.16 88.24Q221.16 87.64 220.44 87.64H207.48Q206.76 87.64 206.76 88.24L205.32 98.68Q205.2 100.0 203.76 100.0H186.72Q185.16 100.0 185.52 98.44L202.92 17.320000000000007Q203.16 16.0 204.48 16.0H224.04Q225.36 16.0 225.6 17.320000000000007L242.88 98.44L243.0 98.92Q243.0 100.0 241.68 100.0H224.28Q222.84 100.0 222.72 98.68ZM209.88 72.28H217.92Q218.4 72.28 218.4 71.68L214.07999999999998 44.32Q213.96 43.84 213.72 43.84Q213.48 43.84 213.36 44.32L209.4 71.68Q209.4 72.28 209.88 72.28ZM250.92000000000002 42.64 249.12 17.439999999999998V17.200000000000003Q249.12 16.0 250.44 16.0H267.36Q269.04 16.0 268.8 17.439999999999998L266.76 42.760000000000005Q266.52 44.080000000000005 265.2 44.080000000000005H252.48000000000002Q251.88 44.080000000000005 251.46 43.660000000000004Q251.04000000000002 43.24 250.92000000000002 42.64ZM276.36 78.64V74.92Q276.36 74.32 276.78 73.9Q277.2 73.48 277.8 73.48H294.6Q295.2 73.48 295.62 73.9Q296.04 74.32 296.04 74.92V77.68Q296.04 80.56 297.42 82.24000000000001Q298.8 83.92 300.96000000000004 83.92Q303.12 83.92 304.5 82.30000000000001Q305.88 80.68 305.88 78.16Q305.88 75.4 303.72 73.18Q301.56 70.96000000000001 295.08 66.28Q289.08 61.96 285.24 58.540000000000006Q281.40000000000003 55.120000000000005 278.64 50.02Q275.88 44.92 275.88 38.2Q275.88 31.36 278.94 26.08Q282.0 20.799999999999997 287.58000000000004 17.92Q293.16 15.040000000000006 300.36 15.040000000000006Q307.68 15.040000000000006 313.26 17.980000000000004Q318.84000000000003 20.92 321.90000000000003 26.260000000000005Q324.96000000000004 31.60000000000001 324.96000000000004 38.56V41.440000000000005Q324.96000000000004 42.04 324.54 42.46Q324.12 42.88 323.52 42.88H306.84000000000003Q306.24 42.88 305.82 42.46Q305.4 42.04 305.4 41.440000000000005V38.080000000000005Q305.4 35.44 303.96 33.76Q302.52 32.08 300.36 32.08Q298.2 32.08 296.88 33.76Q295.56 35.44 295.56 38.2Q295.56 41.2 297.6 43.6Q299.64 46.0 305.88 50.56Q313.44 56.2 317.28 59.68000000000001Q321.12 63.160000000000004 323.28 67.42Q325.44 71.68 325.44 77.44Q325.44 88.24 318.65999999999997 94.6Q311.88 100.96 300.84000000000003 100.96Q293.52 100.96 288.0 98.13999999999999Q282.48 95.32 279.42 90.22Q276.36 85.12 276.36 78.64ZM360.84000000000003 78.64V74.92Q360.84000000000003 74.32 361.26 73.9Q361.68 73.48 362.28000000000003 73.48H379.08000000000004Q379.68 73.48 380.1 73.9Q380.52000000000004 74.32 380.52000000000004 74.92V77.68Q380.52000000000004 80.56 381.90000000000003 82.24000000000001Q383.28000000000003 83.92 385.44000000000005 83.92Q387.6 83.92 388.98 82.30000000000001Q390.36 80.68 390.36 78.16Q390.36 75.4 388.20000000000005 73.18Q386.04 70.96000000000001 379.56 66.28Q373.56 61.96 369.72 58.540000000000006Q365.88000000000005 55.120000000000005 363.12 50.02Q360.36 44.92 360.36 38.2Q360.36 31.36 363.42 26.08Q366.48 20.799999999999997 372.06000000000006 17.92Q377.64000000000004 15.040000000000006 384.84000000000003 15.040000000000006Q392.16 15.040000000000006 397.74 17.980000000000004Q403.32000000000005 20.92 406.38000000000005 26.260000000000005Q409.44000000000005 31.60000000000001 409.44000000000005 38.56V41.440000000000005Q409.44000000000005 42.04 409.02000000000004 42.46Q408.6 42.88 408.0 42.88H391.32000000000005Q390.72 42.88 390.3 42.46Q389.88 42.04 389.88 41.440000000000005V38.080000000000005Q389.88 35.44 388.44 33.76Q387.0 32.08 384.84000000000003 32.08Q382.68 32.08 381.36 33.76Q380.04 35.44 380.04 38.2Q380.04 41.2 382.08000000000004 43.6Q384.12 46.0 390.36 50.56Q397.92 56.2 401.76 59.68000000000001Q405.6 63.160000000000004 407.76 67.42Q409.92 71.68 409.92 77.44Q409.92 88.24 403.14 94.6Q396.36 100.96 385.32000000000005 100.96Q378.0 100.96 372.48 98.13999999999999Q366.96000000000004 95.32 363.90000000000003 90.22Q360.84000000000003 85.12 360.84000000000003 78.64ZM450.6 16.0H467.64000000000004Q468.24000000000007 16.0 468.6600000000001 16.42Q469.08000000000004 16.840000000000003 469.08000000000004 17.439999999999998V98.56Q469.08000000000004 99.16 468.6600000000001 99.58Q468.24000000000007 100.0 467.64000000000004 100.0H450.6Q450.00000000000006 100.0 449.58000000000004 99.58Q449.16 99.16 449.16 98.56V67.12Q449.16 66.52000000000001 448.56000000000006 66.52000000000001H439.9200000000001Q439.32000000000005 66.52000000000001 439.32000000000005 67.12V98.56Q439.32000000000005 99.16 438.90000000000003 99.58Q438.48 100.0 437.88000000000005 100.0H420.84000000000003Q420.24000000000007 100.0 419.82000000000005 99.58Q419.40000000000003 99.16 419.40000000000003 98.56V17.439999999999998Q419.40000000000003 16.840000000000003 419.82000000000005 16.42Q420.24000000000007 16.0 420.84000000000003 16.0H437.88000000000005Q438.48 16.0 438.90000000000003 16.42Q439.32000000000005 16.840000000000003 439.32000000000005 17.439999999999998V48.760000000000005Q439.32000000000005 49.36 439.9200000000001 49.36H448.56000000000006Q449.16 49.36 449.16 48.760000000000005V17.439999999999998Q449.16 16.840000000000003 449.58000000000004 16.42Q450.00000000000006 16.0 450.6 16.0ZM479.40000000000003 76.12V39.88Q479.40000000000003 28.60000000000001 486.30000000000007 21.820000000000007Q493.20000000000005 15.040000000000006 504.84000000000003 15.040000000000006Q516.36 15.040000000000006 523.38 21.820000000000007Q530.4 28.60000000000001 530.4 39.88V76.12Q530.4 87.52 523.38 94.24Q516.36 100.96 504.84000000000003 100.96Q493.20000000000005 100.96 486.30000000000007 94.24Q479.40000000000003 87.52 479.40000000000003 76.12ZM510.48 76.96000000000001V39.04Q510.48 35.8 508.98 33.94Q507.48 32.08 504.84000000000003 32.08Q502.20000000000005 32.08 500.76000000000005 33.94Q499.32000000000005 35.8 499.32000000000005 39.04V76.96000000000001Q499.32000000000005 80.2 500.76000000000005 82.06Q502.20000000000005 83.92 504.84000000000003 83.92Q507.48 83.92 508.98 82.06Q510.48 80.2 510.48 76.96000000000001ZM591.6 42.28Q591.6 49.84 588.78 55.540000000000006Q585.96 61.24 580.8 64.36Q575.64 67.48 568.92 67.48H561.12Q560.52 67.48 560.52 68.08V98.56Q560.52 99.16 560.0999999999999 99.58Q559.68 100.0 559.0799999999999 100.0H542.04Q541.4399999999999 100.0 541.02 99.58Q540.6 99.16 540.6 98.56V17.439999999999998Q540.6 16.840000000000003 541.02 16.42Q541.4399999999999 16.0 542.04 16.0H567.96Q574.92 16.0 580.26 19.300000000000004Q585.6 22.60000000000001 588.6 28.60000000000001Q591.6 34.60000000000001 591.6 42.28ZM571.68 42.760000000000005Q571.68 38.080000000000005 569.7 35.56Q567.72 33.040000000000006 564.48 33.040000000000006H561.12Q560.52 33.040000000000006 560.52 33.64V51.52Q560.52 52.120000000000005 561.12 52.120000000000005H564.48Q567.72 52.120000000000005 569.7 49.660000000000004Q571.68 47.2 571.68 42.760000000000005Z"/></svg><button id="bugBtn" aria-label="Report a bug" title="Report a bug" style="margin-left:auto;width:44px;height:44px;border:0;border-radius:10px;background:#2b3442;font-size:22px;display:flex;align-items:center;justify-content:center">🐞</button><button id="shareApp" aria-label="Share app" style="width:44px;height:44px;border:0;border-radius:10px;background:#2b3442;color:#ffb020;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M7 8l5-5 5 5M5 12v8h14v-8"/></svg></button></header>
 <main>
@@ -367,6 +380,8 @@ a{color:#4da3ff}
 <label id="mwPl" style="display:none">Plate width (in)<input id="mwW" inputmode="decimal" value="48"></label><label>Qty<input id="mwQ" inputmode="numeric" value="1"></label>
 </div><div id="mwOut"></div><div class="hint">Aluminum ≈ .35 × steel; stainless ≈ 1.02 × steel.</div></div></section>
 <section class="screen" id="weld">
+<div data-fasttap style="margin-top:10px"><button class="btn" id="wlJump" type="button" style="width:100%;min-height:44px">📏 Weld layout — stitch / skip spacing ↓</button></div>
+
 <div class="card"><h3>WELD SETTINGS</h3><div class="hint" style="color:#ff4d4d;font-size:13px">⚠ Starting points only — run a test bead on scrap.</div><div class="fld" style="margin-top:6px">
 <label>Brand<select id="wBr"></select></label><label>Machine<select id="wMa"></select></label>
 <label>Process<select id="wPr"></select></label><label>Material<select id="wMt"></select></label>
@@ -374,6 +389,184 @@ a{color:#4da3ff}
 <label class="w" id="wInL">Input power<select id="wIn"><option value="230">230/240 V</option><option value="115">115/120 V</option></select></label>
 </div></div>
 <div class="card"><h3 id="wHead">SETTINGS</h3><div id="wOut"></div><div class="hint" id="wSrc" style="margin-top:8px"></div></div>
+<div class="card" id="wlCard" data-fasttap><h3>WELD LAYOUT — STITCH / SKIP</h3>
+<div class="hint" style="font-size:13px;margin-top:4px">Space intermittent welds along a run. Pick what you know and it solves the rest.</div>
+<div class="seg" id="wlMode" style="margin-top:8px"><button type="button" data-v="count" class="on">Know the gap → find # of welds</button><button type="button" data-v="gap">Know # of welds → find the gap</button></div>
+<div class="fld" style="margin-top:8px">
+<label>Overall length — feet<input id="wlFt" inputmode="decimal" placeholder="0" autocomplete="off" autocapitalize="off"></label>
+<label>+ inches (fractions OK)<input id="wlIn" inputmode="text" enterkeyhint="done" placeholder="48 or 3 1/2" autocomplete="off" autocapitalize="off"></label>
+<label>Weld length (in)<input id="wlW" inputmode="text" enterkeyhint="done" placeholder="2 or 1 1/2" autocomplete="off" autocapitalize="off"></label>
+<label>End margin, each end (in) — optional<input id="wlM" inputmode="text" enterkeyhint="done" placeholder="0" autocomplete="off" autocapitalize="off"></label>
+<label class="w" id="wlGRow"><span id="wlGLbl">Gap between welds (clear, edge to edge)</span><input id="wlG" inputmode="text" enterkeyhint="done" placeholder="4 or 3 1/4" autocomplete="off" autocapitalize="off"></label>
+<label class="w" id="wlNRow" style="display:none">Number of welds<input id="wlN" inputmode="numeric" enterkeyhint="done" placeholder="5" autocomplete="off"></label>
+</div>
+<div id="wlGTRow"><div class="hint" style="margin-top:8px">Gap value means</div><div class="seg" id="wlGT"><button type="button" data-v="clear" class="on">Clear gap (edge to edge)</button><button type="button" data-v="pitch">Pitch (center to center)</button></div></div>
+<div class="hint" style="margin-top:8px">Ends of the run</div><div class="seg" id="wlEnds"><button type="button" data-v="weld" class="on">Weld at both ends</button><button type="button" data-v="gap">Gap at both ends</button></div>
+<div id="wlCRRow"><div class="hint" style="margin-top:8px">When the count isn't a whole number</div><div class="seg" id="wlCR"><button type="button" data-v="near" class="on">Nearest</button><button type="button" data-v="up">More welds</button><button type="button" data-v="down">Fewer welds</button></div></div>
+<div class="hint" style="margin-top:8px">Round gaps to</div><div class="seg" id="wlRes"><button type="button" data-v="8">1/8"</button><button type="button" data-v="16" class="on">1/16"</button><button type="button" data-v="32">1/32"</button></div>
+<div id="wlOut" aria-live="polite"></div>
+</div>
+<script id="wlmath">
+/*WLMATH*/
+var WL=(function(){
+var U=40000,RES={8:5000,16:2500,32:1250,64:625},MAXN=500,MAXIN=10000;
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=a%b;a=b;b=t}return a}
+function idiv(a,b){var q=Math.floor(a/b);while(q*b>a)q--;while((q+1)*b<=a)q++;return q}
+function rdiv(a,b){return idiv(2*a+b,2*b)}
+function cdiv(a,b){return -idiv(-a,b)}
+/* parse an inch value to integer units of 1/40000 in. Accepts 48, 2.5, .375, 3/8, 2 1/2, 2-1/2, 2", 2 in */
+function parse(str){
+ var s=String(str==null?"":str).replace(/["\u201D\u2033]/g,"").replace(/\s*(inches|inch|in)\s*$/i,"").replace(/^\s+|\s+$/g,"").replace(/\s+/g," "),m,u;
+ if(!s)return{err:"empty"};
+ if(s.charAt(0)=="-")return{err:"neg"};
+ if((m=/^(\d{1,5})(?: |-)(\d{1,5})\/(\d{1,5})$/.exec(s))){if(+m[3]==0)return{err:"bad"};u=+m[1]*U+rdiv(+m[2]*U,+m[3])}
+ else if((m=/^(\d{1,5})\/(\d{1,5})$/.exec(s))){if(+m[2]==0)return{err:"bad"};u=rdiv(+m[1]*U,+m[2])}
+ else if(/^(\d{1,9}(\.\d{0,6})?|\.\d{1,6})$/.test(s)){u=Math.round(parseFloat(s)*U)}
+ else return{err:"bad"};
+ if(u>MAXIN*U)return{err:"big"};
+ return{u:u}}
+function trim(t){return t.indexOf(".")>=0?t.replace(/0+$/,"").replace(/\.$/,""):t}
+function frac(sx){var w=Math.floor(sx/64),r=sx%64,g;if(!r)return w+'"';g=gcd(r,64);return(w?w+" ":"")+(r/g)+"/"+(64/g)+'"'}
+/* value n/d units -> {t: display text, d: decimal text, x: exact?} */
+function fmt(n,d){d=d||1;var g=gcd(n,d)||1;n=n/g;d=d/g;
+ if(d==1){var dec=trim((n/U).toFixed(4));return{t:n%625==0?frac(n/625):dec+'"',d:dec,x:true}}
+ var v=trim((n/d/U).toFixed(4));return{t:"\u2248 "+v+'"',d:v,x:false}}
+function pct(total,L){return rdiv(total*1000,L)/10}
+/* o: L,w,m (units), ends "weld"|"gap", mode "count"|"gap", gapType "clear"|"pitch", g (units, user gap or pitch), n (int), cr "near"|"up"|"down", res 8|16|32|64 */
+function solve(o){
+ var L=o.L,w=o.w,m=o.m||0,E=L-2*m,ge=o.ends=="gap",s=RES[o.res]||2500,n,k,G,g,req=null,notes=[],clamped=false;
+ if(!(L>0))return{err:"Overall length must be greater than 0."};
+ if(!(w>0))return{err:"Weld length must be greater than 0."};
+ if(m<0)return{err:"End margin can't be negative."};
+ if(E<=0)return{err:"End margins use up the whole run. Reduce the margin."};
+ if(w>E)return{err:(m?"Weld is longer than the run left after the end margins.":"Weld is longer than the run.")+" Weld "+fmt(w).t+" > run "+fmt(E).t+"."};
+ if(o.mode=="count"){
+  g=o.g;
+  if(!(g>0))return{err:o.gapType=="pitch"?"Pitch must be greater than 0.":"Gap must be greater than 0."};
+  if(o.gapType=="pitch"){if(g<=w)return{err:"Pitch (center to center) must be longer than the weld length "+fmt(w).t+"."};req={pitch:g};g=g-w}
+  else req={gap:g};
+  var num=ge?E-g:E+g,den=w+g;
+  if(num<=0)n=0;else n=o.cr=="up"?cdiv(num,den):o.cr=="down"?idiv(num,den):rdiv(num,den);
+  var nmax=idiv(E,w);
+  if(n<1){n=1;clamped="min"}
+  if(n>nmax){n=nmax;clamped="max"}
+  if(n>MAXN)return{err:"That makes more than "+MAXN+" welds. Check the numbers."}
+ }else{
+  n=o.n;
+  if(!(n>=1)||n!=Math.floor(n))return{err:"Number of welds must be a whole number, 1 or more."};
+  if(n>MAXN)return{err:"Number of welds is limited to "+MAXN+"."};
+  if(n*w>E)return{err:n+" welds \u00D7 "+fmt(w).t+" = "+fmt(n*w).t+" is longer than the run "+fmt(E).t+"."};
+ }
+ k=ge?n+1:n-1;G=E-n*w;
+ var r={n:n,k:k,L:L,w:w,m:m,E:E,G:G,total:n*w,pct:pct(n*w,L),ends:ge?"gap":"weld",mode:o.mode,res:o.res||16,s:s,req:req,clamped:clamped,gapType:o.gapType};
+ if(k==0){r.lo=r.hi=0;r.a=0;r.b=0;r.R=G;r.uniform=true;r.gapN=null;r.gapD=null;r.pitchN=null;r.pitchD=null;r.near=null;return r}
+ var lo=idiv(G,k*s)*s,extra=G-k*lo,a=idiv(extra,s);
+ r.lo=lo;r.hi=lo+s;r.a=a;r.b=k-a;r.R=extra-a*s;r.uniform=(G%(k*s)==0);
+ r.gapN=G;r.gapD=k;r.pitchN=w*k+G;r.pitchD=k;r.near=rdiv(G,k*s)*s;r.pitchNear=w+r.near;
+ r.dev=Math.abs(r.near*k-G)/k; /* units */
+ return r}
+return{solve:solve,parse:parse,fmt:fmt,U:U,idiv:idiv,rdiv:rdiv,gcd:gcd}})();
+/*/WLMATH*/
+</script>
+<script id="weldlayout">
+(function(){
+"use strict";
+var q=function(i){return document.getElementById(i)};
+if(!q("wlCard"))return;
+var U=WL.U,st={mode:"count",gt:"clear",ends:"weld",cr:"near",res:"16"},last=null;
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function F(n,d){return WL.fmt(n,d)}
+function val(id,name,req){var s=q(id).value,p;if(!String(s).replace(/\s/g,""))return req?{blank:true}:{u:0};p=WL.parse(s);
+ if(p.err=="neg")return{err:name+" can't be negative."};
+ if(p.err=="big")return{err:name+" is too large."};
+ if(p.err)return{err:name+" isn't a number I can read. Use 48, 2.5, 3/8 or 2 1/2."};
+ return p}
+function build(){
+ var ft=val("wlFt","Feet",false),inn=val("wlIn","Inches",false),w=val("wlW","Weld length",true),m=val("wlM","End margin",false),g=null,n=null,x;
+ var all=[ft,inn,w,m];
+ if(st.mode=="count"){g=val("wlG",st.gt=="pitch"?"Pitch":"Gap",true);all.push(g)}
+ else{var s=q("wlN").value.replace(/\s/g,"");if(!s)n={blank:true};else if(/^-/.test(s))n={err:"Number of welds can't be negative."};else if(!/^\d{1,4}$/.test(s))n={err:"Number of welds must be a whole number, 1 or more."};else n={v:+s};all.push(n)}
+ for(x=0;x<all.length;x++)if(all[x].err)return{err:all[x].err};
+ var L=ft.u*12+inn.u;
+ if(L>10000*U)return{err:"Overall length is too large."};
+ if(L==0&&(q("wlFt").value.replace(/\s/g,"")||q("wlIn").value.replace(/\s/g,"")))return{err:"Overall length must be greater than 0."};
+ if(L==0||w.blank||(g&&g.blank)||(n&&n.blank))return{wait:true};
+ return{o:{L:L,w:w.u,m:m.u,ends:st.ends,mode:st.mode,gapType:st.gt,g:g?g.u:0,n:n?n.v:0,cr:st.cr,res:+st.res}}}
+function plural(n,a,b){return n+" "+(n==1?a:b)}
+function summary(r){
+ var L=[],gt=[];
+ if(r.k>0){if(r.b)gt.push(r.b+" \u00D7 "+F(r.lo).t);if(r.a)gt.push(r.a+" \u00D7 "+F(r.hi).t)}
+ L.push('Weld layout: '+F(r.L).t+' run'+(r.m?', '+F(r.m).t+' end margin each end':'')+', '+(r.ends=="gap"?'gap at both ends':'weld at both ends'));
+ L.push(plural(r.n,"weld","welds")+' \u00D7 '+F(r.w).t+' = '+F(r.total).t+' welded ('+r.pct.toFixed(1)+'% of run)');
+ if(r.k>0)L.push('Clear gap: '+F(r.gapN,r.gapD).t+(r.uniform?'':' avg \u2192 '+gt.join(' + '))+'; pitch (c-c): '+F(r.pitchN,r.pitchD).t);
+ if(r.R>0)L.push('Remainder: '+F(r.R).t);
+ return L.join("\n")}
+function diagram(r){
+ var X0=12,W=296,sc=W/r.L,i,h="",gx=r.k>0?r.G/r.k:0,start=r.m+(r.ends=="gap"&&r.k>0?gx:0),step=r.w+gx,wl=F(r.L).t;
+ h+='<svg viewBox="0 0 320 76" role="img" aria-label="'+esc("Run "+wl+" with "+plural(r.n,"weld","welds"))+'" preserveAspectRatio="xMidYMid meet">';
+ h+='<line x1="'+X0+'" y1="14" x2="'+(X0+W)+'" y2="14" stroke="#4da3ff" stroke-width="1"/><line x1="'+X0+'" y1="9" x2="'+X0+'" y2="19" stroke="#4da3ff"/><line x1="'+(X0+W)+'" y1="9" x2="'+(X0+W)+'" y2="19" stroke="#4da3ff"/>';
+ h+='<rect x="'+(160-Math.min(70,wl.length*3.6+6))+'" y="6" width="'+Math.min(140,wl.length*7.2+12)+'" height="16" fill="#000"/><text x="160" y="18" text-anchor="middle" font-size="12" font-weight="700" fill="#4da3ff">'+esc(wl)+'</text>';
+ h+='<rect x="'+X0+'" y="30" width="'+W+'" height="20" fill="#1d222a" stroke="#2a2f37"/>';
+ if(r.m>0){var mw=Math.max(r.m*sc,1);h+='<rect x="'+X0+'" y="30" width="'+mw.toFixed(2)+'" height="20" fill="#0b0e12" stroke="#4a5160" stroke-dasharray="2 2"/><rect x="'+(X0+W-mw).toFixed(2)+'" y="30" width="'+mw.toFixed(2)+'" height="20" fill="#0b0e12" stroke="#4a5160" stroke-dasharray="2 2"/>'}
+ for(i=0;i<r.n;i++){var x=X0+(start+i*step)*sc;h+='<rect x="'+x.toFixed(2)+'" y="32" width="'+Math.max(r.w*sc,.6).toFixed(2)+'" height="16" fill="#ffb020"/>'}
+ var cap=plural(r.n,"weld","welds")+" \u00B7 "+F(r.w).t+" each"+(r.k>0?" \u00B7 gap "+(r.uniform?F(r.lo).t:"\u2248 "+F(r.gapN,r.gapD).d+'"'):"");
+ h+='<text x="160" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="#aab3c0">'+esc(cap)+'</text>';
+ return h+'</svg>'}
+function render(){
+ var b=build(),h="",o=q("wlOut");
+ last=null;
+ if(b.err){o.innerHTML='<div class="wlw" role="alert">\u26A0 '+esc(b.err)+'</div>';return}
+ if(b.wait){o.innerHTML='<div class="hint" style="margin-top:10px">Enter the overall length, the weld length, and '+(st.mode=="count"?'the gap or pitch':'the number of welds')+'.</div>';return}
+ var r=WL.solve(b.o);
+ if(r.err){o.innerHTML='<div class="wlw" role="alert">\u26A0 '+esc(r.err)+'</div>';return}
+ last=r;
+ var gap=r.k>0?F(r.near!=null?r.near:0):null,gapAvg=r.k>0?F(r.gapN,r.gapD):null,pit=r.k>0?F(r.pitchN,r.pitchD):null;
+ function cell(l,t,s){return'<div'+(s?' data-s="'+esc(s)+'"':'')+'>'+esc(l)+'<b>'+esc(t)+'</b></div>'}
+ h+='<div class="out" style="margin-top:10px">';
+ h+=cell("WELDS",String(r.n),r.ends=="gap"?"gap at both ends":"weld at both ends");
+ h+=cell("EACH WELD",F(r.w).t,F(r.w).d+" in");
+ h+=cell("CLEAR GAP",r.k>0?(r.uniform?F(r.lo).t:F(r.near).t.replace("\u2248 ","")):"\u2013",r.k>0?(r.uniform?F(r.lo).d+" in between welds":"avg "+gapAvg.d+" in"):"single weld");
+ h+=cell("PITCH (C\u2013C)",r.k>0?(r.uniform?F(r.pitchN,r.pitchD).t:pit.t):"\u2013",r.k>0?pit.d+" in":"");
+ h+=cell("TOTAL WELD",F(r.total).t,F(r.total).d+" in");
+ h+=cell("% WELDED",r.pct.toFixed(1)+"%","of overall length");
+ h+='</div>';
+ var N=[];
+ if(r.mode=="count"){var ask=r.req.pitch!=null?"pitch "+F(r.req.pitch).t:"gap "+F(r.req.gap).t;
+  var same=r.k>0&&r.uniform&&((r.req.gap!=null&&r.req.gap==r.lo)||(r.req.pitch!=null&&r.req.pitch==r.w+r.lo));
+  N.push("For "+esc(ask)+", "+plural(r.n,"weld","welds")+" fit"+(r.n==1?"s":"")+(r.clamped?(r.clamped=="max"?" (limited so the welds fit end to end).":" (at least 1 weld)."):(same?" exactly.":"; the gap is adjusted so the layout fits the run exactly.")))}
+ if(r.k>0&&!r.uniform){
+  var parts=[];if(r.b)parts.push("<b>"+r.b+" \u00D7 "+esc(F(r.lo).t)+"</b>");if(r.a)parts.push("<b>"+r.a+" \u00D7 "+esc(F(r.hi).t)+"</b>");
+  N.push("Rounding to 1/"+r.res+'" changes the spacing: the exact even gap is <b>'+esc(gapAvg.t)+"</b>, which isn't a 1/"+r.res+'" mark. Use '+parts.join(" + ")+(r.R>0?" and leave <b>"+esc(F(r.R).t)+"</b> over":"")+" (nearest single mark is "+esc(F(r.near).t)+", off by "+(r.dev/U).toFixed(4)+'").')}
+ else if(r.k>0&&r.uniform&&r.mode=="count"&&r.req&&((r.req.gap!=null&&r.req.gap!=r.lo)||(r.req.pitch!=null&&r.req.pitch!=r.w+r.lo)))N.push("Gap adjusted from "+esc(r.req.gap!=null?F(r.req.gap).t:F(r.req.pitch-r.w).t)+" to <b>"+esc(F(r.lo).t)+"</b> so the welds fit the run exactly.");
+ if(r.k==0&&r.R>0)N.push("One weld: <b>"+esc(F(r.R).t)+"</b> of the run is left unwelded; place the weld where the drawing says.");
+ if(r.k>0&&r.uniform&&r.R==0&&r.mode=="gap")N.push("All "+(r.k==1?"1 gap":r.k+" gaps")+" are the same size.");
+ if(r.ends=="gap"&&r.k>0)N.push("Gap at both ends: the 2 end gaps are laid out like the gaps between welds.");
+ if(r.m>0)N.push("End margin <b>"+esc(F(r.m).t)+"</b> each end; spacing is laid out over the middle <b>"+esc(F(r.E).t)+"</b>. % welded is of the full <b>"+esc(F(r.L).t)+"</b>.");
+ for(var i=0;i<N.length;i++)h+='<div class="wln">'+N[i]+'</div>';
+ var chk=[plural(r.n,"weld","welds")+" \u00D7 "+F(r.w).t+" = <b>"+esc(F(r.total).t)+"</b>"];
+ if(r.k>0){if(r.b)chk.push(r.b+" \u00D7 "+F(r.lo).t+" gap = <b>"+esc(F(r.b*r.lo).t)+"</b>");if(r.a)chk.push(r.a+" \u00D7 "+F(r.hi).t+" gap = <b>"+esc(F(r.a*r.hi).t)+"</b>")}
+ chk.push("remainder = <b>"+esc(F(r.R).t)+"</b>");
+ h+='<div class="wlchk">Check: '+chk.join(" + ")+" = <b>"+esc(F(r.E).t)+"</b>"+(r.m?" (run less margins)":"")+" \u2713</div>";
+ h+=diagram(r);
+ h+='<button class="btn wlbtn" id="wlCopy" type="button">Copy layout</button>';
+ h+='<div class="hint" style="margin-top:8px">Layout math only. Check the drawing or WPS for the required weld length, spacing and end conditions.</div>';
+ o.innerHTML=h;
+ q("wlCopy").onclick=copy}
+function copy(){
+ if(!last)return;var t=summary(last),done=function(){if(window.toast)toast("Layout copied",1600)};
+ function fb(){var a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;opacity:0;left:-999px";document.body.appendChild(a);a.select();try{document.execCommand("copy");done()}catch(e){if(window.toast)toast("Couldn't copy",2000)}document.body.removeChild(a)}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,fb);else fb()}
+function seg(id,key,after){var box=q(id),bs=box.querySelectorAll("button");
+ Array.prototype.forEach.call(bs,function(b){b.onclick=function(){st[key]=b.getAttribute("data-v");Array.prototype.forEach.call(bs,function(x){x.classList.toggle("on",x===b)});if(after)after();render()}})}
+function layoutMode(){var c=st.mode=="count";q("wlGRow").style.display=c?"":"none";q("wlGTRow").style.display=c?"":"none";q("wlCRRow").style.display=c?"":"none";q("wlNRow").style.display=c?"none":""}
+function gLbl(){q("wlGLbl").textContent=st.gt=="pitch"?"Pitch (center to center)":"Gap between welds (clear, edge to edge)"}
+seg("wlMode","mode",layoutMode);seg("wlGT","gt",gLbl);seg("wlEnds","ends");seg("wlCR","cr");seg("wlRes","res");
+["wlFt","wlIn","wlW","wlM","wlG","wlN"].forEach(function(i){q(i).addEventListener("input",render);q(i).addEventListener("change",render)});
+var j=q("wlJump");if(j)j.onclick=function(){q("wlCard").scrollIntoView({block:"start"})};
+layoutMode();gLbl();render();
+window.hhWeldLayout={solve:WL.solve,parse:WL.parse,fmt:WL.fmt,summary:function(){return last?summary(last):""}};
+})();
+</script>
 </section>
 <section class="screen" id="feedback"><div class="card"><h3>FEEDBACK &amp; RATINGS</h3>
 <div class="hint">Tell us what you think. Send opens your email app with everything filled in.</div>
@@ -1081,7 +1274,7 @@ all();renderNav();var h=location.hash.slice(1);if(h&&q(h))go(h);if(!localStorage
 live();
 </script>
 <script>
-var APP_VERSION="v43";window.APP_VERSION=APP_VERSION;document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION});document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION})});
+var APP_VERSION="v44";window.APP_VERSION=APP_VERSION;document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION});document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll(".verV").forEach(function(e){e.textContent=APP_VERSION})});
 (function(){var RX=/-?Infinity|NaN|undefined/g;function scrub(root){if(!root||!root.querySelectorAll)return;var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n;while(n=w.nextNode()){if(RX.test(n.nodeValue)){RX.lastIndex=0;n.nodeValue=n.nodeValue.replace(RX,"–")}RX.lastIndex=0}}
  function go(){new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(x){if(x.nodeType==1){if(x.closest&&x.closest("section,.card"))scrub(x)}else if(x.nodeType==3&&x.parentNode&&x.parentNode.closest&&x.parentNode.closest("section,.card")&&RX.test(x.nodeValue)){RX.lastIndex=0;x.nodeValue=x.nodeValue.replace(RX,"–")}RX.lastIndex=0})})}).observe(document.body,{childList:true,subtree:true});document.querySelectorAll("section").forEach(scrub)}
  if(document.body)go();else document.addEventListener("DOMContentLoaded",go)})();
